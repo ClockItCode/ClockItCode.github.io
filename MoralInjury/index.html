@@ -7,7 +7,7 @@
 <meta name="description" content="A web companion to a research poster on moral injury and the dialogical self in first responders: understanding identity disruption and restoration through the many voices that make up a self." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&display=swap" rel="stylesheet" />
 <style>
   :root {
     --paper: #FAFAF8;
@@ -20,12 +20,20 @@
     --hairline: #E4E4E1;
     --hairline-strong: #CFCFCB;
     --alert: #B25A4F;
+    /* TWO new restorative accents — earned warmth, restoration beats only */
+    --restore-gold: #B08A3E;
+    --restore-sage: #8C9B82;
     --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
     --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     --measure: 66ch;
     --col: 720px;
     --col-wide: 1080px;
     --dur: 560ms;
+    /* shared named easing system */
+    --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-withdraw: cubic-bezier(0.4, 0, 1, 1);
+    /* fluid spacing rhythm */
+    --space-section: clamp(64px, 9vw, 112px);
   }
 
   * { box-sizing: border-box; }
@@ -37,17 +45,17 @@
 
   body {
     margin: 0;
-    background: var(--paper);
+    background:
+      /* subtle grain / hairline texture, very low alpha */
+      radial-gradient(circle at 1px 1px, rgba(26,28,30,0.018) 1px, transparent 0);
+    background-size: 4px 4px;
+    background-color: var(--paper);
     color: var(--ink);
     font-family: var(--sans);
-    font-size: 17.5px;
+    font-size: clamp(16.5px, 1.1vw + 13px, 18px);
     line-height: 1.66;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-  }
-
-  @media (min-width: 700px) {
-    body { font-size: 18px; }
   }
 
   a {
@@ -112,9 +120,11 @@
   /* Top bar: sensitivity + resources + calm view */
   .topbar {
     border-bottom: 1px solid var(--hairline);
-    background: var(--paper);
+    background: var(--surface);
     font-size: 14px;
     color: var(--ink-soft);
+    position: relative;
+    z-index: 5;
   }
   .topbar .wrap {
     display: flex;
@@ -127,6 +137,7 @@
   .topbar .note {
     flex: 1 1 320px;
     line-height: 1.45;
+    margin: 0;
   }
   .topbar .note strong { font-weight: 600; color: var(--ink); }
 
@@ -155,18 +166,19 @@
 
   /* Hero */
   .hero {
-    padding: 96px 0 64px;
+    padding: clamp(72px, 12vw, 112px) 0 clamp(48px, 7vw, 72px);
     text-align: left;
   }
   .hero h1 {
-    font-size: clamp(30px, 6vw, 40px);
+    font-size: clamp(31px, 6.2vw, 44px);
     margin: 0 0 18px;
     max-width: 18ch;
+    letter-spacing: -0.02em;
   }
   .hero .sub {
     font-family: var(--serif);
     font-weight: 400;
-    font-size: clamp(19px, 3vw, 22px);
+    font-size: clamp(19px, 3vw, 23px);
     color: var(--ink-soft);
     line-height: 1.45;
     margin: 0 0 36px;
@@ -184,7 +196,7 @@
 
   /* Heartbeat motif */
   .motif {
-    margin: 40px 0 0;
+    margin: 44px 0 0;
     max-width: 520px;
   }
   .motif svg { display: block; width: 100%; height: auto; }
@@ -212,14 +224,11 @@
 
   /* Sections */
   section.content {
-    padding: 72px 0;
+    padding: var(--space-section) 0;
     border-bottom: 1px solid var(--hairline);
   }
-  @media (min-width: 700px) {
-    section.content { padding: 104px 0; }
-  }
   section.content h2 {
-    font-size: clamp(24px, 4vw, 28px);
+    font-size: clamp(24px, 4vw, 29px);
     margin: 0 0 28px;
     max-width: 24ch;
   }
@@ -237,12 +246,12 @@
 
   /* Pull quote */
   .pull {
-    margin: 40px 0;
+    margin: clamp(32px, 5vw, 48px) 0;
     padding: 4px 0 4px 26px;
     border-left: 1px solid var(--hairline-strong);
     font-family: var(--serif);
     font-style: italic;
-    font-size: clamp(20px, 3.2vw, 24px);
+    font-size: clamp(20px, 3.2vw, 25px);
     line-height: 1.42;
     color: var(--ink-soft);
     max-width: 46ch;
@@ -303,8 +312,7 @@
   }
 
   /* Four-stage model */
-  .model-section { padding: 72px 0; border-bottom: 1px solid var(--hairline); }
-  @media (min-width: 700px) { .model-section { padding: 104px 0; } }
+  .model-section { padding: var(--space-section) 0; border-bottom: 1px solid var(--hairline); }
   .model-grid {
     margin-top: 40px;
     display: grid;
@@ -358,9 +366,17 @@
   .stage.s4 { border-color: var(--accent); }
   .stage.s4 .num { color: var(--accent); }
 
+  /* Caption beneath model fallback when interactive figure is present */
+  .figure-fallback-note {
+    margin-top: 18px;
+    font-size: 13.5px;
+    color: var(--ghost);
+    font-style: italic;
+    max-width: 60ch;
+  }
+
   /* Poster feature */
-  .poster-section { padding: 72px 0; border-bottom: 1px solid var(--hairline); }
-  @media (min-width: 700px) { .poster-section { padding: 104px 0; } }
+  .poster-section { padding: var(--space-section) 0; border-bottom: 1px solid var(--hairline); }
   .poster-frame {
     margin: 32px 0 20px;
     border: 1px solid var(--hairline-strong);
@@ -413,7 +429,7 @@
   }
 
   /* References */
-  .refs-section { padding: 72px 0; }
+  .refs-section { padding: var(--space-section) 0; }
   .refs-list {
     margin: 28px 0 0;
     padding: 0;
@@ -429,6 +445,18 @@
     max-width: 80ch;
   }
   .refs-list li a { font-size: 13.5px; word-break: break-word; }
+
+  /* Influences note */
+  .influences-note {
+    margin: 36px 0 0;
+    border-top: 1px solid var(--hairline);
+    padding-top: 24px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--ghost);
+    max-width: 72ch;
+  }
+  .influences-note strong { color: var(--ink-soft); font-weight: 600; }
 
   /* Footer */
   footer {
@@ -460,14 +488,14 @@
   @media (prefers-reduced-motion: no-preference) {
     body:not(.calm) .reveal {
       opacity: 0;
-      transition: opacity var(--dur) cubic-bezier(0.22, 0.61, 0.36, 1);
+      transition: opacity var(--dur) var(--ease-settle);
     }
     body:not(.calm) .reveal.in { opacity: 1; }
 
     /* hero stagger via voice elements */
     body:not(.calm) .stagger > * {
       opacity: 0;
-      transition: opacity var(--dur) cubic-bezier(0.22, 0.61, 0.36, 1);
+      transition: opacity var(--dur) var(--ease-settle);
     }
     body:not(.calm) .stagger.in > * { opacity: 1; }
     body:not(.calm) .stagger.in > *:nth-child(2) { transition-delay: 120ms; }
@@ -525,7 +553,7 @@
     </p>
     <div class="motif reveal" aria-hidden="true">
       <svg viewBox="0 0 520 80" role="img">
-        <title>A steady line that falters and then quiets</title>
+        <title>A steady line that falters, then settles into calm</title>
         <path id="hbpath" d="M0,40 L120,40 L140,40 L150,16 L162,64 L176,40 L300,40 L312,28 L322,52 L334,40 L360,40 L520,40" />
       </svg>
     </div>
@@ -552,6 +580,749 @@
       <blockquote class="pull reveal">Moral injury is a wound to conscience and self — not merely a reaction to a frightening event.</blockquote>
     </div>
   </section>
+
+  <!-- ============================================================
+       mod8 — In Their Words: a quiet listening room (consent gate,
+       three participants, site-wide intensity preference)
+       ============================================================ -->
+<section class="mod-mod8" id="mod8" aria-label="In Their Words — a quiet listening room: content note, how to listen, and the three people you are about to hear">
+<style>
+/* ============================================================
+   mod8 — In Their Words. Scoped threshold / consent room.
+   Extends the host light system. Tokens reused verbatim;
+   two new restorative tokens added per spec.
+   ============================================================ */
+.mod-mod8{
+  /* Fallbacks ONLY: host :root already defines these verbatim.
+     Scoped redeclaration keeps the block self-contained. */
+  --m8-paper:#FAFAF8;
+  --m8-surface:#FFFFFF;
+  --m8-ink:#1A1C1E;
+  --m8-ink-soft:#4A4E54;
+  --m8-mist:#9AA0A6;
+  --m8-ghost:#6B7178;
+  --m8-accent:#5B6B7A;
+  --m8-hairline:#E4E4E1;
+  --m8-hairline-strong:#CFCFCB;
+  --m8-alert:#B25A4F;
+  /* The two NEW restorative accents (used only as low-opacity layers) */
+  --m8-restore-gold:#B08A3E;
+  --m8-restore-sage:#8C9B82;
+  --m8-serif:var(--serif,"Source Serif 4",Georgia,"Times New Roman",serif);
+  --m8-sans:var(--sans,"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif);
+  /* Named easings shared site-wide (scoped copy) */
+  --m8-ease-settle:cubic-bezier(0.16,1,0.3,1);
+  --m8-ease-withdraw:cubic-bezier(0.4,0,1,1);
+
+  display:block;
+  background:var(--paper,var(--m8-paper));
+  color:var(--ink,var(--m8-ink));
+  font-family:var(--m8-sans);
+  border-bottom:1px solid var(--hairline,var(--m8-hairline));
+  border-top:1px solid var(--hairline,var(--m8-hairline));
+  padding:72px 0;
+}
+@media (min-width:700px){ .mod-mod8{ padding:104px 0; } }
+
+.mod-mod8 *{ box-sizing:border-box; }
+
+.mod-mod8 .mod8-wrap{
+  width:100%;
+  max-width:var(--col,720px);
+  margin:0 auto;
+  padding:0 24px;
+}
+
+.mod-mod8 .mod8-kicker{
+  font-family:var(--m8-sans);
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--mist,var(--m8-mist));
+  margin:0 0 14px;
+}
+.mod-mod8 h2.mod8-h{
+  font-family:var(--m8-serif);
+  font-weight:600;
+  line-height:1.2;
+  letter-spacing:-0.01em;
+  color:var(--ink,var(--m8-ink));
+  font-size:clamp(24px,4vw,28px);
+  margin:0 0 18px;
+  max-width:26ch;
+}
+.mod-mod8 h3.mod8-sub{
+  font-family:var(--m8-serif);
+  font-weight:600;
+  font-size:18px;
+  line-height:1.3;
+  color:var(--ink,var(--m8-ink));
+  margin:0 0 10px;
+}
+.mod-mod8 p{
+  margin:0 0 18px;
+  max-width:66ch;
+  color:var(--ink,var(--m8-ink));
+  line-height:1.66;
+  font-size:17.5px;
+}
+@media (min-width:700px){ .mod-mod8 p{ font-size:18px; } }
+.mod-mod8 p:last-child{ margin-bottom:0; }
+.mod-mod8 .mod8-soft{ color:var(--ink-soft,var(--m8-ink-soft)); }
+
+/* ---- Content note panel (master gate copy) ---- */
+.mod-mod8 .mod8-note{
+  border:1px solid var(--hairline-strong,var(--m8-hairline-strong));
+  border-radius:4px;
+  background:var(--surface,var(--m8-surface));
+  padding:22px 22px;
+  margin:0 0 30px;
+  max-width:70ch;
+}
+.mod-mod8 .mod8-note p{ font-size:15px; line-height:1.6; color:var(--ink-soft,var(--m8-ink-soft)); }
+.mod-mod8 .mod8-note p:first-child{ margin-top:0; }
+.mod-mod8 .mod8-note strong{ color:var(--ink,var(--m8-ink)); font-weight:600; }
+.mod-mod8 .mod8-note a{
+  color:var(--accent,var(--m8-accent));
+  text-decoration:none;
+  border-bottom:1px solid var(--hairline-strong,var(--m8-hairline-strong));
+}
+.mod-mod8 .mod8-note a:hover{ border-bottom-color:var(--accent,var(--m8-accent)); }
+
+/* ---- The three doors (how to listen) ---- */
+.mod-mod8 .mod8-doors{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin:0 0 14px;
+}
+.mod-mod8 .mod8-door{
+  flex:1 1 220px;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  text-align:left;
+  border:1px solid var(--hairline-strong,var(--m8-hairline-strong));
+  background:var(--surface,var(--m8-surface));
+  color:var(--ink,var(--m8-ink));
+  font-family:var(--m8-sans);
+  border-radius:4px;
+  padding:14px 16px;
+  cursor:pointer;
+  transition:border-color 200ms ease,background 200ms ease;
+}
+.mod-mod8 .mod8-door:hover{ border-color:var(--accent,var(--m8-accent)); }
+.mod-mod8 .mod8-door .mod8-door-t{
+  font-family:var(--m8-serif);
+  font-weight:600;
+  font-size:16.5px;
+}
+.mod-mod8 .mod8-door .mod8-door-d{
+  font-size:13.5px;
+  color:var(--ink-soft,var(--m8-ink-soft));
+  line-height:1.45;
+}
+.mod-mod8 .mod8-door[aria-pressed="true"]{
+  border-color:var(--accent,var(--m8-accent));
+  /* low-opacity cool layer above fixed-lightness text, never the sole signal */
+  background:linear-gradient(0deg,rgba(91,107,122,0.06),rgba(91,107,122,0.06)),var(--surface,var(--m8-surface));
+}
+.mod-mod8 .mod8-door[aria-pressed="true"] .mod8-door-t::after{
+  content:" \00b7 chosen";
+  font-family:var(--m8-sans);
+  font-style:normal;
+  font-weight:600;
+  font-size:11.5px;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--accent,var(--m8-accent));
+}
+
+/* ---- aria-live announcement strip ---- */
+.mod-mod8 .mod8-live{
+  min-height:1.4em;
+  margin:6px 0 4px;
+  font-size:14px;
+  color:var(--ink-soft,var(--m8-ink-soft));
+  line-height:1.45;
+}
+.mod-mod8 .mod8-undo{
+  margin-left:8px;
+  display:none;
+  font-family:var(--m8-sans);
+  font-size:13px;
+  border:1px solid var(--hairline-strong,var(--m8-hairline-strong));
+  background:var(--surface,var(--m8-surface));
+  color:var(--accent,var(--m8-accent));
+  border-radius:3px;
+  padding:4px 10px;
+  cursor:pointer;
+}
+.mod-mod8 .mod8-undo.mod8-on{ display:inline-block; }
+.mod-mod8 .mod8-undo:hover{ border-color:var(--accent,var(--m8-accent)); }
+
+/* ---- Throughline copy ---- */
+.mod-mod8 .mod8-throughline{
+  margin:28px 0 8px;
+  padding:4px 0 4px 26px;
+  border-left:1px solid var(--hairline-strong,var(--m8-hairline-strong));
+  font-family:var(--m8-serif);
+  font-style:italic;
+  font-size:clamp(19px,3vw,22px);
+  line-height:1.45;
+  color:var(--ink-soft,var(--m8-ink-soft));
+  max-width:48ch;
+}
+
+/* ---- The three quiet cards ---- */
+.mod-mod8 .mod8-cards{
+  list-style:none;
+  margin:30px 0 0;
+  padding:0;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:16px;
+}
+@media (min-width:760px){
+  .mod-mod8 .mod8-cards{ grid-template-columns:repeat(3,1fr); gap:18px; }
+}
+.mod-mod8 .mod8-card{
+  width:100%;
+  height:100%;
+  text-align:left;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  border:1px solid var(--hairline,var(--m8-hairline));
+  background:var(--surface,var(--m8-surface));
+  border-radius:4px;
+  padding:24px 22px;
+  cursor:pointer;
+  font-family:var(--m8-sans);
+  color:var(--ink,var(--m8-ink));
+  transition:border-color 250ms var(--m8-ease-settle),background 250ms var(--m8-ease-settle);
+}
+.mod-mod8 .mod8-card:hover{ border-color:var(--hairline-strong,var(--m8-hairline-strong)); }
+.mod-mod8 .mod8-mono{
+  font-family:var(--m8-serif);
+  font-weight:600;
+  font-size:34px;
+  line-height:1;
+  color:var(--ink,var(--m8-ink));
+  letter-spacing:0.01em;
+}
+.mod-mod8 .mod8-role{
+  font-family:var(--m8-serif);
+  font-size:17px;
+  color:var(--ink,var(--m8-ink));
+}
+.mod-mod8 .mod8-context{
+  font-size:14.5px;
+  line-height:1.55;
+  color:var(--ink-soft,var(--m8-ink-soft));
+  margin:0;
+}
+.mod-mod8 .mod8-card-state{
+  margin-top:auto;
+  font-family:var(--m8-sans);
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--mist,var(--m8-mist));
+}
+/* Chosen card: warmth is EARNED — a single muted gold seam, low-opacity,
+   above fixed-lightness text. Plus a non-color text label. */
+.mod-mod8 .mod8-card[aria-pressed="true"]{
+  border-color:var(--restore-gold,var(--m8-restore-gold));
+  background:
+    linear-gradient(0deg,rgba(176,138,62,0.05),rgba(176,138,62,0.05)),
+    var(--surface,var(--m8-surface));
+}
+.mod-mod8 .mod8-card[aria-pressed="true"] .mod8-card-state{
+  color:var(--restore-gold,var(--m8-restore-gold));
+}
+.mod-mod8 .mod8-card[aria-pressed="true"] .mod8-seam{ opacity:1; }
+.mod-mod8 .mod8-seam{
+  display:block;
+  height:2px;
+  margin:0;
+  border-radius:2px;
+  background:linear-gradient(90deg,
+    rgba(176,138,62,0) 0%,
+    rgba(176,138,62,0.85) 18%,
+    rgba(140,155,130,0.85) 82%,
+    rgba(140,155,130,0) 100%);
+  opacity:0;
+  transition:opacity 750ms var(--m8-ease-settle);
+}
+
+/* ---- Handoff link to mod2 (#voice-conflict) ---- */
+.mod-mod8 .mod8-handoff{
+  margin:26px 0 0;
+  font-size:15px;
+  color:var(--ink-soft,var(--m8-ink-soft));
+}
+.mod-mod8 .mod8-handoff a{
+  color:var(--accent,var(--m8-accent));
+  text-decoration:none;
+  border-bottom:1px solid var(--hairline-strong,var(--m8-hairline-strong));
+}
+.mod-mod8 .mod8-handoff a:hover{ border-bottom-color:var(--accent,var(--m8-accent)); }
+.mod-mod8 .mod8-handoff[hidden]{ display:none; }
+
+/* ---- Findings escape hatch: static 4-stage long-read ---- */
+.mod-mod8 .mod8-findings{
+  margin:34px 0 0;
+  border:1px solid var(--hairline-strong,var(--m8-hairline-strong));
+  border-radius:4px;
+  background:var(--surface,var(--m8-surface));
+  padding:24px 22px;
+}
+.mod-mod8 .mod8-findings[hidden]{ display:none; }
+.mod-mod8 .mod8-findings h3{
+  font-family:var(--m8-serif);
+  font-weight:600;
+  font-size:20px;
+  margin:0 0 6px;
+  color:var(--ink,var(--m8-ink));
+}
+.mod-mod8 .mod8-findings .mod8-scope{
+  font-size:13.5px;
+  color:var(--mist,var(--m8-mist));
+  margin:0 0 18px;
+}
+.mod-mod8 .mod8-findings ol{
+  margin:0;
+  padding:0;
+  list-style:none;
+  counter-reset:mod8stage;
+}
+.mod-mod8 .mod8-findings ol li{
+  counter-increment:mod8stage;
+  padding:14px 0;
+  border-top:1px solid var(--hairline,var(--m8-hairline));
+}
+.mod-mod8 .mod8-findings ol li:first-child{ border-top:0; padding-top:0; }
+.mod-mod8 .mod8-findings ol li .mod8-stage-n{
+  font-family:var(--m8-serif);
+  font-size:12.5px;
+  font-weight:600;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--mist,var(--m8-mist));
+  display:block;
+  margin:0 0 4px;
+}
+.mod-mod8 .mod8-findings ol li .mod8-stage-n::before{
+  content:"Stage " counter(mod8stage) " \2014 ";
+}
+.mod-mod8 .mod8-findings ol li p{
+  font-size:15px;
+  line-height:1.55;
+  color:var(--ink-soft,var(--m8-ink-soft));
+  margin:0;
+}
+/* The static long-read honours the luminance arc as FIXED states
+   (no motion): stages 1-2 cooler/dimmer, 3-4 lifted, stage 4 gold seam. */
+.mod-mod8 .mod8-findings ol li.mod8-st1 p,
+.mod-mod8 .mod8-findings ol li.mod8-st2 p{ color:var(--ghost,var(--m8-ghost)); }
+.mod-mod8 .mod8-findings ol li.mod8-st4{
+  border-left:2px solid var(--restore-gold,var(--m8-restore-gold));
+  padding-left:14px;
+}
+
+/* ---- Colophon: Influences & Gratitude ---- */
+.mod-mod8 .mod8-colophon{
+  margin:38px 0 0;
+  padding-top:28px;
+  border-top:1px solid var(--hairline,var(--m8-hairline));
+}
+.mod-mod8 .mod8-colophon h3{
+  font-family:var(--m8-serif);
+  font-weight:600;
+  font-size:18px;
+  margin:0 0 14px;
+  color:var(--ink,var(--m8-ink));
+}
+.mod-mod8 .mod8-colophon dl{ margin:0; }
+.mod-mod8 .mod8-colophon dt{
+  font-family:var(--m8-sans);
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--mist,var(--m8-mist));
+  margin:14px 0 4px;
+}
+.mod-mod8 .mod8-colophon dt:first-of-type{ margin-top:0; }
+.mod-mod8 .mod8-colophon dd{
+  margin:0;
+  font-size:14.5px;
+  line-height:1.55;
+  color:var(--ink-soft,var(--m8-ink-soft));
+  max-width:70ch;
+}
+.mod-mod8 .mod8-colophon dd em{ color:var(--ink,var(--m8-ink)); font-style:italic; }
+
+/* ---- Focus ring (reuse host --accent convention) ---- */
+.mod-mod8 :focus-visible{
+  outline:2px solid var(--accent,var(--m8-accent));
+  outline-offset:3px;
+  border-radius:3px;
+}
+
+/* ---- Visually hidden util ---- */
+.mod-mod8 .mod8-vh{
+  position:absolute !important;
+  width:1px;height:1px;
+  padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);
+  white-space:nowrap;border:0;
+}
+
+/* ============================================================
+   Motion: opacity-as-meaning only. Default opacity:1, no JS.
+   Gated by prefers-reduced-motion: no-preference AND :not(.calm).
+   ============================================================ */
+.mod-mod8 .mod8-reveal{ opacity:1; }
+
+@media (prefers-reduced-motion: no-preference){
+  body:not(.calm) .mod-mod8 .mod8-reveal{
+    opacity:0;
+    transition:opacity 750ms var(--m8-ease-settle);
+  }
+  body:not(.calm) .mod-mod8 .mod8-reveal.mod8-in{ opacity:1; }
+}
+
+/* Calm view OR reduced-motion: everything fully present, no travel. */
+body.calm .mod-mod8 .mod8-reveal{
+  opacity:1 !important;
+  transition:none !important;
+}
+@media (prefers-reduced-motion: reduce){
+  .mod-mod8 .mod8-reveal{ opacity:1 !important; transition:none !important; }
+  .mod-mod8 .mod8-seam{ transition:none !important; }
+  .mod-mod8 .mod8-card{ transition:none !important; }
+}
+</style>
+
+<div class="mod8-wrap">
+  <p class="mod8-kicker mod8-reveal">In their words · a quiet listening room</p>
+  <h2 class="mod8-h mod8-reveal">Before you go further, meet the three people you are about to hear</h2>
+  <p class="mod8-reveal mod8-soft">This room sits between the background and the deeper sections. It is where you decide <em>how</em> you would like to listen, and where the three participants are introduced as real, consented people &mdash; before any of the heavier, interactive parts of the site.</p>
+
+  <!-- ===== Master content note (shared consent gate) ===== -->
+  <div class="mod8-note mod8-reveal" role="note" aria-label="Content note">
+    <p><strong>A note before you begin.</strong> What follows draws on the life-story interviews of three first responders and touches on moral injury &mdash; guilt, shame, self-blame, and the pressure to act when acting was not possible. Nothing here is graphic, and there are no sudden sounds or images. You may slow it down, lighten it, or skip straight to the findings at any time.</p>
+    <p>If you need support now, in Canada you can call or text <a href="tel:988">9-8-8</a> (Suicide Crisis Helpline). Elsewhere, please contact your local emergency or crisis line.</p>
+  </div>
+
+  <!-- ===== The three doors (set site-wide depth ONCE) ===== -->
+  <h3 class="mod8-sub mod8-reveal" id="mod8-doors-h">How would you like to listen?</h3>
+  <p class="mod8-reveal mod8-soft" style="font-size:15px;margin-bottom:14px;">You choose once. Your choice quietly carries through the rest of the site.</p>
+
+  <div class="mod8-doors mod8-reveal" role="group" aria-labelledby="mod8-doors-h">
+    <button type="button" class="mod8-door" id="mod8-door-full" data-mode="full" aria-pressed="false">
+      <span class="mod8-door-t">Sit with the voices</span>
+      <span class="mod8-door-d">The full experience. Gentle, unhurried movement; nothing sudden.</span>
+    </button>
+    <button type="button" class="mod8-door" id="mod8-door-reduced" data-mode="reduced" aria-pressed="false">
+      <span class="mod8-door-t">Reduce intensity</span>
+      <span class="mod8-door-d">One line at a time, no ambient motion. Calmer, plainer pacing.</span>
+    </button>
+    <button type="button" class="mod8-door" id="mod8-door-findings" data-mode="findings" aria-pressed="false">
+      <span class="mod8-door-t">Just read the findings</span>
+      <span class="mod8-door-d">A plain, static summary. No interaction required.</span>
+    </button>
+  </div>
+
+  <p class="mod8-live mod8-reveal" id="mod8-live" aria-live="polite">
+    <span id="mod8-live-text"></span>
+    <button type="button" class="mod8-undo" id="mod8-undo">Undo &mdash; sit with the voices</button>
+  </p>
+
+  <!-- ===== Throughline / honest framing ===== -->
+  <p class="mod8-throughline mod8-reveal">These are real people&rsquo;s words, lightly fictionalized. You are here to listen, not to know what it is like.</p>
+  <p class="mod8-reveal mod8-soft" style="font-size:15px;">Three people took part (N&nbsp;=&nbsp;3). They are never named &mdash; only a monogram and a role &mdash; and nothing they shared is presented graphically. You cannot fully know what this is like; the most honest thing to do is listen.</p>
+
+  <!-- ===== The three quiet cards (choose ONE life) ===== -->
+  <h3 class="mod8-sub mod8-reveal" id="mod8-cards-h" style="margin-top:30px;">Choose one life to listen to</h3>
+  <p class="mod8-reveal mod8-soft" style="font-size:15px;margin-bottom:6px;">One at a time. Whoever you choose will carry their voice into the rooms that follow.</p>
+
+  <ul class="mod8-cards mod8-reveal" aria-labelledby="mod8-cards-h">
+    <li>
+      <button type="button" class="mod8-card" data-voice="M" aria-pressed="false">
+        <span class="mod8-mono" aria-hidden="true">M.</span>
+        <span class="mod8-role"><span class="mod8-vh">Participant </span>M., paramedic</span>
+        <span class="mod8-seam" aria-hidden="true"></span>
+        <p class="mod8-context">The pressure to act when acting wasn&rsquo;t possible.</p>
+        <span class="mod8-card-state" data-state-label>Listen to this voice</span>
+      </button>
+    </li>
+    <li>
+      <button type="button" class="mod8-card" data-voice="R" aria-pressed="false">
+        <span class="mod8-mono" aria-hidden="true">R.</span>
+        <span class="mod8-role"><span class="mod8-vh">Participant </span>R., firefighter</span>
+        <span class="mod8-seam" aria-hidden="true"></span>
+        <p class="mod8-context">Carrying what could not be undone.</p>
+        <span class="mod8-card-state" data-state-label>Listen to this voice</span>
+      </button>
+    </li>
+    <li>
+      <button type="button" class="mod8-card" data-voice="V" aria-pressed="false">
+        <span class="mod8-mono" aria-hidden="true">V.</span>
+        <span class="mod8-role"><span class="mod8-vh">Participant </span>V., police officer</span>
+        <span class="mod8-seam" aria-hidden="true"></span>
+        <p class="mod8-context">Being held to a standard the moment would not allow.</p>
+        <span class="mod8-card-state" data-state-label>Listen to this voice</span>
+      </button>
+    </li>
+  </ul>
+
+  <!-- handoff to mod2 -->
+  <p class="mod8-handoff mod8-reveal" id="mod8-handoff" hidden>
+    <span id="mod8-handoff-text"></span>
+    <a href="#voice-conflict" id="mod8-handoff-link">Listen to this voice in the next room &rarr;</a>
+  </p>
+
+  <!-- ===== Findings escape hatch (static 4-stage long-read) ===== -->
+  <div class="mod8-findings mod8-reveal" id="mod8-findings" hidden aria-label="The findings, in plain summary">
+    <h3>The findings, in four stages</h3>
+    <p class="mod8-scope">A small, exploratory study of three life-story interviews (N&nbsp;=&nbsp;3) via the Valhalla Project Niagara. It illustrates patterns in these particular lives; it does not generalize to all first responders.</p>
+    <ol>
+      <li class="mod8-st1">
+        <span class="mod8-stage-n">Conflict of voices</span>
+        <p>Core identities &mdash; helper, professional, caregiver &mdash; meet conflicting inner voices of guilt and self-criticism. &lsquo;Failing&rsquo; here is a <em>perceived</em> moral failure: the gap between what a person felt they should have done and what the moment actually allowed.</p>
+      </li>
+      <li class="mod8-st2">
+        <span class="mod8-stage-n">Disruption</span>
+        <p>Shame, guilt, and self-blame emerge, alongside a loss of meaning and withdrawal, as self-condemning voices grow loud enough to dominate.</p>
+      </li>
+      <li class="mod8-st3">
+        <span class="mod8-stage-n">Restorative voices</span>
+        <p>Peer support, therapy, mindfulness, community, and creative expression begin to enter the inner conversation &mdash; answering isolation with recognition.</p>
+      </li>
+      <li class="mod8-st4">
+        <span class="mod8-stage-n">Reconstruction</span>
+        <p>Identity is gradually rebuilt. Restoration does not erase the event or silence the difficult voices; it lets supportive voices sit alongside them, so the guilty voice can be answered rather than rule alone.</p>
+      </li>
+    </ol>
+  </div>
+
+  <!-- ===== Colophon: Influences & Gratitude ===== -->
+  <div class="mod8-colophon mod8-reveal" id="mod8-colophon" aria-label="Influences and gratitude">
+    <h3>Influences &amp; gratitude</h3>
+    <dl>
+      <dt>First, the three participants</dt>
+      <dd>To the paramedic, the firefighter, and the police officer who consented to share their life stories: thank you. This room exists to hold your words with care. You are heard, and you are not named.</dd>
+
+      <dt>Then the theory that taught us to listen</dt>
+      <dd>Hubert Hermans&rsquo; <em>Dialogical Self Theory</em> &mdash; itself standing on Mikhail Bakhtin&rsquo;s dialogism and William James&rsquo; many-selves &mdash; gave us the idea that a self is many voices in conversation.</dd>
+
+      <dt>Design &amp; build</dt>
+      <dd>A quiet, light, clinical interface built to extend a shared design system: opacity as meaning, stillness over motion, and warmth that has to be earned. Its interactive form was inspired, in a general way, by other authors&rsquo; interactive works on trauma, grief, and empathy &mdash; an influence gratefully acknowledged, not an endorsement by them.</dd>
+
+      <dt>The lab</dt>
+      <dd>Wisdom &amp; Identity Lab, Ontario Institute for Studies in Education (OISE), University of Toronto.</dd>
+
+      <dt>And the people who made the interviews possible</dt>
+      <dd>The Valhalla Project Niagara, supporting veterans and first responders living with post-traumatic stress through community, connection, and purpose.</dd>
+    </dl>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var root = document.getElementById("mod8");
+  if(!root) return;
+
+  var docEl = document.documentElement;
+  var body  = document.body;
+
+  /* ---------- small helpers ---------- */
+  function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+  function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+
+  var liveText = root.querySelector("#mod8-live-text");
+  function announce(msg){ if(liveText) liveText.textContent = msg; }
+
+  /* ---------- elements ---------- */
+  var doors = {
+    full:     root.querySelector("#mod8-door-full"),
+    reduced:  root.querySelector("#mod8-door-reduced"),
+    findings: root.querySelector("#mod8-door-findings")
+  };
+  var undoBtn  = root.querySelector("#mod8-undo");
+  var findings = root.querySelector("#mod8-findings");
+  var cards    = root.querySelectorAll(".mod8-card");
+  var handoff  = root.querySelector("#mod8-handoff");
+  var handoffText = root.querySelector("#mod8-handoff-text");
+  var handoffLink = root.querySelector("#mod8-handoff-link");
+
+  var ROLES = { M:"M., paramedic", R:"R., firefighter", V:"V., police officer" };
+
+  /* ============================================================
+     SITE-WIDE DEPTH PREFERENCE  (mode: full | reduced | findings)
+     Persisted as mi-intensity. Adds/removes body.mi-intensity-reduced
+     which mod2/mod3/mod4/mod7 read. Findings also reveals the
+     static long-read in this module.
+     ============================================================ */
+  function applyMode(mode, opts){
+    opts = opts || {};
+    // body class consumed site-wide
+    var reduced = (mode === "reduced" || mode === "findings");
+    body.classList.toggle("mi-intensity-reduced", reduced);
+
+    // door pressed states
+    for(var key in doors){
+      if(doors[key]) doors[key].setAttribute("aria-pressed", key === mode ? "true" : "false");
+    }
+
+    // findings escape hatch visibility
+    if(findings){
+      if(mode === "findings"){ findings.hidden = false; }
+      else { findings.hidden = true; }
+    }
+
+    // undo affordance: only meaningful when we auto-picked reduced
+    if(undoBtn){
+      if(opts.showUndo){ undoBtn.classList.add("mod8-on"); }
+      else { undoBtn.classList.remove("mod8-on"); }
+    }
+
+    lsSet("mi-intensity", mode);
+
+    if(!opts.silent){
+      if(mode === "full"){
+        announce("Full experience selected. Gentle, unhurried motion; nothing sudden. This carries through the rest of the site.");
+      } else if(mode === "reduced"){
+        announce("Reduced intensity selected. No ambient motion, plainer pacing, site-wide.");
+      } else if(mode === "findings"){
+        announce("Findings view selected. A plain, static summary is shown below.");
+      }
+    }
+
+    if(opts.scrollToFindings && mode === "findings" && findings){
+      // honour smooth/auto per the host's scroll-behavior
+      findings.setAttribute("tabindex","-1");
+      try{ findings.focus({preventScroll:true}); }catch(e){ try{findings.focus();}catch(e2){} }
+      findings.scrollIntoView({block:"start"});
+    }
+  }
+
+  doors.full     && doors.full.addEventListener("click", function(){ applyMode("full",{}); });
+  doors.reduced  && doors.reduced.addEventListener("click", function(){ applyMode("reduced",{}); });
+  doors.findings && doors.findings.addEventListener("click", function(){ applyMode("findings",{scrollToFindings:true}); });
+
+  undoBtn && undoBtn.addEventListener("click", function(){
+    applyMode("full",{});
+    announce("Restored to the full experience. You can change this at any time.");
+    undoBtn.classList.remove("mod8-on");
+  });
+
+  /* ---------- initial mode resolution ---------- */
+  var stored = lsGet("mi-intensity");
+  var prefersReduced = window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var hostCalm = body.classList.contains("calm") || lsGet("mi-calm") === "1";
+
+  if(stored === "full" || stored === "reduced" || stored === "findings"){
+    applyMode(stored, {silent:true});
+  } else if(prefersReduced || hostCalm){
+    // prefers-reduced-motion / calm PRE-SELECTS reduced, announced + undoable
+    applyMode("reduced", {showUndo:true});
+    announce("Because your device asks for reduced motion, intensity is set to reduced. You can undo this.");
+  } else {
+    // no stored choice, no reduced pref: leave doors un-pressed, gate open
+    announce("");
+  }
+
+  /* ============================================================
+     PARTICIPANT HANDOFF  (mi-voice: M | R | V)
+     Sets data-mi-voice on <html> + localStorage so mod2 at
+     #voice-conflict can voice the knot with the chosen person.
+     mod8 does NOT run the four-beat knot itself.
+     ============================================================ */
+  function applyVoice(code, opts){
+    opts = opts || {};
+    for(var i=0;i<cards.length;i++){
+      var c = cards[i];
+      var on = c.getAttribute("data-voice") === code;
+      c.setAttribute("aria-pressed", on ? "true" : "false");
+      var lbl = c.querySelector("[data-state-label]");
+      if(lbl) lbl.textContent = on ? "Chosen · carried onward" : "Listen to this voice";
+    }
+    docEl.setAttribute("data-mi-voice", code);
+    lsSet("mi-voice", code);
+
+    if(handoff && handoffText){
+      handoff.hidden = false;
+      handoffText.textContent = "You are listening to " + ROLES[code] + ". ";
+    }
+
+    if(!opts.silent){
+      announce("You are now listening to " + ROLES[code] +
+        ". Their voice will carry into the rooms that follow. You are here to listen, not to know what it is like.");
+    }
+  }
+
+  for(var i=0;i<cards.length;i++){
+    (function(card){
+      card.addEventListener("click", function(){
+        applyVoice(card.getAttribute("data-voice"), {});
+      });
+    })(cards[i]);
+  }
+
+  var storedVoice = lsGet("mi-voice");
+  if(storedVoice && ROLES[storedVoice]){
+    applyVoice(storedVoice, {silent:true});
+  }
+
+  /* ============================================================
+     Reveal-on-scroll (opacity-as-meaning), matching host pattern.
+     ============================================================ */
+  var revealEls = root.querySelectorAll(".mod8-reveal");
+  function showAll(){ for(var i=0;i<revealEls.length;i++) revealEls[i].classList.add("mod8-in"); }
+
+  if(prefersReduced || hostCalm || !("IntersectionObserver" in window)){
+    showAll();
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add("mod8-in"); io.unobserve(e.target); }
+      });
+    }, { rootMargin:"0px 0px -8% 0px", threshold:0.12 });
+    for(var j=0;j<revealEls.length;j++) io.observe(revealEls[j]);
+
+    // safety net
+    window.addEventListener("load", function(){
+      setTimeout(function(){
+        for(var k=0;k<revealEls.length;k++){
+          if(!revealEls[k].classList.contains("mod8-in")){
+            var r = revealEls[k].getBoundingClientRect();
+            if(r.top < window.innerHeight) revealEls[k].classList.add("mod8-in");
+          }
+        }
+      }, 900);
+    });
+  }
+
+  /* If the host calm toggle flips later, keep reveals present. */
+  if(window.matchMedia){
+    try{
+      var mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+      var onChange = function(){ if(mq.matches) showAll(); };
+      if(mq.addEventListener) mq.addEventListener("change", onChange);
+      else if(mq.addListener) mq.addListener(onChange);
+    }catch(e){}
+  }
+})();
+</script>
+</section>
 
   <!-- Identity / dialogical self -->
   <section class="content" id="identity" aria-labelledby="h-identity">
@@ -604,6 +1375,657 @@
       <p class="reveal">The reason the helper identity makes these conflicts so sharp is that it sets a high standard for the self. When a person’s whole sense of who they are is built around protecting and helping, almost any outcome involving harm can come to feel like a personal moral failing — even when they acted properly, and even when the constraints of the moment made another outcome impossible (Litz et al., 2009). This is where guilt can quietly harden into shame: a discrete sense of ‘I did something wrong’ can slide into a corrosive verdict of ‘I am wrong.’ In the language of voices, a self-critical voice can grow loud enough to dominate, drowning out the valued voices it speaks against.</p>
       <p class="reveal">The outcomes the participants described — persistent shame, self-blame, a felt sense of responsibility, and a destabilized moral identity — follow from this inner conflict. This supports the study’s central reframing: moral injury is best understood as an identity-based disruption, not solely a reaction to a traumatic event.</p>
       <blockquote class="pull reveal">A self-critical voice can grow loud enough to drown out the helper voice it speaks against.</blockquote>
+
+      <!-- ============================================================
+           mod2 — The Quiet 'but': a listening room of three knots
+           ============================================================ -->
+<section class="mod-mod2" id="mod2-root" aria-label="The quiet 'but' — a listening room of three dialogical knots">
+  <style>
+    /* ============================================================
+       mod2 — The Quiet 'but'. All styles scoped under .mod-mod2.
+       Reuses page-global tokens (--paper, --ink, --mist, --serif,
+       --hairline-strong, --dur, etc). Adds scoped easing + the two
+       reserved restorative accent tokens.
+       ============================================================ */
+    .mod-mod2 {
+      /* fallbacks mirror the page :root in case the block is lifted out */
+      --m2-paper: var(--paper, #FAFAF8);
+      --m2-surface: var(--surface, #FFFFFF);
+      --m2-ink: var(--ink, #1A1C1E);
+      --m2-ink-soft: var(--ink-soft, #4A4E54);
+      --m2-mist: var(--mist, #9AA0A6);
+      --m2-ghost: var(--ghost, #6B7178);
+      --m2-accent: var(--accent, #5B6B7A);
+      --m2-hairline: var(--hairline, #E4E4E1);
+      --m2-hairline-strong: var(--hairline-strong, #CFCFCB);
+      --m2-serif: var(--serif, "Source Serif 4", Georgia, serif);
+      --m2-sans: var(--sans, "Inter", -apple-system, system-ui, sans-serif);
+      --m2-dur: var(--dur, 560ms);
+
+      /* NEW shared easing pair (named) */
+      --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-withdraw: cubic-bezier(0.4, 0, 1, 1);
+
+      /* NEW reserved restorative accents (low-chroma; used only as
+         low-opacity light/stroke layers above fixed-lightness text) */
+      --restore-gold: #B08A3E;
+      --restore-sage: #8C9B82;
+
+      margin: 40px 0;
+      max-width: 720px;
+      font-family: var(--m2-sans);
+      color: var(--m2-ink);
+    }
+
+    /* ---- persistent in-module bar (matches topbar styling) ---- */
+    .mod-mod2 .mod2-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 16px;
+      border: 1px solid var(--m2-hairline);
+      border-bottom-color: var(--m2-hairline-strong);
+      background: var(--m2-paper);
+      border-radius: 4px 4px 0 0;
+      padding: 10px 14px;
+      font-size: 14px;
+      color: var(--m2-ink-soft);
+    }
+    .mod-mod2 .mod2-step {
+      flex: 1 1 auto;
+      font-family: var(--m2-serif);
+      font-size: 14px;
+      letter-spacing: 0.01em;
+      color: var(--m2-ink-soft);
+    }
+    .mod-mod2 .mod2-step b { font-weight: 600; color: var(--m2-ink); }
+    .mod-mod2 .mod2-barbtns { display: inline-flex; gap: 8px; flex: 0 0 auto; }
+    .mod-mod2 .mod2-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 38px;
+      border: 1px solid var(--m2-hairline-strong);
+      background: var(--m2-surface);
+      color: var(--m2-ink-soft);
+      font-family: var(--m2-sans);
+      font-size: 13.5px;
+      padding: 6px 12px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: border-color 200ms ease, color 200ms ease, background 200ms ease;
+    }
+    .mod-mod2 .mod2-btn:hover:not([disabled]) { border-color: var(--m2-accent); color: var(--m2-ink); }
+    .mod-mod2 .mod2-btn[disabled] { opacity: 0.45; cursor: default; }
+    .mod-mod2 .mod2-btn[aria-pressed="true"] { border-color: var(--m2-accent); color: var(--m2-ink); }
+
+    /* shared visible focus ring (reuse site convention) */
+    .mod-mod2 :focus-visible {
+      outline: 2px solid var(--m2-accent);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    /* ---- the listening room / stage ---- */
+    .mod-mod2 .mod2-stage {
+      border: 1px solid var(--m2-hairline-strong);
+      border-top: none;
+      border-radius: 0 0 4px 4px;
+      background: var(--m2-surface);
+      padding: 30px 24px 26px;
+      position: relative;
+      /* cool-overlay luminance arc: dimmer in the unopened/conflict state */
+      --m2-overlay: 0;
+    }
+
+    .mod-mod2 .mod2-listen-hint {
+      font-family: var(--m2-sans);
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--m2-mist);
+      margin: 0 0 22px;
+    }
+    .mod-mod2 .mod2-listen-hint .you {
+      display: block;
+      text-transform: none;
+      letter-spacing: 0;
+      font-family: var(--m2-serif);
+      font-size: 15px;
+      font-style: italic;
+      color: var(--m2-ghost);
+      margin-top: 6px;
+    }
+
+    .mod-mod2 .mod2-attrib {
+      font-family: var(--m2-serif);
+      font-size: 14px;
+      color: var(--m2-ghost);
+      letter-spacing: 0.01em;
+      margin: 0 0 16px;
+    }
+    .mod-mod2 .mod2-attrib .mono { font-weight: 600; color: var(--m2-ink-soft); }
+
+    /* ---- scoped voice tokens (mirror page .voice / .voice.opposing) ---- */
+    .mod-mod2 .mod2-voice {
+      font-family: var(--m2-serif);
+      font-size: clamp(19px, 3.2vw, 23px);
+      line-height: 1.45;
+      color: var(--m2-ink);
+      font-weight: 600;
+      font-variation-settings: "wght" 600;
+      max-width: 30ch;
+    }
+    .mod-mod2 .mod2-voice.opposing {
+      font-style: italic;
+      font-weight: 400;
+      font-variation-settings: "wght" 400;
+      color: var(--m2-ghost);
+    }
+
+    /* ---- the knot: reuse 1fr/auto/1fr grid verbatim ---- */
+    .mod-mod2 .knot {
+      margin: 6px 0 0;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 8px 20px;
+      max-width: 640px;
+    }
+    .mod-mod2 .knot .side { display: flex; flex-direction: column; gap: 12px; }
+    .mod-mod2 .knot .side.right { align-items: flex-end; text-align: right; }
+    .mod-mod2 .knot .but {
+      font-family: var(--m2-serif);
+      font-style: italic;
+      color: var(--m2-mist);
+      font-size: 18px;
+      align-self: center;
+    }
+    @media (max-width: 560px) {
+      .mod-mod2 .knot { grid-template-columns: 1fr; gap: 14px; }
+      .mod-mod2 .knot .side.right { align-items: flex-start; text-align: left; }
+      .mod-mod2 .knot .but { text-align: center; }
+    }
+
+    /* ---- the quiet 'but' button (faint underline = link hairline) ---- */
+    .mod-mod2 .mod2-butbtn {
+      appearance: none;
+      -webkit-appearance: none;
+      background: transparent;
+      border: none;
+      font-family: var(--m2-serif);
+      font-style: italic;
+      font-size: 18px;
+      color: var(--m2-ghost);
+      border-bottom: 1px solid var(--m2-hairline-strong);
+      padding: 12px 6px; /* generous 44px+ hit target */
+      min-height: 44px;
+      min-width: 44px;
+      line-height: 1;
+      cursor: pointer;
+      align-self: center;
+      justify-self: center;
+      transition: color 200ms ease, border-color 200ms ease;
+    }
+    .mod-mod2 .mod2-butbtn:hover { color: var(--m2-ink); border-bottom-color: var(--m2-accent); }
+    .mod-mod2 .mod2-butbtn[aria-expanded="true"] { color: var(--m2-mist); border-bottom-color: transparent; }
+
+    /* the centered lower-luminance 'but' shown once opened */
+    .mod-mod2 .mod2-but-open {
+      font-family: var(--m2-serif);
+      font-style: italic;
+      font-size: 18px;
+      color: var(--m2-mist);
+      align-self: center;
+      justify-self: center;
+    }
+
+    /* visually-hidden label */
+    .mod-mod2 .mod2-vh {
+      position: absolute !important;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* opposing voice + connecting line wrapper */
+    .mod-mod2 .mod2-opp-wrap { position: relative; }
+    .mod-mod2 .mod2-line-svg {
+      display: block;
+      width: 100%;
+      height: 22px;
+      margin: 4px 0 2px;
+      overflow: visible;
+    }
+    .mod-mod2 .mod2-line-svg path {
+      fill: none;
+      stroke: var(--m2-hairline-strong);
+      stroke-width: 1;
+    }
+
+    /* persistent caption under every opposing line */
+    .mod-mod2 .mod2-caption {
+      font-family: var(--m2-sans);
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: var(--m2-mist);
+      margin: 14px 0 0;
+      max-width: 52ch;
+      border-left: 1px solid var(--m2-hairline);
+      padding-left: 12px;
+    }
+
+    /* ---- BASE / no-motion-first state: opposing voice fully present ---- */
+    .mod-mod2 .mod2-opp,
+    .mod-mod2 .mod2-but-open,
+    .mod-mod2 .mod2-caption {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* when JS marks a knot as "closed", hide the opposing layer.
+       Without JS this class never appears -> knot stays fully open. */
+    .mod-mod2 .mod2-knot[data-open="false"] .mod2-opp-wrap,
+    .mod-mod2 .mod2-knot[data-open="false"] .mod2-but-open {
+      display: none;
+    }
+    /* when only one knot is active in the JS room, others are hidden */
+    .mod-mod2.mod2-js .mod2-knot[hidden] { display: none; }
+
+    /* the warm "earned" seam: a single low-opacity gold glow that appears
+       only on an opened, settled knot. Never the sole signal; text labels persist. */
+    .mod-mod2 .mod2-line-svg .seam {
+      stroke: var(--restore-gold);
+      stroke-opacity: 0;
+      stroke-width: 1.25;
+    }
+
+    /* plain-text fallback view (toggle) */
+    .mod-mod2 .mod2-plain { display: none; }
+    .mod-mod2.mod2-plainmode .mod2-knot[data-active="true"] .mod2-rich { display: none; }
+    .mod-mod2.mod2-plainmode .mod2-knot[data-active="true"] .mod2-plain { display: block; }
+    .mod-mod2 .mod2-plain p { margin: 0 0 10px; }
+    .mod-mod2 .mod2-plain .pv {
+      font-family: var(--m2-serif); font-weight: 600; color: var(--m2-ink); font-size: 18px;
+    }
+    .mod-mod2 .mod2-plain .pb { font-family: var(--m2-serif); font-style: italic; color: var(--m2-mist); }
+    .mod-mod2 .mod2-plain .po {
+      font-family: var(--m2-serif); font-style: italic; color: var(--m2-ghost); font-size: 18px;
+    }
+
+    /* ===========================================================
+       MOTION — only when motion allowed AND not in Calm view.
+       Everything below merely *adds travel* to the already-present
+       final state; nothing here is required for meaning.
+       =========================================================== */
+    @media (prefers-reduced-motion: no-preference) {
+      body:not(.calm) .mod-mod2 .mod2-stage {
+        /* cool-grey overlay (#9AA0A6 over paper) carries luminance arc */
+        transition: box-shadow 1100ms var(--ease-settle), background 1100ms var(--ease-settle);
+      }
+      /* dimmer/cooler while conflict is unopened across the room */
+      body:not(.calm) .mod-mod2.mod2-js[data-room-open="false"] .mod2-stage {
+        background:
+          linear-gradient(0deg, rgba(154,160,166,0.05), rgba(154,160,166,0.05)),
+          var(--m2-surface);
+      }
+      /* warmer/lighter once the visitor has opened the held knot */
+      body:not(.calm) .mod-mod2.mod2-js[data-room-open="true"] .mod2-stage {
+        background: var(--m2-surface);
+        box-shadow: inset 0 0 0 1px rgba(176,138,62,0.10);
+      }
+
+      /* the opposing voice arrival: opacity 0->1 + translateY 10->0 (~750ms) */
+      body:not(.calm) .mod-mod2.mod2-js .mod2-knot[data-open="true"][data-armed="true"] .mod2-opp-wrap {
+        animation: mod2-arrive 750ms var(--ease-settle) both;
+      }
+      body:not(.calm) .mod-mod2.mod2-js .mod2-knot[data-open="true"][data-armed="true"] .mod2-but-open {
+        animation: mod2-arrive 750ms var(--ease-settle) both;
+        animation-delay: 80ms;
+      }
+      /* valued line: identity strain as weight, 600 -> ~480 (never to zero) */
+      body:not(.calm) .mod-mod2.mod2-js .mod2-knot[data-open="true"][data-armed="true"] .mod2-valued {
+        animation: mod2-strain 900ms var(--ease-settle) both;
+      }
+      /* connecting hairline drawn via stroke-dashoffset (~700ms) */
+      body:not(.calm) .mod-mod2.mod2-js .mod2-knot[data-open="true"][data-armed="true"] .mod2-line-svg path.link {
+        stroke-dasharray: 240;
+        stroke-dashoffset: 240;
+        animation: mod2-draw 700ms var(--ease-settle) 120ms forwards;
+      }
+      /* reserved warm seam: a thin gold seam fades in last and is LEFT visible */
+      body:not(.calm) .mod-mod2.mod2-js .mod2-knot[data-open="true"][data-armed="true"] .mod2-line-svg path.seam {
+        stroke-dasharray: 240;
+        stroke-dashoffset: 240;
+        animation: mod2-draw 700ms var(--ease-settle) 360ms forwards, mod2-warm 800ms var(--ease-settle) 360ms forwards;
+      }
+    }
+
+    @keyframes mod2-arrive {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes mod2-strain {
+      from { font-variation-settings: "wght" 600; }
+      to   { font-variation-settings: "wght" 480; }
+    }
+    @keyframes mod2-draw {
+      to { stroke-dashoffset: 0; }
+    }
+    @keyframes mod2-warm {
+      to { stroke-opacity: 0.45; }
+    }
+
+    /* CALM / reduced-motion final styled states (no travel):
+       valued line carries strain as a fixed lighter weight; seam shown faint. */
+    body.calm .mod-mod2 .mod2-knot[data-open="true"] .mod2-valued,
+    .mod-mod2 .mod2-knot[data-open="true"] .mod2-valued {
+      /* default open weight when not animating */
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .mod-mod2 .mod2-knot[data-open="true"] .mod2-valued { font-variation-settings: "wght" 480; }
+      .mod-mod2 .mod2-line-svg path.seam { stroke-opacity: 0.4; }
+    }
+    body.calm .mod-mod2 .mod2-knot[data-open="true"] .mod2-valued { font-variation-settings: "wght" 480; }
+    body.calm .mod-mod2 .mod2-line-svg path.seam { stroke-opacity: 0.4; }
+  </style>
+
+  <!-- ============ NO-JS / Calm / reduced-motion FALLBACK ============ -->
+  <!-- The original static .knot grid lives here, fully visible, three knots
+       shown as plain held pairings. Hidden once JS upgrades the module. -->
+  <div class="mod2-fallback" id="mod2-fallback">
+    <p class="mod2-listen-hint">You are here to listen.
+      <span class="you">You cannot fully know this.</span></p>
+
+    <div class="knot" aria-label="A dialogical knot: a valued voice held against an opposing voice — M., paramedic">
+      <div class="side left"><span class="mod2-voice">I-as-helper</span></div>
+      <div class="but" aria-hidden="true">but</div>
+      <div class="side right"><span class="mod2-voice opposing">I-as-guilty</span></div>
+    </div>
+    <p class="mod2-caption">A perceived moral failure — the gap between what they felt they should have done and what was possible. Not blame.</p>
+
+    <div class="knot" aria-label="A dialogical knot — R., firefighter">
+      <div class="side left"><span class="mod2-voice">I-as-professional</span></div>
+      <div class="but" aria-hidden="true">but</div>
+      <div class="side right"><span class="mod2-voice opposing">I-as-self-critical</span></div>
+    </div>
+    <p class="mod2-caption">A perceived moral failure — the gap between what they felt they should have done and what was possible. Not blame.</p>
+
+    <div class="knot" aria-label="A dialogical knot — V., police officer">
+      <div class="side left"><span class="mod2-voice">I-as-caregiver</span></div>
+      <div class="but" aria-hidden="true">but</div>
+      <div class="side right"><span class="mod2-voice opposing">I-as-identity-lost</span></div>
+    </div>
+    <p class="mod2-caption">A perceived moral failure — the gap between what they felt they should have done and what was possible. Not blame.</p>
+  </div>
+
+  <!-- ============ JS-UPGRADED LISTENING ROOM (built by IIFE) ============ -->
+  <!-- intentionally empty; populated only if JS runs. -->
+
+  <script>
+  (function () {
+    "use strict";
+    var root = document.getElementById("mod2-root");
+    if (!root) return;
+    var fallback = document.getElementById("mod2-fallback");
+
+    // Three knots — monogram + role attribution (n=3). Edit data here only.
+    var MOD2_KNOTS = [
+      { mono: "M.", role: "paramedic",      valued: "I-as-helper",       opposing: "I-as-guilty" },
+      { mono: "R.", role: "firefighter",    valued: "I-as-professional", opposing: "I-as-self-critical" },
+      { mono: "V.", role: "police officer", valued: "I-as-caregiver",    opposing: "I-as-identity-lost" }
+    ];
+    var CAPTION = "A perceived moral failure — the gap between what they felt they should have done and what was possible. Not blame.";
+    var HELD_STILLNESS = 500; // ms deliberate stillness before opposing arrives
+
+    function calmOn() { return document.body.classList.contains("calm"); }
+    function motionOK() {
+      return !calmOn() &&
+        window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
+    }
+
+    // --- build DOM ---
+    root.classList.add("mod2-js");
+
+    var bar = document.createElement("div");
+    bar.className = "mod2-bar";
+    bar.innerHTML =
+      '<span class="mod2-step" id="mod2-step">voice <b>1</b> of <b>3</b></span>' +
+      '<span class="mod2-barbtns">' +
+        '<button type="button" class="mod2-btn" id="mod2-prev">' +
+          '<span aria-hidden="true">&larr;</span> Previous voice</button>' +
+        '<button type="button" class="mod2-btn" id="mod2-next">' +
+          'Next voice <span aria-hidden="true">&rarr;</span></button>' +
+        '<button type="button" class="mod2-btn" id="mod2-plain" aria-pressed="false">' +
+          'Read these as plain text</button>' +
+      '</span>';
+
+    var stage = document.createElement("div");
+    stage.className = "mod2-stage";
+
+    var hint = document.createElement("p");
+    hint.className = "mod2-listen-hint";
+    hint.innerHTML = 'You are here to listen.' +
+      '<span class="you">You cannot fully know this.</span>';
+    stage.appendChild(hint);
+
+    // live region
+    var live = document.createElement("div");
+    live.className = "mod2-vh";
+    live.setAttribute("aria-live", "polite");
+    live.setAttribute("role", "status");
+    stage.appendChild(live);
+
+    var knotEls = [];
+
+    MOD2_KNOTS.forEach(function (k, i) {
+      var wrap = document.createElement("div");
+      wrap.className = "mod2-knot";
+      wrap.setAttribute("data-open", "false");
+      wrap.setAttribute("data-active", i === 0 ? "true" : "false");
+      wrap.setAttribute("data-armed", "false");
+      if (i !== 0) wrap.hidden = true;
+
+      var attrib = document.createElement("p");
+      attrib.className = "mod2-attrib";
+      attrib.innerHTML = '<span class="mono">' + k.mono + '</span> &mdash; ' + k.role;
+      wrap.appendChild(attrib);
+
+      // RICH (interactive) view
+      var rich = document.createElement("div");
+      rich.className = "mod2-rich";
+
+      var grid = document.createElement("div");
+      grid.className = "knot";
+      grid.setAttribute("aria-label",
+        "A dialogical knot: a valued voice held against an opposing voice — " + k.mono + ", " + k.role);
+
+      // left side: valued line
+      var left = document.createElement("div");
+      left.className = "side left";
+      var valued = document.createElement("span");
+      valued.className = "mod2-voice mod2-valued";
+      valued.textContent = k.valued;
+      left.appendChild(valued);
+      grid.appendChild(left);
+
+      // center: the quiet 'but' button (closed) OR static 'but' label (open)
+      var butBtn = document.createElement("button");
+      butBtn.type = "button";
+      butBtn.className = "mod2-butbtn";
+      butBtn.setAttribute("aria-expanded", "false");
+      var oppId = "mod2-opp-" + i;
+      butBtn.setAttribute("aria-controls", oppId);
+      butBtn.innerHTML = 'but<span class="mod2-vh">Open the quiet but — hear the opposing voice</span>';
+      grid.appendChild(butBtn);
+
+      var butOpen = document.createElement("div");
+      butOpen.className = "mod2-but-open";
+      butOpen.setAttribute("aria-hidden", "true");
+      butOpen.textContent = "but";
+      grid.appendChild(butOpen);
+
+      // right side: opposing voice + connecting line + caption
+      var right = document.createElement("div");
+      right.className = "side right";
+      var oppWrap = document.createElement("div");
+      oppWrap.className = "mod2-opp-wrap";
+      oppWrap.id = oppId;
+
+      var oppVoice = document.createElement("span");
+      oppVoice.className = "mod2-voice opposing mod2-opp";
+      oppVoice.textContent = k.opposing;
+      oppWrap.appendChild(oppVoice);
+
+      // connecting hairline (decorative SVG, described)
+      var svgNS = "http://www.w3.org/2000/svg";
+      var svg = document.createElementNS(svgNS, "svg");
+      svg.setAttribute("class", "mod2-line-svg");
+      svg.setAttribute("viewBox", "0 0 240 22");
+      svg.setAttribute("preserveAspectRatio", "none");
+      svg.setAttribute("role", "img");
+      var titleId = "mod2-lt-" + i, descId = "mod2-ld-" + i;
+      svg.setAttribute("aria-labelledby", titleId + " " + descId);
+      var t = document.createElementNS(svgNS, "title");
+      t.id = titleId;
+      t.textContent = "A thin line connecting the two voices.";
+      var d = document.createElementNS(svgNS, "desc");
+      d.id = descId;
+      d.textContent = "A decorative hairline drawn between the valued voice and the opposing voice, holding them together without resolving the tension.";
+      svg.appendChild(t); svg.appendChild(d);
+      var pathLink = document.createElementNS(svgNS, "path");
+      pathLink.setAttribute("class", "link");
+      pathLink.setAttribute("d", "M2 11 C 70 11, 170 11, 238 11");
+      svg.appendChild(pathLink);
+      var pathSeam = document.createElementNS(svgNS, "path");
+      pathSeam.setAttribute("class", "seam");
+      pathSeam.setAttribute("d", "M2 11 C 70 11, 170 11, 238 11");
+      svg.appendChild(pathSeam);
+      oppWrap.appendChild(svg);
+
+      right.appendChild(oppWrap);
+      grid.appendChild(right);
+      rich.appendChild(grid);
+
+      var cap = document.createElement("p");
+      cap.className = "mod2-caption";
+      cap.textContent = CAPTION;
+      rich.appendChild(cap);
+
+      wrap.appendChild(rich);
+
+      // PLAIN-TEXT view (static two-line pairing)
+      var plain = document.createElement("div");
+      plain.className = "mod2-plain";
+      plain.innerHTML =
+        '<p><span class="pv">' + k.valued + '</span> <span class="pb">but</span> ' +
+        '<span class="po">' + k.opposing + '</span></p>' +
+        '<p class="mod2-caption" style="border:none;padding:0;margin:0;">' + CAPTION + '</p>';
+      wrap.appendChild(plain);
+
+      stage.appendChild(wrap);
+      knotEls.push({ wrap: wrap, butBtn: butBtn, valued: valued, oppVoice: oppVoice, attrib: attrib, k: k });
+    });
+
+    // insert upgraded module, hide static fallback
+    if (fallback) fallback.setAttribute("hidden", "");
+    root.appendChild(bar);
+    root.appendChild(stage);
+
+    // --- state & behaviour ---
+    var current = 0;
+    var stepEl = bar.querySelector("#mod2-step");
+    var prevBtn = bar.querySelector("#mod2-prev");
+    var nextBtn = bar.querySelector("#mod2-next");
+    var plainBtn = bar.querySelector("#mod2-plain");
+
+    function announce(msg) { live.textContent = ""; live.textContent = msg; }
+
+    function refreshRoomOpenAttr() {
+      // room reads "open" if the currently-active knot is open (drives luminance arc)
+      var k = knotEls[current];
+      root.setAttribute("data-room-open", k.wrap.getAttribute("data-open") === "true" ? "true" : "false");
+    }
+
+    function showCurrent(focusBut, announceVoice) {
+      knotEls.forEach(function (ke, i) {
+        var active = i === current;
+        ke.wrap.hidden = !active;
+        ke.wrap.setAttribute("data-active", active ? "true" : "false");
+      });
+      var k = knotEls[current].k;
+      stepEl.innerHTML = "voice <b>" + (current + 1) + "</b> of <b>" + MOD2_KNOTS.length + "</b>";
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === MOD2_KNOTS.length - 1;
+      refreshRoomOpenAttr();
+      if (announceVoice) {
+        var opened = knotEls[current].wrap.getAttribute("data-open") === "true";
+        announce("Voice " + (current + 1) + " of " + MOD2_KNOTS.length + ". " +
+          k.mono + ", " + k.role + ". Valued voice: " + k.valued + "." +
+          (opened ? " Opposing voice held: " + k.opposing + "." :
+                    " The quiet but is unopened."));
+      }
+      if (focusBut) knotEls[current].wrap.querySelector(".mod2-butbtn").focus();
+    }
+
+    function openKnot(ke) {
+      if (ke.wrap.getAttribute("data-open") === "true") return;
+      ke.butBtn.setAttribute("aria-expanded", "true");
+      var doReveal = function () {
+        ke.wrap.setAttribute("data-armed", motionOK() ? "true" : "false");
+        ke.wrap.setAttribute("data-open", "true");
+        refreshRoomOpenAttr();
+        announce(ke.k.opposing + " — held beside " + ke.k.valued + ". " + CAPTION);
+      };
+      if (motionOK()) {
+        // deliberate held 500ms stillness, then the opposing voice arrives
+        setTimeout(doReveal, HELD_STILLNESS);
+      } else {
+        doReveal(); // calm / reduced-motion: instant, opacity-only/static
+      }
+    }
+
+    function closeKnot(ke) {
+      ke.butBtn.setAttribute("aria-expanded", "false");
+      ke.wrap.setAttribute("data-open", "false");
+      ke.wrap.setAttribute("data-armed", "false");
+      refreshRoomOpenAttr();
+      announce("Closed. " + ke.k.valued + " — the quiet but is held shut again.");
+    }
+
+    function toggleKnot(ke) {
+      if (ke.wrap.getAttribute("data-open") === "true") closeKnot(ke);
+      else openKnot(ke);
+    }
+
+    knotEls.forEach(function (ke) {
+      ke.butBtn.addEventListener("click", function () { toggleKnot(ke); });
+      // native <button> already handles Enter/Space; no extra keydown needed.
+    });
+
+    prevBtn.addEventListener("click", function () {
+      if (current > 0) { current--; showCurrent(true, true); }
+    });
+    nextBtn.addEventListener("click", function () {
+      if (current < MOD2_KNOTS.length - 1) { current++; showCurrent(true, true); }
+    });
+
+    plainBtn.addEventListener("click", function () {
+      var on = root.classList.toggle("mod2-plainmode");
+      plainBtn.setAttribute("aria-pressed", on ? "true" : "false");
+      plainBtn.textContent = on ? "Read these as interactive" : "Read these as plain text";
+      announce(on ? "Showing the knots as plain text." : "Showing the interactive knots.");
+    });
+
+    showCurrent(false, false);
+    refreshRoomOpenAttr();
+  })();
+  </script>
+</section>
     </div>
   </section>
 
@@ -622,6 +2044,995 @@
       <p class="reveal">This can be understood as an erosion of meaning along several dimensions at once. Meaning in life is built from a sense that one’s life is coherent, that it has purpose, and that one matters (Costin &amp; Vignoles, 2020). Moral injury can disturb all three: the self-narrative no longer quite makes sense, valued goals feel foreclosed, and — perhaps most corrosively — the felt sense of mattering withdraws, as a person comes to feel they no longer count. Research suggests mattering is the strongest of these threads, which is part of why recognition by others is so central to recovery.</p>
       <p class="reveal">It is important to hold this gently. Loss of meaning here is the lived experience of someone whose deepest values were strained by an impossible situation. Meaning is not something a person failed to keep; it is something that was disrupted, and that can, with support, be slowly rebuilt.</p>
       <blockquote class="pull reveal">Meaning is not something a person failed to keep. It is something disrupted — and, with support, slowly rebuilt.</blockquote>
+
+      <!-- ============================================================
+           mod4 — The Weight That Gathers (Stage 2)
+           ============================================================ -->
+<section class="mod-mod4" id="mod4-root" aria-label="The weight that gathers: self-blame settling into the field">
+  <style>
+    /* ============================================================
+       mod4 — The Weight That Gathers
+       Stage 2 of the moral-injury model, in the LIGHT system.
+       All styles scoped under .mod-mod4. No globals.
+       ============================================================ */
+    .mod-mod4 {
+      /* Inherit site tokens; redeclare as fallbacks so the block is
+         self-contained even if lifted out of the page. */
+      --paper: #FAFAF8;
+      --surface: #FFFFFF;
+      --ink: #1A1C1E;
+      --ink-soft: #4A4E54;
+      --mist: #9AA0A6;
+      --ghost: #6B7178;
+      --accent: #5B6B7A;
+      --hairline: #E4E4E1;
+      --hairline-strong: #CFCFCB;
+      --alert: #B25A4F;
+
+      /* TWO new restorative accent tokens — earned warmth, restoration only */
+      --restore-gold: #B08A3E;
+      --restore-sage: #8C9B82;
+
+      /* shared easing system */
+      --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-withdraw: cubic-bezier(0.4, 0, 1, 1);
+
+      /* the single luminance-arc property: cool overlay alpha, 0..~0.18 */
+      --mod4-dim: 0;
+
+      --mod4-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+      --mod4-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+      font-family: var(--mod4-sans);
+      color: var(--ink);
+      margin: 8px 0 0;
+    }
+
+    .mod-mod4 *, .mod-mod4 *::before, .mod-mod4 *::after { box-sizing: border-box; }
+
+    .mod-mod4 .mod4-kicker {
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ghost);
+      margin: 0 0 10px;
+      font-weight: 600;
+    }
+    .mod-mod4 .mod4-h {
+      font-family: var(--mod4-serif);
+      font-weight: 600;
+      font-size: clamp(20px, 3.4vw, 24px);
+      line-height: 1.3;
+      margin: 0 0 6px;
+      color: var(--ink);
+    }
+    .mod-mod4 .mod4-lede {
+      color: var(--ink-soft);
+      font-size: 16px;
+      line-height: 1.6;
+      max-width: 60ch;
+      margin: 0 0 18px;
+    }
+
+    /* ---- Content-note micro-gate (three doors) ---- */
+    .mod-mod4 .mod4-gate {
+      border: 1px solid var(--hairline-strong);
+      border-radius: 4px;
+      background: var(--surface);
+      padding: 18px 18px 16px;
+      max-width: 60ch;
+    }
+    .mod-mod4 .mod4-gate-note {
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      margin: 0 0 14px;
+    }
+    .mod-mod4 .mod4-gate-note strong { color: var(--ink); }
+    .mod-mod4 .mod4-doors {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .mod-mod4 .mod4-door {
+      font-family: inherit;
+      font-size: 14.5px;
+      line-height: 1.3;
+      color: var(--ink);
+      background: var(--paper);
+      border: 1px solid var(--hairline-strong);
+      border-radius: 4px;
+      padding: 10px 14px;
+      cursor: pointer;
+      transition: border-color 200ms ease, background 200ms ease;
+    }
+    .mod-mod4 .mod4-door:hover { border-color: var(--accent); }
+    .mod-mod4 .mod4-door .mod4-door-sub {
+      display: block;
+      font-size: 12.5px;
+      color: var(--ghost);
+      margin-top: 3px;
+      font-weight: 400;
+    }
+    .mod-mod4 .mod4-door[aria-pressed="true"] {
+      border-color: var(--accent);
+      background: var(--surface);
+    }
+    .mod-mod4 .mod4-gate-rm {
+      font-size: 13px;
+      color: var(--ghost);
+      margin: 12px 0 0;
+    }
+    .mod-mod4 .mod4-gate-rm a {
+      color: var(--accent);
+      border-bottom: 1px solid var(--hairline-strong);
+      text-decoration: none;
+    }
+
+    /* =====================================================
+       THE FIELD — the calm near-empty panel
+       ===================================================== */
+    .mod-mod4 .mod4-stage {
+      position: relative;
+      margin-top: 18px;
+      max-width: 720px;
+    }
+
+    .mod-mod4 .mod4-field {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--hairline-strong);
+      border-radius: 6px;
+      min-height: 340px;
+      padding: 34px 26px 28px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    /* The cool dim overlay — luminance arc lives here, ABOVE the field
+       background but BELOW the text (z-index). Alpha driven by --mod4-dim.
+       Cool grey (--mist 9AA0A6) over paper => cooler + dimmer. */
+    .mod-mod4 .mod4-field::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          to top,
+          rgba(154, 160, 166, calc(var(--mod4-dim) * 1.35)) 0%,
+          rgba(154, 160, 166, calc(var(--mod4-dim) * 0.7)) 45%,
+          rgba(154, 160, 166, calc(var(--mod4-dim) * 0.25)) 100%
+        );
+      pointer-events: none;
+      z-index: 1;
+      transition: background 1100ms var(--ease-withdraw);
+    }
+
+    /* The valued line sits at center and ALWAYS holds full presence. */
+    .mod-mod4 .mod4-valued {
+      position: relative;
+      z-index: 3;
+      margin: auto auto;
+      text-align: center;
+      max-width: 30ch;
+    }
+    .mod-mod4 .mod4-valued .mod4-valued-label {
+      display: block;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ghost);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .mod-mod4 .mod4-valued .mod4-valued-line {
+      font-family: var(--mod4-serif);
+      font-weight: 500;
+      font-style: italic;
+      font-size: clamp(22px, 4.2vw, 30px);
+      line-height: 1.3;
+      color: var(--ink); /* fixed lightness — never darkened */
+    }
+
+    /* A soft halo that the dim "presses in" around the valued line,
+       implemented as a light wash so the line stays an island of clarity. */
+    .mod-mod4 .mod4-valued::after {
+      content: "";
+      position: absolute;
+      inset: -26px -34px;
+      border-radius: 50%;
+      background: radial-gradient(
+        ellipse at center,
+        rgba(255, 255, 255, calc(0.55 + var(--mod4-dim) * 2.2)) 0%,
+        rgba(255, 255, 255, 0) 70%
+      );
+      z-index: -1;
+      pointer-events: none;
+      transition: background 1100ms var(--ease-settle);
+    }
+
+    /* ---- The sediment zone: self-blame phrases settle into lower edge ---- */
+    .mod-mod4 .mod4-sediment {
+      position: relative;
+      z-index: 3;
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-top: 16px;
+    }
+
+    .mod-mod4 .mod4-phrase {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      font-family: var(--mod4-serif);
+      color: var(--ink-soft); /* fixed lightness for AA; dim is overlay only */
+      font-size: clamp(15px, 2.6vw, 17px);
+      line-height: 1.5;
+      padding: 6px 8px;
+      border-radius: 6px;
+      border-left: 2px solid var(--hairline-strong);
+      background: rgba(154, 160, 166, 0.05);
+      scroll-margin: 16px;
+    }
+    .mod-mod4 .mod4-phrase .mod4-phrase-tag {
+      flex: 0 0 auto;
+      font-family: var(--mod4-sans);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--ghost);
+      border: 1px solid var(--hairline-strong);
+      border-radius: 999px;
+      padding: 2px 8px;
+      white-space: nowrap;
+      align-self: center;
+    }
+    .mod-mod4 .mod4-phrase .mod4-phrase-text {
+      font-style: italic;
+    }
+    .mod-mod4 .mod4-phrase:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    /* ---- The restorative beat (Stage 3 -> 4 bridge) ---- */
+    .mod-mod4 .mod4-restore {
+      position: relative;
+      z-index: 3;
+      margin-top: 14px;
+      padding: 14px 14px 16px;
+      border-radius: 5px;
+      border: 1px solid var(--restore-sage);
+      background:
+        linear-gradient(
+          to right,
+          rgba(140, 155, 130, 0.10),
+          rgba(176, 138, 62, 0.06)
+        );
+    }
+    .mod-mod4 .mod4-restore .mod4-phrase-tag {
+      color: #5f6b58;
+      border-color: var(--restore-sage);
+    }
+    .mod-mod4 .mod4-restore .mod4-restore-text {
+      font-family: var(--mod4-serif);
+      font-style: italic;
+      font-size: clamp(16px, 2.8vw, 18px);
+      color: var(--ink); /* fixed lightness */
+      line-height: 1.45;
+    }
+    /* the single kintsugi seam — a thin warm-gold line, drawn + left visible */
+    .mod-mod4 .mod4-seam {
+      display: block;
+      width: 100%;
+      height: 10px;
+      margin: 10px 0 2px;
+      overflow: visible;
+    }
+    .mod-mod4 .mod4-seam path {
+      fill: none;
+      stroke: var(--restore-gold);
+      stroke-width: 1.6;
+      stroke-linecap: round;
+    }
+
+    /* =====================================================
+       Controls + indicator (persistent, same position)
+       ===================================================== */
+    .mod-mod4 .mod4-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .mod-mod4 .mod4-primary {
+      font-family: inherit;
+      font-size: 15.5px;
+      font-weight: 500;
+      color: var(--surface);
+      background: var(--accent);
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      padding: 11px 18px;
+      cursor: pointer;
+      transition: background 220ms ease, opacity 220ms ease;
+    }
+    .mod-mod4 .mod4-primary:hover { background: #4d5a67; }
+    .mod-mod4 .mod4-primary[disabled] {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+    .mod-mod4 .mod4-primary.mod4-is-restore {
+      background: var(--restore-gold);
+      border-color: var(--restore-gold);
+      color: #fff;
+    }
+    .mod-mod4 .mod4-primary.mod4-is-restore:hover { background: #9c7833; }
+
+    .mod-mod4 .mod4-secondary {
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--ink);
+      background: var(--paper);
+      border: 1px solid var(--hairline-strong);
+      border-radius: 4px;
+      padding: 9px 13px;
+      cursor: pointer;
+      transition: border-color 200ms ease;
+    }
+    .mod-mod4 .mod4-secondary:hover { border-color: var(--accent); }
+    .mod-mod4 .mod4-secondary[aria-pressed="true"] {
+      border-color: var(--accent);
+      background: var(--surface);
+    }
+
+    .mod-mod4 .mod4-primary:focus-visible,
+    .mod-mod4 .mod4-secondary:focus-visible,
+    .mod-mod4 .mod4-door:focus-visible,
+    .mod-mod4 .mod4-gate-rm a:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .mod-mod4 .mod4-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 14px;
+      margin-top: 12px;
+    }
+    .mod-mod4 .mod4-indicator {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ghost);
+      font-variant-numeric: tabular-nums;
+    }
+    .mod-mod4 .mod4-caption {
+      font-size: 13px;
+      color: var(--ghost);
+      font-style: italic;
+    }
+
+    /* Witness / framing copy */
+    .mod-mod4 .mod4-witness {
+      margin-top: 16px;
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: var(--ghost);
+      max-width: 62ch;
+    }
+
+    /* Visually-hidden live region + helper */
+    .mod-mod4 .mod4-sr {
+      position: absolute !important;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap; border: 0;
+    }
+
+    /* =====================================================
+       STATIC-FIRST: the full plain document, no JS required.
+       Shown by default. JS hides it and shows the interactive
+       stage only after a door is chosen.
+       ===================================================== */
+    .mod-mod4 .mod4-static {
+      margin-top: 18px;
+      max-width: 64ch;
+      border-top: 1px solid var(--hairline);
+      padding-top: 18px;
+    }
+    .mod-mod4 .mod4-static h3 {
+      font-family: var(--mod4-serif);
+      font-weight: 600;
+      font-size: 17px;
+      margin: 0 0 10px;
+      color: var(--ink);
+    }
+    .mod-mod4 .mod4-static .mod4-static-valued {
+      font-family: var(--mod4-serif);
+      font-style: italic;
+      font-size: 19px;
+      color: var(--ink);
+      margin: 0 0 12px;
+    }
+    .mod-mod4 .mod4-static ol {
+      margin: 0 0 12px;
+      padding-left: 1.2em;
+    }
+    .mod-mod4 .mod4-static li {
+      color: var(--ink-soft);
+      line-height: 1.6;
+      margin-bottom: 6px;
+    }
+    .mod-mod4 .mod4-static li .mod4-static-tag {
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--ghost);
+      font-weight: 600;
+      margin-right: 6px;
+    }
+    .mod-mod4 .mod4-static p {
+      color: var(--ink-soft);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    /* When JS is active, hide static doc unless "Just read the words" chosen */
+    .mod-mod4.mod4-js .mod4-static { display: none; }
+    .mod-mod4.mod4-js.mod4-mode-words .mod4-static { display: block; }
+    .mod-mod4.mod4-js.mod4-mode-words .mod4-stage { display: none; }
+    .mod-mod4.mod4-js.mod4-mode-words .mod4-controls,
+    .mod-mod4.mod4-js.mod4-mode-words .mod4-meta { display: none; }
+
+    /* JS hides the gate after a choice; show stage instead */
+    .mod-mod4.mod4-js .mod4-stage,
+    .mod-mod4.mod4-js .mod4-controls,
+    .mod-mod4.mod4-js .mod4-meta,
+    .mod-mod4.mod4-js .mod4-witness { display: none; }
+    .mod-mod4.mod4-js.mod4-started .mod4-gate { display: none; }
+    .mod-mod4.mod4-js.mod4-started:not(.mod4-mode-words) .mod4-stage,
+    .mod-mod4.mod4-js.mod4-started:not(.mod4-mode-words) .mod4-controls,
+    .mod-mod4.mod4-js.mod4-started:not(.mod4-mode-words) .mod4-meta,
+    .mod-mod4.mod4-js.mod4-started:not(.mod4-mode-words) .mod4-witness { display: flex; }
+    .mod-mod4.mod4-js.mod4-started:not(.mod4-mode-words) .mod4-stage,
+    .mod-mod4.mod4-js.mod4-started:not(.mod4-mode-words) .mod4-witness { display: block; }
+
+    /* =====================================================
+       MOTION — opacity-as-meaning, no-motion-first.
+       Phrases default to fully present. Travel/fade only in
+       no-preference AND not(.calm) AND not(.mod4-paused).
+       ===================================================== */
+
+    /* Base (no-JS / reduced / calm): phrases hidden by JS state class,
+       shown instantly. Entered phrases full presence. */
+    .mod-mod4 .mod4-phrase[hidden],
+    .mod-mod4 .mod4-restore[hidden],
+    .mod-mod4 .mod4-rm-undo[hidden] { display: none !important; }
+
+    /* Default entered state = fully present (calm baseline). */
+    .mod-mod4 .mod4-phrase {
+      opacity: 1;
+      transform: none;
+      filter: none;
+      letter-spacing: normal;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .mod-mod4:not(.mod4-calm):not(.mod4-paused) .mod4-phrase.mod4-entering {
+        /* incoming self-blame uses the EXISTING .dissolve feel:
+           opacity 0.55 + blur 1.1px + letter-spacing 0.04em, then settles */
+        opacity: 0;
+        transform: translateY(10px);
+        filter: blur(1.1px);
+        letter-spacing: 0.04em;
+        transition:
+          opacity 800ms var(--ease-settle),
+          transform 800ms var(--ease-settle),
+          filter 800ms var(--ease-settle),
+          letter-spacing 800ms var(--ease-settle);
+      }
+      .mod-mod4:not(.mod4-calm):not(.mod4-paused) .mod4-phrase.mod4-entering.mod4-settled {
+        /* settled sediment: dimmed-but-legible, echoing .dissolve.in */
+        opacity: 0.92;
+        transform: translateY(0);
+        filter: blur(0.2px);
+        letter-spacing: normal;
+      }
+
+      .mod-mod4:not(.mod4-calm):not(.mod4-paused) .mod4-restore.mod4-entering {
+        opacity: 0;
+        transform: translateY(8px);
+        transition:
+          opacity 900ms var(--ease-settle),
+          transform 900ms var(--ease-settle);
+      }
+      .mod-mod4:not(.mod4-calm):not(.mod4-paused) .mod4-restore.mod4-entering.mod4-settled {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Calm / paused / reduced: collapse to instant, fully present. */
+    .mod-mod4.mod4-calm .mod4-phrase,
+    .mod-mod4.mod4-paused .mod4-phrase,
+    .mod-mod4.mod4-calm .mod4-restore,
+    .mod-mod4.mod4-paused .mod4-restore {
+      opacity: 1 !important;
+      transform: none !important;
+      filter: none !important;
+      letter-spacing: normal !important;
+      transition: none !important;
+    }
+    .mod-mod4.mod4-calm .mod4-field::before,
+    .mod-mod4.mod4-paused .mod4-field::before,
+    .mod-mod4.mod4-calm .mod4-valued::after {
+      transition: none !important;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .mod-mod4 .mod4-field::before,
+      .mod-mod4 .mod4-valued::after,
+      .mod-mod4 .mod4-phrase,
+      .mod-mod4 .mod4-restore {
+        transition: none !important;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .mod-mod4 .mod4-field { min-height: 300px; padding: 26px 16px 22px; }
+      .mod-mod4 .mod4-phrase { flex-wrap: wrap; }
+    }
+  </style>
+
+  <p class="mod4-kicker">Stage 2 · the weight that gathers</p>
+  <h2 class="mod4-h" id="mod4-heading">What it is like when self-blame settles</h2>
+  <p class="mod4-lede">
+    One valued sentence holds the centre. With each thought you read, a
+    self-blame voice settles into the field like sediment, and the light
+    around the valued line dims a single measured notch. The valued voice is
+    never erased — and a different voice can always be let in.
+  </p>
+
+  <!-- ===================== CONTENT-NOTE MICRO-GATE ===================== -->
+  <div class="mod4-gate" id="mod4-gate" role="group" aria-labelledby="mod4-gate-h">
+    <p class="mod4-gate-note" id="mod4-gate-h">
+      <strong>A gentle note.</strong> What follows voices a first responder's
+      self-blame — the perceived gap between what they felt they should have
+      done and what was possible. It is heavy, but non-graphic. You are a
+      consented witness here; you cannot fully know this. Choose how to enter.
+    </p>
+    <div class="mod4-doors">
+      <button type="button" class="mod4-door" id="mod4-door-sit" aria-pressed="false">
+        Sit with this
+        <span class="mod4-door-sub">read the thoughts one at a time</span>
+      </button>
+      <button type="button" class="mod4-door" id="mod4-door-all" aria-pressed="false">
+        Show it all at once, calmly
+        <span class="mod4-door-sub">the settled end-state, no motion</span>
+      </button>
+      <button type="button" class="mod4-door" id="mod4-door-words" aria-pressed="false">
+        Just read the words
+        <span class="mod4-door-sub">a plain ordered list</span>
+      </button>
+    </div>
+    <p class="mod4-gate-rm" id="mod4-rm-note" hidden>
+      Your device asks for reduced motion, so the calm, all-at-once view is
+      selected. <a href="#mod4-door-sit" id="mod4-rm-undo-link">Read it one
+      thought at a time instead</a>.
+    </p>
+  </div>
+
+  <!-- ===================== INTERACTIVE STAGE ===================== -->
+  <div class="mod4-stage" id="mod4-stage">
+    <div class="mod4-field" id="mod4-field">
+      <div class="mod4-valued">
+        <span class="mod4-valued-label">the voice that stays</span>
+        <span class="mod4-valued-line">"I am the one who helps."</span>
+      </div>
+
+      <div class="mod4-sediment" id="mod4-sediment" aria-label="Self-blame voices that have settled">
+        <p class="mod4-phrase" id="mod4-p1" hidden tabindex="-1">
+          <span class="mod4-phrase-tag">self-blame voice</span>
+          <span class="mod4-phrase-text">"…but I should have been faster."</span>
+        </p>
+        <p class="mod4-phrase" id="mod4-p2" hidden tabindex="-1">
+          <span class="mod4-phrase-tag">self-blame voice</span>
+          <span class="mod4-phrase-text">"…but it wasn't enough."</span>
+        </p>
+        <p class="mod4-phrase" id="mod4-p3" hidden tabindex="-1">
+          <span class="mod4-phrase-tag">self-blame voice</span>
+          <span class="mod4-phrase-text">"…but I keep going back to it."</span>
+        </p>
+
+        <div class="mod4-restore" id="mod4-restore" hidden tabindex="-1">
+          <p style="margin:0 0 4px;">
+            <span class="mod4-phrase-tag">restorative voice</span>
+          </p>
+          <p class="mod4-restore-text" style="margin:0;">
+            "You did what the moment allowed. You can carry this with others now."
+          </p>
+          <svg class="mod4-seam" id="mod4-seam" viewBox="0 0 600 10" preserveAspectRatio="none" aria-hidden="true">
+            <path id="mod4-seam-path" d="M2,8 C90,2 150,9 240,4 C330,-1 400,8 470,4 C530,1 575,6 598,3" />
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- persistent controls, same position every step -->
+    <div class="mod4-controls">
+      <button type="button" class="mod4-primary" id="mod4-next">Read the next thought</button>
+      <button type="button" class="mod4-secondary" id="mod4-pause" aria-pressed="false">Pause</button>
+      <button type="button" class="mod4-secondary" id="mod4-calm" aria-pressed="false">Calm view</button>
+      <button type="button" class="mod4-secondary" id="mod4-back">Back to the words.</button>
+    </div>
+
+    <div class="mod4-meta">
+      <span class="mod4-indicator" id="mod4-indicator" aria-hidden="true">thought 0 of 4</span>
+      <span class="mod4-caption">These are perceived failures, not verdicts.</span>
+    </div>
+
+    <p class="mod4-witness">
+      Failing, here, is the gap between what they felt they should have done
+      and what was possible — never a verdict on the person. The valued voice
+      stays present throughout, and a restorative voice is always within reach,
+      so no one is left stranded in this stage.
+    </p>
+  </div>
+
+  <!-- live region for screen readers -->
+  <div class="mod4-sr" id="mod4-live" aria-live="polite" role="status"></div>
+
+  <!-- ===================== STATIC, NO-JS DOCUMENT ===================== -->
+  <div class="mod4-static" id="mod4-static">
+    <h3>The same arc, in plain words</h3>
+    <p class="mod4-static-valued">The valued voice, which never disappears: "I am the one who helps."</p>
+    <p style="margin-top:0;">Three self-blame voices that settle, in order:</p>
+    <ol>
+      <li><span class="mod4-static-tag">self-blame voice</span> "…but I should have been faster."</li>
+      <li><span class="mod4-static-tag">self-blame voice</span> "…but it wasn't enough."</li>
+      <li><span class="mod4-static-tag">self-blame voice</span> "…but I keep going back to it."</li>
+    </ol>
+    <p>Then a different voice is let in:</p>
+    <ol start="4">
+      <li><span class="mod4-static-tag">restorative voice</span> "You did what the moment allowed. You can carry this with others now."</li>
+    </ol>
+    <p>
+      These are perceived failures, not verdicts — the gap between what a
+      responder felt they should have done and what was possible. The valued
+      voice is never deleted, and the restorative voice is the bridge into the
+      four-stage model that follows.
+    </p>
+    <noscript>
+      <p style="color:var(--ghost);font-style:italic;">
+        (This is the full content; the interactive version simply reveals these
+        same words one at a time. Nothing is hidden without JavaScript.)
+      </p>
+    </noscript>
+  </div>
+
+  <script>
+  (function () {
+    "use strict";
+
+    var root = document.getElementById("mod4-root");
+    if (!root) return;
+
+    // Mark JS active so CSS switches from static-first to interactive.
+    root.classList.add("mod4-js");
+
+    var STORAGE_KEY = "mi-calm";
+
+    var doorSit   = document.getElementById("mod4-door-sit");
+    var doorAll   = document.getElementById("mod4-door-all");
+    var doorWords = document.getElementById("mod4-door-words");
+    var rmNote    = document.getElementById("mod4-rm-note");
+    var rmUndo    = document.getElementById("mod4-rm-undo-link");
+
+    var field     = document.getElementById("mod4-field");
+    var nextBtn   = document.getElementById("mod4-next");
+    var pauseBtn  = document.getElementById("mod4-pause");
+    var calmBtn   = document.getElementById("mod4-calm");
+    var backBtn   = document.getElementById("mod4-back");
+    var indicator = document.getElementById("mod4-indicator");
+    var live      = document.getElementById("mod4-live");
+    var seamPath  = document.getElementById("mod4-seam-path");
+
+    var phrases = [
+      { el: document.getElementById("mod4-p1"), text: "I should have been faster" },
+      { el: document.getElementById("mod4-p2"), text: "it wasn't enough" },
+      { el: document.getElementById("mod4-p3"), text: "I keep going back to it" }
+    ];
+    var restore = document.getElementById("mod4-restore");
+
+    var TOTAL_STEPS = 4;   // 3 self-blame + 1 restorative handoff
+    var DIM_NOTCH = 0.06;  // per self-blame phrase; 3 * 0.06 = 0.18 max
+
+    var step = 0;          // 0..3 (3 = restoration revealed)
+    var paused = false;
+
+    /* ---------- Calm state (shares the site-wide mi-calm flag) ---------- */
+    function readCalm() {
+      // Prefer the live page class set by the global toggle; fall back to flag.
+      if (document.body.classList.contains("calm")) return true;
+      try { return localStorage.getItem(STORAGE_KEY) === "1"; } catch (e) { return false; }
+    }
+    function applyCalmVisual(on) {
+      root.classList.toggle("mod4-calm", on);
+      calmBtn.setAttribute("aria-pressed", on ? "true" : "false");
+    }
+    function setCalm(on) {
+      // Drive the same global flag + body class the rest of the site uses,
+      // so the existing global Calm toggle stays in sync.
+      document.body.classList.toggle("calm", on);
+      try { localStorage.setItem(STORAGE_KEY, on ? "1" : "0"); } catch (e) {}
+      applyCalmVisual(on);
+    }
+
+    var prefersReduced = window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function noMotion() { return prefersReduced || readCalm() || paused; }
+
+    /* ---------- The field dim (single custom property) ---------- */
+    function setDim(notches) {
+      field.style.setProperty("--mod4-dim", (notches * DIM_NOTCH).toFixed(3));
+    }
+
+    /* ---------- Reveal a phrase as settling sediment ---------- */
+    function revealPhrase(p, announce) {
+      var el = p.el;
+      el.hidden = false;
+      el.setAttribute("tabindex", "0");
+
+      if (noMotion()) {
+        el.classList.remove("mod4-entering");
+      } else {
+        el.classList.add("mod4-entering");
+        // held stillness, then a pure-opacity settle (THE KNOT cadence)
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            el.classList.add("mod4-settled");
+          });
+        });
+      }
+      if (announce) {
+        live.textContent = "A self-blame voice enters: " + p.text + ".";
+      }
+    }
+
+    function revealRestore(announce) {
+      restore.hidden = false;
+      restore.setAttribute("tabindex", "0");
+      if (noMotion()) {
+        restore.classList.remove("mod4-entering");
+        drawSeam(true);
+      } else {
+        restore.classList.add("mod4-entering");
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            restore.classList.add("mod4-settled");
+            drawSeam(false);
+          });
+        });
+      }
+      if (announce) {
+        live.textContent = "A different voice enters: a restorative voice. " +
+          "You did what the moment allowed. You can carry this with others now.";
+      }
+    }
+
+    /* the single reserved animation: the kintsugi seam, drawn + left visible */
+    function drawSeam(instant) {
+      if (!seamPath) return;
+      try {
+        var len = seamPath.getTotalLength();
+        seamPath.style.strokeDasharray = len;
+        if (instant || noMotion()) {
+          seamPath.style.transition = "none";
+          seamPath.style.strokeDashoffset = "0";
+          return;
+        }
+        seamPath.style.strokeDashoffset = len;
+        seamPath.style.transition = "stroke-dashoffset 700ms cubic-bezier(0.16,1,0.3,1)";
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            seamPath.style.strokeDashoffset = "0";
+          });
+        });
+      } catch (e) {
+        seamPath.style.strokeDashoffset = "0";
+      }
+    }
+
+    /* ---------- Update the honest indicator + button label ---------- */
+    function updateUI() {
+      indicator.textContent = "thought " + step + " of " + TOTAL_STEPS;
+      if (step < phrases.length) {
+        nextBtn.textContent = "Read the next thought";
+        nextBtn.classList.remove("mod4-is-restore");
+        nextBtn.disabled = false;
+      } else if (step === phrases.length) {
+        // all self-blame gathered -> handoff button
+        nextBtn.textContent = "Let a different voice in";
+        nextBtn.classList.add("mod4-is-restore");
+        nextBtn.disabled = false;
+      } else {
+        nextBtn.textContent = "A different voice is here";
+        nextBtn.classList.remove("mod4-is-restore");
+        nextBtn.disabled = true;
+      }
+    }
+
+    /* ---------- Advance exactly one idea per press ---------- */
+    function advance() {
+      if (step < phrases.length) {
+        revealPhrase(phrases[step], true);
+        step++;
+        setDim(Math.min(step, phrases.length)); // dim one notch per phrase
+        updateUI();
+        focusLatest();
+      } else if (step === phrases.length) {
+        // the handoff: let a different voice in -> overlay lifts/warms
+        revealRestore(true);
+        setDim(0.4); // luminance lifts toward warmth (overlay nearly gone)
+        step++;
+        updateUI();
+        focusRestore();
+      }
+    }
+
+    function focusLatest() {
+      var el = phrases[step - 1] && phrases[step - 1].el;
+      if (el && !prefersReduced) {
+        // move focus gently to the new sediment so keyboard users land on it
+        el.focus({ preventScroll: false });
+      }
+    }
+    function focusRestore() {
+      if (restore && !prefersReduced) restore.focus({ preventScroll: false });
+    }
+
+    /* ---------- Render whole end-state at once (calm door / reset) ---------- */
+    function renderAll(announce) {
+      for (var i = 0; i < phrases.length; i++) {
+        phrases[i].el.hidden = false;
+        phrases[i].el.setAttribute("tabindex", "0");
+        phrases[i].el.classList.remove("mod4-entering", "mod4-settled");
+      }
+      restore.hidden = false;
+      restore.setAttribute("tabindex", "0");
+      restore.classList.remove("mod4-entering", "mod4-settled");
+      step = TOTAL_STEPS;
+      setDim(0.4);
+      drawSeam(true);
+      updateUI();
+      if (announce) {
+        live.textContent = "Showing the full settled state: three self-blame " +
+          "voices, and the restorative voice that answers them, all present.";
+      }
+    }
+
+    function resetStage(announce) {
+      step = 0;
+      for (var i = 0; i < phrases.length; i++) {
+        phrases[i].el.hidden = true;
+        phrases[i].el.setAttribute("tabindex", "-1");
+        phrases[i].el.classList.remove("mod4-entering", "mod4-settled");
+      }
+      restore.hidden = true;
+      restore.setAttribute("tabindex", "-1");
+      restore.classList.remove("mod4-entering", "mod4-settled");
+      setDim(0);
+      if (seamPath) {
+        try {
+          var len = seamPath.getTotalLength();
+          seamPath.style.transition = "none";
+          seamPath.style.strokeDasharray = len;
+          seamPath.style.strokeDashoffset = len;
+        } catch (e) {}
+      }
+      updateUI();
+      if (announce) {
+        live.textContent = "Returned to the words. The field is clear again, " +
+          "with the valued voice at its centre.";
+      }
+    }
+
+    /* ---------- Door selection ---------- */
+    function pressDoor(active) {
+      [doorSit, doorAll, doorWords].forEach(function (d) {
+        d.setAttribute("aria-pressed", d === active ? "true" : "false");
+      });
+    }
+
+    function chooseSit() {
+      pressDoor(doorSit);
+      root.classList.remove("mod4-mode-words");
+      root.classList.add("mod4-started");
+      resetStage(false);
+      live.textContent = "Sitting with this. Press the button to read each thought.";
+      nextBtn.focus();
+    }
+    function chooseAll() {
+      pressDoor(doorAll);
+      root.classList.remove("mod4-mode-words");
+      root.classList.add("mod4-started");
+      renderAll(true);
+      nextBtn.focus();
+    }
+    function chooseWords() {
+      pressDoor(doorWords);
+      root.classList.add("mod4-mode-words", "mod4-started");
+      live.textContent = "Showing the plain list of words.";
+    }
+
+    doorSit.addEventListener("click", chooseSit);
+    doorAll.addEventListener("click", chooseAll);
+    doorWords.addEventListener("click", chooseWords);
+
+    /* ---------- Controls ---------- */
+    nextBtn.addEventListener("click", advance);
+
+    pauseBtn.addEventListener("click", function () {
+      paused = !paused;
+      root.classList.toggle("mod4-paused", paused);
+      pauseBtn.setAttribute("aria-pressed", paused ? "true" : "false");
+      pauseBtn.textContent = paused ? "Resume" : "Pause";
+      live.textContent = paused
+        ? "Paused. Nothing will move; the button still works when you are ready."
+        : "Resumed.";
+    });
+
+    calmBtn.addEventListener("click", function () {
+      setCalm(!readCalm());
+      live.textContent = readCalm()
+        ? "Calm view on. Motion is off; everything is shown steadily."
+        : "Calm view off.";
+    });
+
+    backBtn.addEventListener("click", function () {
+      resetStage(true);
+      nextBtn.focus();
+    });
+
+    /* ---------- reduced-motion / calm pre-selection ---------- */
+    if (prefersReduced) {
+      rmNote.hidden = false;
+      // pre-select the calm all-at-once path, with an announced undo
+      chooseAll();
+      live.textContent = "Reduced motion is on, so the calm all-at-once view " +
+        "is selected. You can choose to read it one thought at a time instead.";
+    }
+    rmUndo.addEventListener("click", function (e) {
+      e.preventDefault();
+      chooseSit();
+    });
+
+    /* keep our calm visual in sync if the global toggle changes it */
+    applyCalmVisual(readCalm());
+    window.addEventListener("storage", function (e) {
+      if (e.key === STORAGE_KEY) applyCalmVisual(readCalm());
+    });
+    if ("MutationObserver" in window) {
+      new MutationObserver(function () {
+        applyCalmVisual(readCalm());
+      }).observe(document.body, { attributes: true, attributeFilter: ["class"] });
+    }
+
+    // initialize UI label/indicator
+    updateUI();
+  })();
+  </script>
+</section>
     </div>
   </section>
 
@@ -633,6 +3044,1352 @@
         <h2 id="h-model" class="reveal" style="font-family:var(--serif);font-weight:600;font-size:clamp(24px,4vw,28px);margin:0 0 28px;">A four-stage model of moral injury</h2>
         <p class="reveal">Drawing these threads together, the study proposes a model of moral injury as a dynamic, ongoing dialogical process — captured in four stages. In Stage 1, core identities encounter conflicting internal voices: the helper, professional, and caregiver positions meet opposing voices of guilt and self-criticism. In Stage 2, these conflicts give rise to shame, guilt, and self-blame, to a loss of meaning, and to social withdrawal — the constriction of self that follows when self-condemning voices dominate.</p>
         <p class="reveal">In Stage 3, restorative voices intervene: peer support, therapy, mindfulness, and community begin to enter the inner conversation. In Stage 4, identity is reconstructed — meaning is rebuilt and a coherent sense of self is gradually restored. Importantly, restoration does not mean erasing the event or silencing the difficult voices. It means introducing supportive voices that can sit alongside them, so the guilty voice can be answered rather than left to rule alone. Because this is an ongoing process rather than a finish line, the model holds both the depth of the injury and the genuine possibility of repair.</p>
+
+        <!-- ============================================================
+             mod3 — The Signal You Cannot Restart (interactive figure)
+             ============================================================ -->
+<section class="mod-mod3" id="mod3-root" aria-labelledby="mod3-title" aria-describedby="mod3-intro">
+  <style>
+  /* ============================================================
+     mod3 — The Signal You Cannot Restart
+     Scoped, no-motion-first, extends the hospital/ghosting system.
+     ============================================================ */
+  .mod-mod3 {
+    /* shared easing + duration system (added once, scoped) */
+    --mod3-ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
+    --mod3-ease-withdraw: cubic-bezier(0.4, 0, 1, 1);
+    --mod3-dur-settle: 800ms;
+    --mod3-dur-withdraw: 600ms;
+    --mod3-dur-scene: 1100ms;
+    /* two EARNED restorative accents — only used in stage 3->4 beats */
+    --mod3-restore-gold: #B08A3E;
+    --mod3-restore-sage: #8C9B82;
+
+    margin: 40px auto 8px;
+    max-width: var(--col, 720px);
+    padding: 0;
+  }
+
+  .mod-mod3 *,
+  .mod-mod3 *::before,
+  .mod-mod3 *::after { box-sizing: border-box; }
+
+  .mod3-fig {
+    border: 1px solid var(--hairline, #E4E4E1);
+    border-radius: 6px;
+    background: var(--surface, #FFFFFF);
+    padding: 22px 22px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  @media (min-width: 700px) {
+    .mod3-fig { padding: 28px 28px 24px; }
+  }
+
+  /* cool-grey "loss" overlay: dimmer/cooler in conflict, lifts in restoration.
+     Sits above the figure but BELOW text/controls (which are z-raised). */
+  .mod3-overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--mist, #9AA0A6);
+    opacity: 0;
+    pointer-events: none;
+    border-radius: 6px;
+    z-index: 1;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .mod-mod3:not(.mod3-calm) .mod3-overlay {
+      transition: opacity var(--mod3-dur-scene) var(--mod3-ease-withdraw);
+    }
+  }
+
+  .mod3-fig > * { position: relative; z-index: 2; }
+
+  /* ---- header row ---- */
+  .mod3-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px 16px;
+    margin: 0 0 4px;
+  }
+  .mod3-kicker {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mist, #9AA0A6);
+    margin: 0;
+  }
+  .mod3-counter {
+    font-family: var(--serif);
+    font-size: 13.5px;
+    color: var(--ghost, #6B7178);
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .mod3-title {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(19px, 3.4vw, 22px);
+    line-height: 1.28;
+    color: var(--ink, #1A1C1E);
+    margin: 6px 0 2px;
+    letter-spacing: -0.01em;
+  }
+  .mod3-witness {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14.5px;
+    color: var(--ink-soft, #4A4E54);
+    margin: 0 0 16px;
+    max-width: 56ch;
+  }
+
+  /* ---- the signal stage ---- */
+  .mod3-stage {
+    position: relative;
+    border: 1px solid var(--hairline, #E4E4E1);
+    border-radius: 5px;
+    background: var(--paper, #FAFAF8);
+    padding: 14px 12px 12px;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .mod-mod3:not(.mod3-calm) .mod3-stage {
+      transition: border-color var(--mod3-dur-scene) var(--mod3-ease-settle),
+                  background var(--mod3-dur-scene) var(--mod3-ease-settle);
+    }
+  }
+  .mod-mod3[data-mod3-stage="4"] .mod3-stage {
+    border-color: var(--mod3-restore-gold, #B08A3E);
+  }
+
+  .mod3-svgwrap { position: relative; width: 100%; }
+  .mod3-svg { display: block; width: 100%; height: auto; }
+
+  /* reuse hero motif stroke styling */
+  .mod3-line {
+    fill: none;
+    stroke: var(--mist, #9AA0A6);
+    stroke-width: 1.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .mod-mod3:not(.mod3-calm) .mod3-line {
+      transition: stroke var(--mod3-dur-scene) var(--mod3-ease-settle);
+    }
+  }
+  /* sibling restorative traces (faint, sage) */
+  .mod3-sib {
+    fill: none;
+    stroke: var(--mod3-restore-sage, #8C9B82);
+    stroke-width: 1.1;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .mod-mod3:not(.mod3-calm) .mod3-sib {
+      transition: opacity 750ms var(--mod3-ease-settle);
+    }
+  }
+  .mod3-sib.mod3-on { opacity: 0.5; }
+  .mod-mod3.mod3-calm .mod3-sib.mod3-on { opacity: 0.5; }
+
+  /* kintsugi gold seam — single earned accent, stage 4 only */
+  .mod3-seam {
+    fill: none;
+    stroke: var(--mod3-restore-gold, #B08A3E);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0;
+  }
+  .mod3-seam.mod3-on { opacity: 0.92; }
+
+  /* crest voice nodes (stage 1) */
+  .mod3-crest {
+    cursor: pointer;
+    pointer-events: auto;
+  }
+  .mod3-crest .mod3-dot {
+    fill: var(--surface, #FFFFFF);
+    stroke: var(--accent, #5B6B7A);
+    stroke-width: 1.4;
+  }
+  .mod3-crest .mod3-ctxt {
+    font-family: var(--serif);
+    font-size: 11px;
+    fill: var(--ink-soft, #4A4E54);
+  }
+  .mod3-crest:focus-visible { outline: none; }
+  .mod3-crest:focus-visible .mod3-dot,
+  .mod3-crest:hover .mod3-dot {
+    fill: var(--accent, #5B6B7A);
+  }
+  .mod3-crest:focus-visible .mod3-ring {
+    stroke: var(--accent, #5B6B7A);
+    stroke-width: 1.4;
+    fill: none;
+    opacity: 1;
+  }
+  .mod3-ring { opacity: 0; }
+
+  /* line-state caption under the svg */
+  .mod3-state {
+    min-height: 1.5em;
+    margin: 8px 2px 0;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--ink-soft, #4A4E54);
+  }
+
+  /* ---- the stage body / prose ---- */
+  .mod3-body {
+    margin: 16px 2px 0;
+  }
+  .mod3-sname {
+    font-family: var(--sans);
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--mist, #9AA0A6);
+    margin: 0 0 6px;
+  }
+  .mod-mod3[data-mod3-stage="4"] .mod3-sname { color: var(--mod3-restore-gold, #B08A3E); }
+  .mod3-stitle {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.3;
+    color: var(--ink, #1A1C1E);
+    margin: 0 0 8px;
+  }
+  .mod3-sdesc {
+    font-size: 15.5px;
+    line-height: 1.55;
+    color: var(--ink-soft, #4A4E54);
+    margin: 0;
+    max-width: 60ch;
+  }
+
+  /* consented line revealed by focusing a crest */
+  .mod3-consent {
+    margin: 12px 2px 0;
+    min-height: 1.4em;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ghost, #6B7178);
+    border-left: 1px solid var(--hairline-strong, #CFCFCB);
+    padding-left: 14px;
+    opacity: 0;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .mod-mod3:not(.mod3-calm) .mod3-consent {
+      transition: opacity 750ms var(--mod3-ease-settle);
+    }
+  }
+  .mod3-consent.mod3-on { opacity: 1; }
+  .mod-mod3.mod3-calm .mod3-consent.mod3-on { opacity: 1; transition: none; }
+
+  /* ---- knot panel (stage 2) ---- */
+  .mod3-knot {
+    margin: 14px 2px 0;
+    display: none;
+  }
+  .mod-mod3[data-mod3-stage="2"] .mod3-knot { display: block; }
+
+  .mod3-steady {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink, #1A1C1E);
+    background: var(--surface, #FFFFFF);
+    border: 1px solid var(--hairline-strong, #CFCFCB);
+    border-radius: 4px;
+    padding: 11px 18px;
+    cursor: pointer;
+    transition: border-color 200ms ease, background 200ms ease;
+  }
+  .mod3-steady:hover { border-color: var(--accent, #5B6B7A); background: var(--paper, #FAFAF8); }
+  .mod3-steady .mod3-steady-dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--mod3-restore-sage, #8C9B82);
+    flex: 0 0 auto;
+  }
+
+  .mod3-crossed {
+    margin: 14px 2px 2px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px 12px;
+  }
+  .mod3-crossed-label {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--mist, #9AA0A6);
+  }
+  .mod3-wish {
+    font-family: var(--serif);
+    font-size: 16px;
+    color: var(--ghost, #6B7178);
+    text-decoration: line-through;
+    text-decoration-color: var(--mist, #9AA0A6);
+    cursor: not-allowed;
+    background: none;
+    border: 0;
+    padding: 0;
+    position: relative;
+  }
+  .mod3-wish:focus-visible {
+    outline: 2px solid var(--accent, #5B6B7A);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  .mod3-wish-note {
+    display: block;
+    margin-top: 4px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 13.5px;
+    color: var(--mist, #9AA0A6);
+    opacity: 0;
+    max-width: 48ch;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .mod-mod3:not(.mod3-calm) .mod3-wish-note {
+      transition: opacity var(--mod3-dur-withdraw) var(--mod3-ease-settle);
+    }
+  }
+  .mod3-wish:focus-visible .mod3-wish-note,
+  .mod3-wish:hover .mod3-wish-note { opacity: 1; }
+
+  /* the faint opposing "but..." — signature knot fade */
+  .mod3-but {
+    margin: 12px 2px 0;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--mist, #9AA0A6);
+    opacity: 0;
+  }
+  .mod3-but::before { content: "but "; }
+  @media (prefers-reduced-motion: no-preference) {
+    .mod-mod3:not(.mod3-calm) .mod3-but {
+      transition: opacity 800ms linear;
+    }
+  }
+  .mod3-but.mod3-on { opacity: 1; }
+  .mod-mod3.mod3-calm .mod3-but.mod3-on { opacity: 1; transition: none; }
+
+  /* ---- invite panel (stage 3) ---- */
+  .mod3-invite {
+    margin: 14px 2px 0;
+    display: none;
+  }
+  .mod-mod3[data-mod3-stage="3"] .mod3-invite { display: block; }
+  .mod3-invitebtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink, #1A1C1E);
+    background: var(--surface, #FFFFFF);
+    border: 1px solid var(--mod3-restore-sage, #8C9B82);
+    border-radius: 4px;
+    padding: 11px 18px;
+    cursor: pointer;
+    transition: border-color 200ms ease, background 200ms ease, opacity 200ms ease;
+  }
+  .mod3-invitebtn:hover { background: var(--paper, #FAFAF8); }
+  .mod3-invitebtn[disabled] {
+    cursor: default;
+    opacity: 0.5;
+    border-color: var(--hairline-strong, #CFCFCB);
+  }
+  .mod3-invitebtn .mod3-leaf {
+    width: 9px; height: 9px; border-radius: 50% 0 50% 50%;
+    background: var(--mod3-restore-sage, #8C9B82);
+    flex: 0 0 auto;
+  }
+  .mod3-voicelist {
+    list-style: none;
+    margin: 14px 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .mod3-voicelist li {
+    font-family: var(--serif);
+    font-size: 14.5px;
+    color: var(--ghost, #6B7178);
+    border: 1px solid var(--hairline, #E4E4E1);
+    background: var(--paper, #FAFAF8);
+    border-radius: 3px;
+    padding: 6px 12px;
+    opacity: 0;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .mod-mod3:not(.mod3-calm) .mod3-voicelist li {
+      transition: opacity 750ms var(--mod3-ease-settle), color 750ms var(--mod3-ease-settle), border-color 750ms var(--mod3-ease-settle);
+    }
+  }
+  .mod3-voicelist li.mod3-on {
+    opacity: 1;
+    color: var(--ink-soft, #4A4E54);
+    border-color: var(--mod3-restore-sage, #8C9B82);
+  }
+  .mod-mod3.mod3-calm .mod3-voicelist li.mod3-on { opacity: 1; transition: none; }
+
+  /* ---- nav row ---- */
+  .mod3-nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin: 22px 2px 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--hairline, #E4E4E1);
+  }
+  .mod3-btn {
+    font-family: var(--sans);
+    font-size: 14.5px;
+    font-weight: 500;
+    color: var(--ink-soft, #4A4E54);
+    background: var(--surface, #FFFFFF);
+    border: 1px solid var(--hairline-strong, #CFCFCB);
+    border-radius: 4px;
+    padding: 9px 16px;
+    cursor: pointer;
+    transition: border-color 200ms ease, color 200ms ease, opacity 200ms ease;
+  }
+  .mod3-btn:hover { border-color: var(--accent, #5B6B7A); color: var(--ink, #1A1C1E); }
+  .mod3-btn-primary {
+    color: var(--surface, #FFFFFF);
+    background: var(--accent, #5B6B7A);
+    border-color: var(--accent, #5B6B7A);
+  }
+  .mod3-btn-primary:hover { color: var(--surface, #FFFFFF); opacity: 0.92; }
+  .mod3-btn[disabled] {
+    cursor: default;
+    opacity: 0.4;
+    border-color: var(--hairline, #E4E4E1);
+  }
+  .mod3-btn[disabled]:hover { color: var(--ink-soft, #4A4E54); }
+  .mod3-nav-spacer { flex: 1 1 auto; }
+
+  .mod3-link {
+    font-family: var(--sans);
+    font-size: 13.5px;
+    color: var(--accent, #5B6B7A);
+    background: none;
+    border: 0;
+    border-bottom: 1px solid var(--hairline-strong, #CFCFCB);
+    padding: 0 0 1px;
+    cursor: pointer;
+    transition: border-color 200ms ease;
+  }
+  .mod3-link:hover { border-color: var(--accent, #5B6B7A); }
+
+  /* progress ticks */
+  .mod3-ticks {
+    display: flex;
+    gap: 6px;
+    margin: 14px 2px 0;
+  }
+  .mod3-tick {
+    height: 3px;
+    flex: 1 1 0;
+    border-radius: 2px;
+    background: var(--hairline, #E4E4E1);
+  }
+  .mod3-tick.mod3-done { background: var(--mist, #9AA0A6); }
+  .mod3-tick.mod3-cur { background: var(--accent, #5B6B7A); }
+  .mod-mod3[data-mod3-stage="4"] .mod3-tick.mod3-cur { background: var(--mod3-restore-gold, #B08A3E); }
+
+  /* ---- read-only text equivalent ---- */
+  .mod3-read {
+    margin: 18px 2px 0;
+    border-top: 1px solid var(--hairline, #E4E4E1);
+    padding-top: 18px;
+  }
+  .mod3-read[hidden] { display: none; }
+  .mod3-read h3 {
+    font-family: var(--serif);
+    font-size: 17px;
+    margin: 0 0 12px;
+    color: var(--ink, #1A1C1E);
+  }
+  .mod3-read dl { margin: 0; }
+  .mod3-read dt {
+    font-family: var(--sans);
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--mist, #9AA0A6);
+    margin: 14px 0 4px;
+  }
+  .mod3-read dd {
+    margin: 0;
+    font-size: 15.5px;
+    line-height: 1.55;
+    color: var(--ink-soft, #4A4E54);
+    max-width: 64ch;
+  }
+  .mod3-read .mod3-read-lines {
+    margin: 16px 0 0;
+    padding: 14px 16px;
+    border: 1px solid var(--hairline, #E4E4E1);
+    border-radius: 4px;
+    background: var(--paper, #FAFAF8);
+  }
+  .mod3-read .mod3-read-lines p {
+    margin: 0 0 10px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ghost, #6B7178);
+  }
+  .mod3-read .mod3-read-lines p:last-child { margin-bottom: 0; }
+
+  /* ---- take a break overlay ---- */
+  .mod3-break {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    background: var(--surface, #FFFFFF);
+    border-radius: 6px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 32px 26px;
+  }
+  .mod3-break.mod3-open { display: flex; }
+  .mod3-break h3 {
+    font-family: var(--serif);
+    font-size: 20px;
+    margin: 0 0 10px;
+    color: var(--ink, #1A1C1E);
+  }
+  .mod3-break p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-soft, #4A4E54);
+    margin: 0 0 14px;
+    max-width: 46ch;
+  }
+  .mod3-break a { color: var(--accent, #5B6B7A); border-bottom: 1px solid var(--hairline-strong, #CFCFCB); text-decoration: none; }
+  .mod3-break a:hover { border-bottom-color: var(--accent, #5B6B7A); }
+  .mod3-breath {
+    width: 64px; height: 64px; border-radius: 50%;
+    border: 1px solid var(--mod3-restore-sage, #8C9B82);
+    margin: 0 0 18px;
+    transform: scale(0.82);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .mod-mod3:not(.mod3-calm) .mod3-break.mod3-open .mod3-breath {
+      animation: mod3-breathe 5500ms ease-in-out infinite;
+    }
+  }
+  @keyframes mod3-breathe {
+    0%, 100% { transform: scale(0.82); opacity: 0.55; }
+    50% { transform: scale(1.05); opacity: 1; }
+  }
+  .mod3-break-close {
+    margin-top: 6px;
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--ink-soft, #4A4E54);
+    background: var(--surface, #FFFFFF);
+    border: 1px solid var(--hairline-strong, #CFCFCB);
+    border-radius: 4px;
+    padding: 9px 16px;
+    cursor: pointer;
+  }
+  .mod3-break-close:hover { border-color: var(--accent, #5B6B7A); }
+
+  .mod3-breakbtn {
+    position: absolute;
+    top: 14px; right: 14px;
+    z-index: 5;
+    font-family: var(--sans);
+    font-size: 12.5px;
+    color: var(--ink-soft, #4A4E54);
+    background: var(--surface, #FFFFFF);
+    border: 1px solid var(--hairline-strong, #CFCFCB);
+    border-radius: 3px;
+    padding: 6px 11px;
+    cursor: pointer;
+  }
+  .mod3-breakbtn:hover { border-color: var(--accent, #5B6B7A); color: var(--ink, #1A1C1E); }
+
+  .mod3-sr {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* focus ring consistent with site */
+  .mod-mod3 :focus-visible {
+    outline: 2px solid var(--accent, #5B6B7A);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  </style>
+
+  <div class="mod3-fig" id="mod3-fig">
+
+    <button type="button" class="mod3-breakbtn" id="mod3-breakbtn" aria-haspopup="dialog">Take a break</button>
+
+    <div class="mod3-overlay" id="mod3-overlay" aria-hidden="true"></div>
+
+    <div class="mod3-head">
+      <p class="mod3-kicker">Figure 1 &middot; the signal</p>
+      <p class="mod3-counter" id="mod3-counter" aria-hidden="true">Stage 1 of 4</p>
+    </div>
+    <h3 class="mod3-title" id="mod3-title">The signal you cannot restart</h3>
+    <p class="mod3-witness" id="mod3-intro">You watch over the signal. You do not have to fix it &mdash; only stay with it, one stage at a time, at your own pace.</p>
+
+    <!-- aria-live region for step announcements -->
+    <p class="mod3-sr" id="mod3-live" aria-live="polite"></p>
+
+    <!-- the figure -->
+    <div class="mod3-stage">
+      <div class="mod3-svgwrap">
+        <svg class="mod3-svg" id="mod3-svg" viewBox="0 0 560 150" role="img"
+             aria-labelledby="mod3-svgtitle mod3-svgdesc" preserveAspectRatio="xMidYMid meet">
+          <title id="mod3-svgtitle">A pulse line moving through four states</title>
+          <desc id="mod3-svgdesc">A steady line that draws itself, then falters with a dropped beat and a slow tremor, then steadies as supportive traces join it, and finally resolves into a new, calmer waveform with a single thin gold seam tracing the place where it once broke.</desc>
+
+          <!-- faint restorative sibling traces (stage 3+) -->
+          <path class="mod3-sib" id="mod3-sib1" d="" aria-hidden="true" />
+          <path class="mod3-sib" id="mod3-sib2" d="" aria-hidden="true" />
+          <path class="mod3-sib" id="mod3-sib3" d="" aria-hidden="true" />
+
+          <!-- the main pulse line -->
+          <path class="mod3-line" id="mod3-path" d="" aria-hidden="true" />
+
+          <!-- kintsugi gold seam (stage 4 only) -->
+          <path class="mod3-seam" id="mod3-seam" d="" aria-hidden="true" />
+
+          <!-- crest voice nodes, stage 1 -->
+          <g id="mod3-crests" aria-hidden="false"></g>
+        </svg>
+      </div>
+      <p class="mod3-state" id="mod3-state" aria-live="polite"></p>
+    </div>
+
+    <!-- consented line (stage 1, on crest focus) -->
+    <p class="mod3-consent" id="mod3-consent" aria-live="polite"></p>
+
+    <!-- stage prose -->
+    <div class="mod3-body">
+      <p class="mod3-sname" id="mod3-sname">Stage 1</p>
+      <h4 class="mod3-stitle" id="mod3-stitle">Conflict of voices</h4>
+      <p class="mod3-sdesc" id="mod3-sdesc"></p>
+    </div>
+
+    <!-- stage 2: the knot -->
+    <div class="mod3-knot" id="mod3-knotpanel">
+      <button type="button" class="mod3-steady" id="mod3-steady">
+        <span class="mod3-steady-dot" aria-hidden="true"></span>
+        Steady the line
+      </button>
+      <div class="mod3-crossed">
+        <span class="mod3-crossed-label">the path that was wished for:</span>
+        <button type="button" class="mod3-wish" id="mod3-wish" aria-disabled="true">
+          act in time, hold the line
+          <span class="mod3-wish-note">there wasn&rsquo;t time / this wasn&rsquo;t mine to give</span>
+        </button>
+      </div>
+      <p class="mod3-but" id="mod3-but">it was never a line one person could have held alone.</p>
+    </div>
+
+    <!-- stage 3: invite -->
+    <div class="mod3-invite" id="mod3-invitepanel">
+      <button type="button" class="mod3-invitebtn" id="mod3-invite">
+        <span class="mod3-leaf" aria-hidden="true"></span>
+        When you&rsquo;re ready, invite a voice in
+      </button>
+      <ul class="mod3-voicelist" id="mod3-voicelist" aria-label="Restorative voices invited into the conversation">
+        <li data-mod3-v="0">peer support &mdash; &ldquo;me too&rdquo;</li>
+        <li data-mod3-v="1">therapy &mdash; a compassionate question</li>
+        <li data-mod3-v="2">community &amp; meaning &mdash; you still count</li>
+      </ul>
+    </div>
+
+    <!-- progress ticks -->
+    <div class="mod3-ticks" id="mod3-ticks" aria-hidden="true">
+      <span class="mod3-tick"></span><span class="mod3-tick"></span>
+      <span class="mod3-tick"></span><span class="mod3-tick"></span>
+    </div>
+
+    <!-- navigation -->
+    <div class="mod3-nav">
+      <button type="button" class="mod3-btn" id="mod3-prev" disabled>Back</button>
+      <button type="button" class="mod3-btn mod3-btn-primary" id="mod3-next">Continue when you are ready</button>
+      <span class="mod3-nav-spacer"></span>
+      <button type="button" class="mod3-link" id="mod3-readtoggle" aria-expanded="false" aria-controls="mod3-read">Read the findings instead</button>
+    </div>
+
+    <!-- read-only text equivalent -->
+    <div class="mod3-read" id="mod3-read" hidden>
+      <h3>The four stages, in full</h3>
+      <dl>
+        <dt>Stage 1 &mdash; Conflict of voices</dt>
+        <dd>Core identities &mdash; helper, professional, caregiver &mdash; encounter conflicting internal voices of guilt and self-criticism. The line draws steadily, carrying the valued voices.</dd>
+        <dt>Stage 2 &mdash; Disruption (the knot)</dt>
+        <dd>Shame, guilt, and self-blame emerge, alongside a loss of meaning and withdrawal as self-condemning voices dominate. The line falters and drops a beat. The wished-for path &mdash; acting in time &mdash; was not, in truth, within one person&rsquo;s power. It does not come back on command. This is structural impossibility, not blame.</dd>
+        <dt>Stage 3 &mdash; Restorative voices</dt>
+        <dd>Peer support, therapy, mindfulness, and community begin to enter the inner conversation, one at a time. The line steadies only through invited accompaniment &mdash; never through a restart.</dd>
+        <dt>Stage 4 &mdash; Reconstruction</dt>
+        <dd>Identity is reconstructed into a new, stable-but-altered self. The opposing voices remain, quieter; restoration is integration, not erasure. A single warm seam honors the break rather than hiding it. Restoration is a possibility, not a cure.</dd>
+      </dl>
+      <div class="mod3-read-lines" aria-label="Consented lines from the valued voices">
+        <p>I-as-helper: &ldquo;I went into this to be the one who shows up.&rdquo;</p>
+        <p>I-as-professional: &ldquo;I trained for the worst so others wouldn&rsquo;t have to face it alone.&rdquo;</p>
+        <p>I-as-caregiver: &ldquo;What I carry, I carry for the people I couldn&rsquo;t carry far enough.&rdquo;</p>
+      </div>
+    </div>
+
+    <!-- take a break overlay -->
+    <div class="mod3-break" id="mod3-break" role="dialog" aria-modal="true" aria-labelledby="mod3-break-h">
+      <div class="mod3-breath" aria-hidden="true"></div>
+      <h3 id="mod3-break-h">Take a breath.</h3>
+      <p>There is no timer here. Let the next breath be a little slower than the last. When you are ready, come back &mdash; the signal will be exactly where you left it.</p>
+      <p>If you need support now, in Canada you can call or text <a href="tel:988">9-8-8</a> (Suicide Crisis Helpline). Elsewhere, please contact your local emergency or crisis line.</p>
+      <button type="button" class="mod3-break-close" id="mod3-break-close">Return to the signal</button>
+    </div>
+
+  </div>
+
+  <script>
+  (function () {
+    "use strict";
+
+    var root = document.getElementById("mod3-root");
+    if (!root) return;
+    var fig = document.getElementById("mod3-fig");
+
+    /* ---------- elements ---------- */
+    var svg      = document.getElementById("mod3-svg");
+    var path     = document.getElementById("mod3-path");
+    var seam     = document.getElementById("mod3-seam");
+    var sibs     = [document.getElementById("mod3-sib1"),
+                    document.getElementById("mod3-sib2"),
+                    document.getElementById("mod3-sib3")];
+    var crestsG  = document.getElementById("mod3-crests");
+    var stateEl  = document.getElementById("mod3-state");
+    var consent  = document.getElementById("mod3-consent");
+    var counter  = document.getElementById("mod3-counter");
+    var live     = document.getElementById("mod3-live");
+
+    var snameEl  = document.getElementById("mod3-sname");
+    var stitleEl = document.getElementById("mod3-stitle");
+    var sdescEl  = document.getElementById("mod3-sdesc");
+
+    var knotPanel= document.getElementById("mod3-knotpanel");
+    var steadyBtn= document.getElementById("mod3-steady");
+    var wishBtn  = document.getElementById("mod3-wish");
+    var butEl    = document.getElementById("mod3-but");
+
+    var invitePanel = document.getElementById("mod3-invitepanel");
+    var inviteBtn   = document.getElementById("mod3-invite");
+    var voiceItems  = Array.prototype.slice.call(
+                        document.querySelectorAll("#mod3-voicelist li"));
+
+    var prevBtn  = document.getElementById("mod3-prev");
+    var nextBtn  = document.getElementById("mod3-next");
+    var readTog  = document.getElementById("mod3-readtoggle");
+    var readEl   = document.getElementById("mod3-read");
+    var ticks    = Array.prototype.slice.call(document.querySelectorAll("#mod3-ticks .mod3-tick"));
+
+    var breakBtn   = document.getElementById("mod3-breakbtn");
+    var breakBox   = document.getElementById("mod3-break");
+    var breakClose = document.getElementById("mod3-break-close");
+
+    /* ---------- environment ---------- */
+    var mqReduce = window.matchMedia
+      ? window.matchMedia("(prefers-reduced-motion: reduce)")
+      : { matches: false, addEventListener: function () {} };
+
+    function pageCalm() {
+      return document.body && document.body.classList.contains("calm");
+    }
+    function isStatic() {
+      return mqReduce.matches || pageCalm();
+    }
+    function syncCalmClass() {
+      root.classList.toggle("mod3-calm", isStatic());
+    }
+
+    /* ---------- geometry ---------- */
+    var VBW = 560, VBH = 150, MIDY = 75;
+    var X0 = 8, X1 = 552;
+    var SPAN = X1 - X0;
+    var N = 140;                 // points along the line
+    var BASE_AMP = 26;           // baseline pulse amplitude
+    var PEAKS = 6;               // pulse beats across the span
+
+    // deterministic value-noise (smoothed) for the tremor
+    var noiseSeed = [];
+    (function () {
+      var s = 1337;
+      for (var i = 0; i < 24; i++) {
+        s = (s * 1103515245 + 12345) & 0x7fffffff;
+        noiseSeed.push((s / 0x7fffffff) * 2 - 1);
+      }
+    })();
+    function valNoise(u) {            // u in [0,1]; smoothed interpolation
+      var f = u * (noiseSeed.length - 1);
+      var i = Math.floor(f);
+      var t = f - i;
+      var a = noiseSeed[i];
+      var b = noiseSeed[Math.min(i + 1, noiseSeed.length - 1)];
+      var s = t * t * (3 - 2 * t);   // smoothstep
+      return a + (b - a) * s;
+    }
+
+    /*
+      Build a pulse path.
+      distress: 0..1  (1 = faltering knot, 0 = steady)
+      tremorPhase: animated phase for the slow tremor
+      opts.dropped: include the dropped beat
+      opts.altered: stage-4 "stable but altered" waveform shape
+    */
+    function buildPath(distress, tremorPhase, opts) {
+      opts = opts || {};
+      var pts = [];
+      var amp = BASE_AMP * (1 - 0.45 * distress);   // amplitude lowers with distress
+      for (var i = 0; i <= N; i++) {
+        var u = i / N;
+        var x = X0 + u * SPAN;
+
+        // pulse envelope: a series of soft beats
+        var beats = PEAKS + (opts.altered ? -0.6 : 0);
+        var phase = u * beats * Math.PI * 2;
+        var pulse = Math.sin(phase);
+        // sharpen near crests a touch (still no spike, no flatline)
+        pulse = Math.sign(pulse) * Math.pow(Math.abs(pulse), 0.85);
+
+        var y = MIDY - pulse * amp;
+
+        // dropped beat: flatten a window around u~0.5 when faltering
+        if (opts.dropped) {
+          var d = Math.abs(u - 0.52);
+          if (d < 0.085) {
+            var k = 1 - (d / 0.085);
+            y = y + (MIDY - y) * (k * 0.92);  // collapse toward midline
+          }
+        }
+
+        // slow smoothed tremor, scaled by distress
+        var tr = valNoise((u + tremorPhase) % 1) * 5.0 * distress;
+        y += tr;
+
+        // altered (stage 4): gently shift baseline + slightly longer wavelength feel
+        if (opts.altered) {
+          y += Math.sin(u * Math.PI) * -2.2;  // a calm bowed baseline
+        }
+
+        pts.push([x, y]);
+      }
+      return ptsToPath(pts);
+    }
+
+    function ptsToPath(pts) {
+      var d = "M" + r(pts[0][0]) + "," + r(pts[0][1]);
+      for (var i = 1; i < pts.length; i++) {
+        d += " L" + r(pts[i][0]) + "," + r(pts[i][1]);
+      }
+      return d;
+    }
+    function r(n) { return Math.round(n * 100) / 100; }
+
+    // a sibling trace: lower amplitude, offset baseline
+    function buildSib(offset, ampScale) {
+      var pts = [];
+      var amp = BASE_AMP * ampScale;
+      for (var i = 0; i <= N; i++) {
+        var u = i / N;
+        var x = X0 + u * SPAN;
+        var phase = u * PEAKS * Math.PI * 2;
+        var y = MIDY + offset - Math.sin(phase) * amp;
+        pts.push([x, y]);
+      }
+      return ptsToPath(pts);
+    }
+
+    // seam traces along the OLD falter location (around the dropped beat)
+    function buildSeam() {
+      var pts = [];
+      var lo = 0.40, hi = 0.64;
+      for (var i = 0; i <= 60; i++) {
+        var u = lo + (hi - lo) * (i / 60);
+        var x = X0 + u * SPAN;
+        var phase = u * PEAKS * Math.PI * 2;
+        var pulse = Math.sin(phase);
+        pulse = Math.sign(pulse) * Math.pow(Math.abs(pulse), 0.85);
+        var y = MIDY - pulse * (BASE_AMP * 0.55);
+        // bow it slightly to read as a healed seam tracing the break
+        y += Math.sin((u - lo) / (hi - lo) * Math.PI) * 4;
+        pts.push([x, y]);
+      }
+      return ptsToPath(pts);
+    }
+
+    /* ---------- stage content ---------- */
+    var STAGES = [
+      { /* 1 */
+        name: "Stage 1",
+        title: "Conflict of voices",
+        desc: "The line draws itself, carrying the valued voices a responder built a self upon — helper, professional, caregiver. Focus a voice on the line to hear it.",
+        state: "A steady signal, drawing left to right.",
+        distress: 0
+      },
+      { /* 2 */
+        name: "Stage 2 · the knot",
+        title: "Disruption",
+        desc: "The signal falters — lower, slower, one beat dropped. Shame, self-blame, and a loss of meaning crowd in. You may try to steady it.",
+        state: "The line falters. One beat is missing.",
+        distress: 1
+      },
+      { /* 3 */
+        name: "Stage 3",
+        title: "Restorative voices",
+        desc: "Nothing restarts the signal. But other voices can be invited to join it — peer support, therapy, community — each one easing the strain a little.",
+        state: "The line is not alone now.",
+        distress: 1
+      },
+      { /* 4 */
+        name: "Stage 4",
+        title: "Reconstruction",
+        desc: "The signal resolves into a new, steady-but-altered waveform. The opposing voices remain, quieter. A single warm seam honors the place where it broke — carried, not erased.",
+        state: "A new steadiness. The break is honored, not hidden.",
+        distress: 0
+      }
+    ];
+
+    var CRESTS = [
+      { u: 0.16, label: "I-as-helper",
+        line: "I-as-helper: “I went into this to be the one who shows up.”" },
+      { u: 0.50, label: "I-as-professional",
+        line: "I-as-professional: “I trained for the worst so others wouldn’t have to face it alone.”" },
+      { u: 0.83, label: "I-as-caregiver",
+        line: "I-as-caregiver: “What I carry, I carry for the people I couldn’t carry far enough.”" }
+    ];
+
+    /* ---------- state ---------- */
+    var stage = 1;               // 1..4
+    var invited = 0;             // restorative voices invited (0..3) in stage 3
+    var distress = 0;            // current distress coefficient
+    var tremorPhase = 0;
+    var rafId = null;
+    var visible = true;
+
+    /* ---------- crest nodes (stage 1) ---------- */
+    function pulseYat(u) {
+      var phase = u * PEAKS * Math.PI * 2;
+      var pulse = Math.sin(phase);
+      pulse = Math.sign(pulse) * Math.pow(Math.abs(pulse), 0.85);
+      return MIDY - pulse * BASE_AMP;
+    }
+    function buildCrests() {
+      var ns = "http://www.w3.org/2000/svg";
+      CRESTS.forEach(function (c, idx) {
+        var x = X0 + c.u * SPAN;
+        var y = pulseYat(c.u) - 2;
+        var g = document.createElementNS(ns, "g");
+        g.setAttribute("class", "mod3-crest");
+        g.setAttribute("tabindex", "0");
+        g.setAttribute("role", "button");
+        g.setAttribute("aria-label", c.label + ". Reveal a line from this voice.");
+        g.setAttribute("data-mod3-c", String(idx));
+
+        var ring = document.createElementNS(ns, "circle");
+        ring.setAttribute("class", "mod3-ring");
+        ring.setAttribute("cx", r(x)); ring.setAttribute("cy", r(y));
+        ring.setAttribute("r", "8");
+        g.appendChild(ring);
+
+        var dot = document.createElementNS(ns, "circle");
+        dot.setAttribute("class", "mod3-dot");
+        dot.setAttribute("cx", r(x)); dot.setAttribute("cy", r(y));
+        dot.setAttribute("r", "3.4");
+        g.appendChild(dot);
+
+        var anchor = x > VBW * 0.66 ? "end" : (x < VBW * 0.33 ? "start" : "middle");
+        var txt = document.createElementNS(ns, "text");
+        txt.setAttribute("class", "mod3-ctxt");
+        txt.setAttribute("x", r(x));
+        txt.setAttribute("y", r(y - 11));
+        txt.setAttribute("text-anchor", anchor);
+        txt.textContent = c.label;
+        g.appendChild(txt);
+
+        function reveal() {
+          consent.textContent = c.line;
+          consent.classList.add("mod3-on");
+        }
+        g.addEventListener("focus", reveal);
+        g.addEventListener("mouseenter", reveal);
+        g.addEventListener("click", reveal);
+        g.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
+            e.preventDefault(); reveal();
+          }
+        });
+        crestsG.appendChild(g);
+      });
+    }
+    buildCrests();
+
+    function showCrests(show) {
+      crestsG.style.display = show ? "" : "none";
+      var nodes = crestsG.querySelectorAll(".mod3-crest");
+      for (var i = 0; i < nodes.length; i++) {
+        nodes[i].setAttribute("tabindex", show ? "0" : "-1");
+      }
+    }
+
+    /* ---------- rendering ---------- */
+    function renderPath() {
+      var opts = {};
+      if (stage === 2) opts.dropped = true;
+      if (stage === 3 && invited < 3) opts.dropped = (invited === 0);
+      if (stage === 4) opts.altered = true;
+      path.setAttribute("d", buildPath(distress, tremorPhase, opts));
+
+      // line color steadies mist -> ink as distress falls
+      var t = 1 - distress; // 0 distress -> 1
+      // interpolate mist(#9AA0A6) to ink(#1A1C1E)
+      var col = lerpColor([0x9A,0xA0,0xA6],[0x1A,0x1C,0x1E], t);
+      path.style.stroke = col;
+    }
+    function lerpColor(a, b, t) {
+      var c = a.map(function (v, i) { return Math.round(v + (b[i]-v)*t); });
+      return "rgb(" + c[0] + "," + c[1] + "," + c[2] + ")";
+    }
+
+    function setSibs() {
+      var configs = [[ -2, 0.42 ], [ 6, 0.30 ], [ -8, 0.36 ]];
+      sibs.forEach(function (s, i) {
+        s.setAttribute("d", buildSib(configs[i][0], configs[i][1]));
+      });
+    }
+    setSibs();
+    seam.setAttribute("d", buildSeam());
+
+    /* ---------- self-draw with non-uniform phases ---------- */
+    function drawLine(phaseProfile) {
+      if (isStatic()) { path.style.strokeDasharray = ""; path.style.strokeDashoffset = ""; return; }
+      var len;
+      try { len = path.getTotalLength(); } catch (e) { return; }
+      path.style.transition = "none";
+      path.style.strokeDasharray = len;
+      path.style.strokeDashoffset = len;
+      // force reflow
+      // eslint-disable-next-line no-unused-expressions
+      path.getBoundingClientRect();
+      // non-uniform: slow entry, hesitate, re-settle via multi-segment timing
+      path.style.transition = "stroke-dashoffset " + phaseProfile.ms + "ms " + phaseProfile.ease + ", stroke 1100ms var(--mod3-ease-settle, cubic-bezier(0.16,1,0.3,1))";
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          path.style.strokeDashoffset = "0";
+        });
+      });
+    }
+
+    /* ---------- tremor loop (rAF), paused offscreen ---------- */
+    function loop() {
+      tremorPhase = (tremorPhase + 0.0016) % 1;   // slow drift
+      if ((stage === 2 || (stage === 3 && distress > 0.02))) {
+        renderPath();
+      }
+      rafId = requestAnimationFrame(loop);
+    }
+    function startLoop() {
+      if (rafId != null) return;
+      if (isStatic()) return;
+      if (!visible) return;
+      if (!(stage === 2 || stage === 3)) return;
+      rafId = requestAnimationFrame(loop);
+    }
+    function stopLoop() {
+      if (rafId != null) { cancelAnimationFrame(rafId); rafId = null; }
+    }
+
+    /* ---------- knot: futile steady + crossed path + but ---------- */
+    function fireKnot() {
+      // held stillness ~500ms, then the "but" fades by pure opacity ~800ms
+      if (isStatic()) {
+        butEl.classList.add("mod3-on");
+        return;
+      }
+      window.setTimeout(function () {
+        butEl.classList.add("mod3-on");
+      }, 500);
+    }
+    steadyBtn.addEventListener("click", function () {
+      // FUTILE by design: returns the same faltering line, unchanged.
+      stateEl.textContent = "It doesn’t come back that way — not on command.";
+      live.textContent = "The signal did not change. It doesn’t come back that way — not on command.";
+      // a tiny re-assertion of the same faltering render (no improvement)
+      renderPath();
+    });
+    // wish button is unclickable on purpose
+    wishBtn.addEventListener("click", function (e) { e.preventDefault(); });
+    wishBtn.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") e.preventDefault();
+    });
+
+    /* ---------- invite (stage 3) ---------- */
+    inviteBtn.addEventListener("click", function () {
+      if (invited >= 3) return;
+      var item = voiceItems[invited];
+      if (item) item.classList.add("mod3-on");
+      var sib = sibs[invited];
+      if (sib) sib.classList.add("mod3-on");
+      invited++;
+      // each invited voice eases distress down one step (1 -> ~0.66 -> ~0.33 -> ~0.08)
+      distress = Math.max(0.08, 1 - invited * (0.92 / 3));
+      renderPath();
+      live.textContent = "A restorative voice joined the signal. The line steadies a little. " +
+                         invited + " of 3 invited.";
+      if (invited >= 3) {
+        inviteBtn.setAttribute("disabled", "disabled");
+        inviteBtn.textContent = "The conversation is no longer one voice alone";
+        stateEl.textContent = "Steadier — through who joined, never through a restart.";
+      } else {
+        stateEl.textContent = "The line steadies, only because it is accompanied.";
+      }
+    });
+
+    /* ---------- stage application ---------- */
+    function applyStage(prevStage) {
+      var s = STAGES[stage - 1];
+      root.setAttribute("data-mod3-stage", String(stage));
+
+      snameEl.textContent  = s.name;
+      stitleEl.textContent = s.title;
+      sdescEl.textContent  = s.desc;
+      stateEl.textContent  = s.state;
+      counter.textContent  = "Stage " + stage + " of 4";
+
+      // overlay luminance arc: dimmer/cooler in conflict, lifts toward restoration
+      var ov = document.getElementById("mod3-overlay");
+      var ovAlpha = stage === 1 ? 0.05
+                  : stage === 2 ? 0.16
+                  : stage === 3 ? Math.max(0.04, 0.16 - invited * 0.045)
+                  : 0.0;
+      ov.style.opacity = String(ovAlpha);
+
+      // reset consent unless staying in stage 1
+      if (stage !== 1) { consent.classList.remove("mod3-on"); consent.textContent = ""; }
+
+      // crests only in stage 1
+      showCrests(stage === 1);
+
+      // knot panel state
+      if (stage === 2) {
+        butEl.classList.remove("mod3-on");
+        fireKnot();
+      } else {
+        butEl.classList.remove("mod3-on");
+      }
+
+      // distress per stage
+      if (stage === 1) distress = 0;
+      else if (stage === 2) distress = 1;
+      else if (stage === 3) distress = Math.max(0.08, 1 - invited * (0.92 / 3));
+      else if (stage === 4) distress = 0;
+
+      // seam only at stage 4 (the single reserved real animation)
+      if (stage === 4) {
+        renderPath();
+        revealSeam();
+      } else {
+        seam.classList.remove("mod3-on");
+        seam.style.transition = "none";
+        renderPath();
+      }
+
+      // self-draw with non-uniform timing on forward arrival
+      var forward = prevStage == null || stage >= prevStage;
+      if (!isStatic() && forward && stage !== 4) {
+        var profile = stage === 1 ? { ms: 1700, ease: "cubic-bezier(0.16,1,0.3,1)" }
+                    : stage === 2 ? { ms: 1300, ease: "cubic-bezier(0.4,0,0.2,1)" } // hesitate
+                    : { ms: 1100, ease: "cubic-bezier(0.16,1,0.3,1)" };
+        drawLine(profile);
+      } else {
+        path.style.strokeDasharray = "";
+        path.style.strokeDashoffset = "";
+      }
+
+      // ticks
+      ticks.forEach(function (tk, i) {
+        tk.classList.remove("mod3-done", "mod3-cur");
+        if (i + 1 < stage) tk.classList.add("mod3-done");
+        else if (i + 1 === stage) tk.classList.add("mod3-cur");
+      });
+
+      // nav buttons
+      prevBtn.disabled = (stage === 1);
+      if (stage === 4) {
+        nextBtn.disabled = true;
+        nextBtn.textContent = "The signal rests here";
+      } else {
+        nextBtn.disabled = false;
+        nextBtn.textContent = "Continue when you are ready";
+      }
+
+      // announce
+      live.textContent = "Stage " + stage + " of 4: " + s.title + ". " + s.state;
+
+      // loop management
+      stopLoop();
+      startLoop();
+    }
+
+    function revealSeam() {
+      seam.classList.remove("mod3-on");
+      if (isStatic()) { seam.classList.add("mod3-on"); seam.style.strokeDasharray = ""; seam.style.strokeDashoffset = ""; return; }
+      var len;
+      try { len = seam.getTotalLength(); } catch (e) { seam.classList.add("mod3-on"); return; }
+      seam.style.transition = "none";
+      seam.style.strokeDasharray = len;
+      seam.style.strokeDashoffset = len;
+      seam.classList.add("mod3-on");
+      seam.getBoundingClientRect();
+      // reverse-entropy weight-ease, slow, left visible
+      window.setTimeout(function () {
+        seam.style.transition = "stroke-dashoffset 900ms cubic-bezier(0.16,1,0.3,1)";
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () { seam.style.strokeDashoffset = "0"; });
+        });
+      }, 350);
+    }
+
+    /* ---------- nav ---------- */
+    nextBtn.addEventListener("click", function () {
+      if (stage >= 4) return;
+      var prev = stage;
+      stage++;
+      applyStage(prev);
+    });
+    prevBtn.addEventListener("click", function () {
+      if (stage <= 1) return;
+      var prev = stage;
+      stage--;
+      // when returning to stage 3, keep invited voices as-is (integration persists)
+      applyStage(prev);
+    });
+
+    /* ---------- read-only toggle ---------- */
+    readTog.addEventListener("click", function () {
+      var open = readEl.hasAttribute("hidden");
+      if (open) {
+        readEl.removeAttribute("hidden");
+        readTog.setAttribute("aria-expanded", "true");
+        readTog.textContent = "Hide the findings";
+      } else {
+        readEl.setAttribute("hidden", "");
+        readTog.setAttribute("aria-expanded", "false");
+        readTog.textContent = "Read the findings instead";
+      }
+    });
+
+    /* ---------- take a break ---------- */
+    var lastFocus = null;
+    function openBreak() {
+      lastFocus = document.activeElement;
+      breakBox.classList.add("mod3-open");
+      breakClose.focus();
+      document.addEventListener("keydown", breakKey);
+    }
+    function closeBreak() {
+      breakBox.classList.remove("mod3-open");
+      document.removeEventListener("keydown", breakKey);
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+    function breakKey(e) {
+      if (e.key === "Escape") closeBreak();
+      if (e.key === "Tab") {
+        // simple focus trap within the dialog
+        e.preventDefault();
+        breakClose.focus();
+      }
+    }
+    breakBtn.addEventListener("click", openBreak);
+    breakClose.addEventListener("click", closeBreak);
+
+    /* ---------- visibility: pause rAF offscreen ---------- */
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          visible = en.isIntersecting;
+          if (visible) startLoop(); else stopLoop();
+        });
+      }, { threshold: 0.05 });
+      io.observe(fig);
+    }
+
+    /* ---------- react to motion / calm changes ---------- */
+    function onEnvChange() {
+      syncCalmClass();
+      if (isStatic()) {
+        stopLoop();
+        // render final state of current stage instantly, no travel
+        path.style.transition = "none";
+        path.style.strokeDasharray = "";
+        path.style.strokeDashoffset = "";
+        renderPath();
+        if (stage === 4) { seam.classList.add("mod3-on"); seam.style.strokeDashoffset = ""; seam.style.strokeDasharray = ""; }
+        if (stage === 2) butEl.classList.add("mod3-on");
+      } else {
+        startLoop();
+      }
+    }
+    if (mqReduce.addEventListener) {
+      mqReduce.addEventListener("change", onEnvChange);
+    } else if (mqReduce.addListener) {
+      mqReduce.addListener(onEnvChange);
+    }
+    // watch the page's existing Calm toggle (class on <body>)
+    if (window.MutationObserver && document.body) {
+      var mo = new MutationObserver(function () { onEnvChange(); });
+      mo.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+    }
+
+    /* ---------- init ---------- */
+    syncCalmClass();
+    applyStage(null);
+  })();
+  </script>
+</section>
+
+      <p class="figure-fallback-note">The four cards below are the read-only equivalent of the interactive figure above — the same four stages, fully present without any motion.</p>
       </div>
       <div class="model-grid">
         <div class="stage s1 reveal">
@@ -676,6 +4433,995 @@
       <p class="reveal">Each pathway plays a recognizable part. Community and peer connection answer isolation with recognition; hearing another person who has carried similar guilt say ‘me too’ rather than ‘you failed’ can quietly counter the inner critic — the mechanism at the heart of the Valhalla Project’s peer model, whose participants speak of no longer feeling alone. Therapy offers structured, compassionate ways to re-examine self-blame and separate realistic responsibility from what was never within a person’s control; several approaches developed for moral injury work precisely by introducing a compassionate voice into the inner dialogue (Litz et al., 2009). Spirituality, mindfulness, and creative or narrative expression offer ways to hold meaning, to notice harsh self-judgment without being commanded by it, and to give form to what words alone struggle to reach.</p>
       <p class="reveal">We hold this part of the story with honesty and humility. Restoration is not a return to a pre-injury self; it is an integration that carries the experience rather than pretending it never happened. It is gradual, relational, and witnessed — supported with and by others, never the product of willpower alone — and several of these supports, while widely valued, are best understood as complements to professional care rather than guaranteed cures.</p>
       <blockquote class="pull reveal">Restoration is not a return to who you were before. It is a self that carries the experience, and is recognized by others.</blockquote>
+
+      <!-- ============================================================
+           mod7 — Let a Voice In (restoration as voices re-forming a self)
+           ============================================================ -->
+<section class="mod-mod7" aria-label="Let a voice in: an interactive figure where supportive voices partly re-form a withdrawn self, without erasing the wound">
+  <style>
+    /* ============================================================
+       mod7 — Let a Voice In
+       Restoration as voices re-forming a self (Stage 3 -> 4).
+       All styles scoped under .mod-mod7. Extends the existing
+       light "white ghosting / hospital" system; reuses existing
+       tokens; adds exactly two earned restorative tokens.
+       No-motion-first: base state is fully present, fully restored.
+       ============================================================ */
+
+    .mod-mod7 {
+      /* Two new restorative tokens — used ONLY here, in restoration beats. */
+      --restore-gold: #B08A3E;   /* muted warm gold: the kintsugi seam/accent */
+      --restore-sage: #8C9B82;   /* dim sage: restorative-voice glows */
+      /* Shared named easing/duration system (extends the site motion language). */
+      --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-withdraw: cubic-bezier(0.4, 0, 1, 1);
+
+      margin: 40px 0 8px;
+      font-family: var(--sans);
+      color: var(--ink);
+    }
+
+    .mod-mod7 *,
+    .mod-mod7 *::before,
+    .mod-mod7 *::after { box-sizing: border-box; }
+
+    /* ---- Framing copy ---- */
+    .mod-mod7 .mod7-intro {
+      max-width: var(--measure);
+      font-size: 15.5px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      margin: 0 0 6px;
+    }
+    .mod-mod7 .mod7-humility {
+      max-width: var(--measure);
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--ghost);
+      margin: 0 0 22px;
+    }
+
+    /* ---- Content-note gate (three doors) ---- */
+    .mod-mod7 .mod7-gate {
+      border: 1px solid var(--hairline-strong);
+      border-radius: 4px;
+      background: var(--surface);
+      padding: 22px 22px 24px;
+      max-width: 640px;
+    }
+    .mod-mod7 .mod7-gate h3 {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 1.3;
+      margin: 0 0 10px;
+      color: var(--ink);
+    }
+    .mod-mod7 .mod7-gate p {
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      margin: 0 0 16px;
+      max-width: 56ch;
+    }
+    .mod-mod7 .mod7-doors {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .mod-mod7 .mod7-door {
+      font-family: var(--sans);
+      font-size: 14.5px;
+      line-height: 1.3;
+      padding: 11px 16px;
+      border-radius: 3px;
+      border: 1px solid var(--hairline-strong);
+      background: var(--surface);
+      color: var(--ink);
+      cursor: pointer;
+      transition: border-color 200ms ease, color 200ms ease, background 200ms ease;
+    }
+    .mod-mod7 .mod7-door:hover { border-color: var(--accent); color: var(--ink); }
+    .mod-mod7 .mod7-door.mod7-door-primary {
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .mod-mod7 .mod7-door.mod7-door-primary:hover {
+      background: var(--accent);
+      color: var(--surface);
+    }
+
+    /* Reuse the page's slate focus ring explicitly (in case of cascade). */
+    .mod-mod7 :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 3px;
+    }
+
+    /* ---- The two routes are mutually exclusive ---- */
+    .mod-mod7 .mod7-room,
+    .mod-mod7 .mod7-textonly { display: none; }
+    .mod-mod7[data-mode="room"] .mod7-gate { display: none; }
+    .mod-mod7[data-mode="room"] .mod7-room { display: block; }
+    .mod-mod7[data-mode="text"] .mod7-gate { display: none; }
+    .mod-mod7[data-mode="text"] .mod7-textonly { display: block; }
+
+    /* ---- Persistent controls (same position throughout) ---- */
+    .mod-mod7 .mod7-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      align-items: center;
+      margin: 0 0 24px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .mod-mod7 .mod7-ctrl {
+      font-family: var(--sans);
+      font-size: 13.5px;
+      padding: 8px 13px;
+      border-radius: 3px;
+      border: 1px solid var(--hairline-strong);
+      background: var(--surface);
+      color: var(--ink-soft);
+      cursor: pointer;
+      transition: border-color 200ms ease, color 200ms ease;
+    }
+    .mod-mod7 .mod7-ctrl:hover { border-color: var(--accent); color: var(--ink); }
+
+    /* ---- The room: the stage ---- */
+    .mod-mod7 .mod7-stage {
+      position: relative;
+      border: 1px solid var(--hairline);
+      border-radius: 6px;
+      /* Fixed-lightness ground: warmth layers ABOVE this, contrast never drops. */
+      background: var(--surface);
+      padding: 56px 28px 48px;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    @media (min-width: 700px) {
+      .mod-mod7 .mod7-stage { padding: 72px 48px 60px; }
+    }
+
+    /* Warm edge-glow: a soft radial of gold+sage, low opacity, layered
+       ABOVE the fixed-lightness ground but BEHIND the text. Eases up as
+       voices are let in. At 0 voices it is absent (cooler, dimmer). */
+    .mod-mod7 .mod7-glow {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0;
+      background:
+        radial-gradient(120% 80% at 50% 116%,
+          rgba(176, 138, 62, 0.16) 0%,
+          rgba(140, 155, 130, 0.10) 34%,
+          rgba(176, 138, 62, 0) 70%);
+    }
+    /* A faint cool overlay carries the "withdrawn / dimmer" Stage-2 ground;
+       it lifts as warmth arrives. Kept very low so AA always holds. */
+    .mod-mod7 .mod7-cool {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: rgba(154, 160, 166, 0.06); /* --mist, low alpha */
+      opacity: 1;
+    }
+
+    .mod-mod7 .mod7-stage > .mod7-self,
+    .mod-mod7 .mod7-stage > .mod7-presence { position: relative; z-index: 1; }
+
+    /* ---- Central self-line (real selectable text) ---- */
+    .mod-mod7 .mod7-self {
+      text-align: center;
+      max-width: 30ch;
+      margin: 0 auto;
+    }
+    .mod-mod7 .mod7-selfline {
+      font-family: var(--serif);
+      font-size: clamp(22px, 4.4vw, 30px);
+      line-height: 1.34;
+      letter-spacing: 0.005em;
+      /* Withdrawn Stage-2 self: low weight, reduced opacity. Color stays
+         fixed-lightness ink; only weight + opacity move, so AA holds. */
+      color: var(--ink);
+      font-weight: 300;
+      font-variation-settings: "wght" 250;
+      opacity: 0.62;
+      margin: 0;
+    }
+    /* The seam sits under these words. */
+    .mod-mod7 .mod7-selfwrap { position: relative; display: inline-block; }
+    .mod-mod7 .mod7-seam {
+      position: absolute;
+      left: -2%;
+      right: -2%;
+      bottom: -0.32em;
+      width: 104%;
+      height: 14px;
+      overflow: visible;
+      pointer-events: none;
+    }
+    .mod-mod7 .mod7-seam path {
+      fill: none;
+      stroke: var(--restore-gold);
+      stroke-width: 1.4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: 0.72;
+    }
+
+    /* Opposing voice persists beneath — carried, never erased. */
+    .mod-mod7 .mod7-opposing {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(15px, 2.6vw, 17px);
+      line-height: 1.4;
+      color: var(--ghost);
+      margin: 22px auto 0;
+      max-width: 34ch;
+    }
+    .mod-mod7 .mod7-opposing .mod7-but {
+      color: var(--mist);
+      font-style: italic;
+    }
+
+    /* ---- Count (neutral, not a score) ---- */
+    .mod-mod7 .mod7-count {
+      text-align: center;
+      font-family: var(--sans);
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      color: var(--ink-soft);
+      margin: 34px 0 0;
+    }
+    .mod-mod7 .mod7-count .mod7-count-num { color: var(--ink); font-weight: 500; }
+
+    /* ---- The five restorative voices (real buttons) ---- */
+    .mod-mod7 .mod7-voices {
+      list-style: none;
+      margin: 26px 0 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    @media (min-width: 620px) {
+      .mod-mod7 .mod7-voices { grid-template-columns: repeat(2, 1fr); }
+      .mod-mod7 .mod7-voices > li:nth-child(5) { grid-column: 1 / -1; }
+    }
+    .mod-mod7 .mod7-voice {
+      width: 100%;
+      text-align: left;
+      font-family: var(--serif);
+      font-size: 16px;
+      line-height: 1.45;
+      padding: 14px 16px;
+      border-radius: 3px;
+      /* Reuse .voice.restorative tokens: slate accent affordance on surface. */
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      background: var(--surface);
+      cursor: pointer;
+      transition:
+        border-color 240ms ease,
+        background 800ms var(--ease-settle),
+        color 240ms ease,
+        box-shadow 800ms var(--ease-settle);
+    }
+    .mod-mod7 .mod7-voice .mod7-voice-role {
+      display: block;
+      font-family: var(--sans);
+      font-size: 11.5px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--mist);
+      margin: 0 0 4px;
+      font-weight: 600;
+      transition: color 240ms ease;
+    }
+    .mod-mod7 .mod7-voice .mod7-voice-label { display: block; }
+    .mod-mod7 .mod7-voice:hover:not([aria-pressed="true"]) {
+      background: var(--accent);
+      color: var(--surface);
+    }
+    .mod-mod7 .mod7-voice:hover:not([aria-pressed="true"]) .mod7-voice-role {
+      color: rgba(255,255,255,0.82);
+    }
+
+    /* Let-in state: settled, warmed by a low-opacity sage edge. Text stays
+       fixed-lightness ink for AA; warmth is a border + soft glow only. */
+    .mod-mod7 .mod7-voice[aria-pressed="true"] {
+      cursor: default;
+      color: var(--ink);
+      border-color: var(--restore-sage);
+      background:
+        linear-gradient(var(--surface), var(--surface)) padding-box,
+        radial-gradient(140% 180% at 0% 0%,
+          rgba(140, 155, 130, 0.10),
+          rgba(176, 138, 62, 0.05)) border-box;
+      box-shadow: inset 0 0 0 9999px rgba(140, 155, 130, 0.045);
+      font-style: normal;
+    }
+    .mod-mod7 .mod7-voice[aria-pressed="true"] .mod7-voice-role {
+      color: var(--restore-sage);
+    }
+    .mod-mod7 .mod7-voice[aria-pressed="true"] .mod7-voice-label {
+      /* The replaced first-person line. Fades in (pure opacity). */
+      opacity: 1;
+      font-style: italic;
+      color: var(--ink-soft);
+    }
+
+    /* ---- Ambient presence (someone is here with you) ---- */
+    .mod-mod7 .mod7-presence {
+      display: block;
+      margin: 30px auto 0;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--restore-sage);
+      opacity: 0.5;
+    }
+
+    /* ---- Skip-to-summary target / summary ---- */
+    .mod-mod7 .mod7-summary {
+      margin: 26px 0 0;
+      border-top: 1px solid var(--hairline);
+      padding-top: 22px;
+    }
+    .mod-mod7 .mod7-summary h3 {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: 17px;
+      margin: 0 0 10px;
+      color: var(--ink);
+    }
+    .mod-mod7 .mod7-summary p {
+      font-size: 14.5px;
+      line-height: 1.62;
+      color: var(--ink-soft);
+      margin: 0 0 14px;
+      max-width: 60ch;
+    }
+    .mod-mod7 .mod7-summary p:last-child { margin-bottom: 0; }
+
+    /* ---- Text-only route ---- */
+    .mod-mod7 .mod7-textonly h3 {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: 18px;
+      margin: 0 0 12px;
+      color: var(--ink);
+    }
+    .mod-mod7 .mod7-textonly p {
+      font-size: 15px;
+      line-height: 1.64;
+      color: var(--ink);
+      margin: 0 0 16px;
+      max-width: 62ch;
+    }
+    .mod-mod7 .mod7-textonly dl { margin: 4px 0 18px; max-width: 62ch; }
+    .mod-mod7 .mod7-textonly dt {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--ink);
+      margin: 14px 0 4px;
+    }
+    .mod-mod7 .mod7-textonly dd {
+      margin: 0;
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+    }
+    .mod-mod7 .mod7-textonly dd .mod7-to-role {
+      display: block;
+      font-family: var(--sans);
+      font-size: 11.5px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--mist);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    /* ---- Pause / step-away panel ---- */
+    .mod-mod7 .mod7-pause {
+      display: none;
+      margin: 0 0 22px;
+      border: 1px solid var(--hairline-strong);
+      border-radius: 4px;
+      background: var(--paper);
+      padding: 20px 22px;
+      max-width: 600px;
+    }
+    .mod-mod7[data-paused="true"] .mod7-pause { display: block; }
+    .mod-mod7 .mod7-pause h3 {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: 17px;
+      margin: 0 0 8px;
+      color: var(--ink);
+    }
+    .mod-mod7 .mod7-pause p {
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      margin: 0 0 12px;
+      max-width: 54ch;
+    }
+    .mod-mod7 .mod7-pause a {
+      color: var(--accent);
+      border-bottom: 1px solid var(--hairline-strong);
+    }
+    .mod-mod7 .mod7-pause a:hover { border-bottom-color: var(--accent); }
+    .mod-mod7 .mod7-breath {
+      display: inline-block;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--restore-sage);
+      opacity: 0.55;
+      vertical-align: -2px;
+      margin-right: 8px;
+    }
+
+    /* Visually-hidden live region text helper */
+    .mod-mod7 .mod7-vh {
+      position: absolute !important;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0 0 0 0);
+      white-space: nowrap; border: 0;
+    }
+
+    /* ============================================================
+       MOTION — no-motion-first.
+       Everything above is already in its RESTORED / present state by
+       default. The block below only adds easing + the withdrawn START
+       state, gated on (no reduced-motion) AND body:not(.calm).
+       ============================================================ */
+    @media (prefers-reduced-motion: no-preference) {
+      /* Glow eases up with --ease-settle; cool overlay withdraws. */
+      body:not(.calm) .mod-mod7 .mod7-glow {
+        transition: opacity 900ms var(--ease-settle);
+      }
+      body:not(.calm) .mod-mod7 .mod7-cool {
+        transition: opacity 1100ms var(--ease-withdraw);
+      }
+
+      /* The single reserved "real" animation: reverse-entropy weight-ease.
+         Start withdrawn; the JS sets data-step which eases wght + opacity up.
+         Color never animates (AA at every frame). */
+      body:not(.calm) .mod-mod7 .mod7-selfline {
+        transition:
+          font-variation-settings 900ms var(--ease-settle),
+          opacity 900ms var(--ease-settle);
+      }
+
+      /* Restorative first-person lines fade in (pure opacity) after a held
+         pause; the JS applies a per-button delay for the 160ms stagger. */
+      body:not(.calm) .mod-mod7 .mod7-voice .mod7-voice-label { transition: opacity 800ms ease; }
+      body:not(.calm) .mod-mod7 .mod7-voice[aria-pressed="true"].mod7-just .mod7-voice-label {
+        animation: mod7-fade-line 800ms ease both;
+      }
+      @keyframes mod7-fade-line {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+      }
+
+      /* Seam draw (stroke-dashoffset) — applied once via JS, then stays. */
+      body:not(.calm) .mod-mod7 .mod7-seam path {
+        transition: stroke-dashoffset 700ms var(--ease-settle);
+      }
+
+      /* Ambient presence breathes slowly (~5500ms), gently. */
+      body:not(.calm) .mod-mod7 .mod7-presence {
+        animation: mod7-breathe 5500ms ease-in-out infinite;
+      }
+      @keyframes mod7-breathe {
+        0%, 100% { opacity: 0.32; transform: scale(0.9); }
+        50%      { opacity: 0.62; transform: scale(1.12); }
+      }
+    }
+
+    /* ============================================================
+       CALM / reduced-motion: snap to final restored state.
+       (Calm class on <body>, OR the OS reduced-motion preference.)
+       Letters at restored weight, glow at final, seam static, breathing
+       off, fades collapsed. Same words, same meaning, zero travel.
+       ============================================================ */
+    @media (prefers-reduced-motion: reduce) {
+      .mod-mod7 .mod7-presence { animation: none !important; }
+      .mod-mod7 .mod7-glow,
+      .mod-mod7 .mod7-cool,
+      .mod-mod7 .mod7-selfline,
+      .mod-mod7 .mod7-seam path,
+      .mod-mod7 .mod7-voice,
+      .mod-mod7 .mod7-voice .mod7-voice-label {
+        transition-duration: 200ms !important;
+        animation: none !important;
+      }
+    }
+    body.calm .mod-mod7 .mod7-presence { animation: none !important; }
+    body.calm .mod-mod7 .mod7-glow,
+    body.calm .mod-mod7 .mod7-cool,
+    body.calm .mod-mod7 .mod7-selfline,
+    body.calm .mod-mod7 .mod7-seam path,
+    body.calm .mod-mod7 .mod7-voice,
+    body.calm .mod-mod7 .mod7-voice .mod7-voice-label {
+      transition-duration: 200ms !important;
+      animation: none !important;
+    }
+  </style>
+
+  <p class="mod7-intro">
+    Restoration is not erasure. Below is a self that has gone quiet —
+    withdrawn after a perceived moral failure, the painful gap between
+    what someone felt they should have done and what was possible.
+    You are the listener. You can <strong>let a voice in</strong>.
+    Each supportive voice re-forms a little of the self; none of them
+    take the wound away.
+  </p>
+  <p class="mod7-humility">
+    These are real people’s words, lightly fictionalized; you cannot
+    fully know this, and that’s okay.
+  </p>
+
+  <!-- ===================== CONTENT-NOTE GATE: THREE DOORS ===================== -->
+  <div class="mod7-gate" id="mod7-gate">
+    <h3>Before you go in</h3>
+    <p>
+      This short interaction gently stages the move from withdrawal toward
+      repair (Stages 3–4 of the model): supportive voices entering and
+      partly re-forming a self. It is quiet — no sound, no sudden movement.
+      Nothing is graphic. Choose how you’d like to continue.
+    </p>
+    <div class="mod7-doors">
+      <button type="button" class="mod7-door mod7-door-primary" id="mod7-door-enter">
+        Enter the quiet room
+      </button>
+      <button type="button" class="mod7-door" id="mod7-door-text">
+        Read it as text only
+      </button>
+      <button type="button" class="mod7-door" id="mod7-door-skip">
+        Skip to the summary
+      </button>
+    </div>
+  </div>
+
+  <!-- ===================== THE ROOM (interactive) ===================== -->
+  <div class="mod7-room" id="mod7-room">
+    <!-- Persistent, same-position controls -->
+    <div class="mod7-controls">
+      <button type="button" class="mod7-ctrl" id="mod7-pause-btn" aria-expanded="false" aria-controls="mod7-pause">
+        Pause / step away
+      </button>
+      <button type="button" class="mod7-ctrl" id="mod7-skip-btn">
+        Skip to summary
+      </button>
+      <button type="button" class="mod7-ctrl" id="mod7-text-btn">
+        Switch to text only
+      </button>
+    </div>
+
+    <!-- Pause / step-away panel -->
+    <div class="mod7-pause" id="mod7-pause" role="region" aria-label="Take a moment">
+      <h3><span class="mod7-breath" aria-hidden="true"></span>Take a breath</h3>
+      <p>
+        There’s no rush here, and nothing you need to finish. If this is
+        a hard moment, you can step away. In Canada you can call or text
+        <a href="tel:988">9-8-8</a> (Suicide Crisis Helpline). Elsewhere,
+        please reach your local emergency or crisis line. You can also just
+        sit for a moment — breathe in slowly, and let it out slowly — and
+        come back when you’re ready.
+      </p>
+      <button type="button" class="mod7-ctrl" id="mod7-pause-close">Close this</button>
+    </div>
+
+    <div class="mod7-stage" id="mod7-stage" data-step="0">
+      <div class="mod7-cool" aria-hidden="true"></div>
+      <div class="mod7-glow" id="mod7-glow" aria-hidden="true"></div>
+
+      <div class="mod7-self">
+        <div class="mod7-selfwrap">
+          <p class="mod7-selfline" id="mod7-selfline">I am the one who comes when called.</p>
+          <!-- Kintsugi seam: the carried wound. Drawn once, then stays. -->
+          <svg class="mod7-seam" id="mod7-seam" viewBox="0 0 400 14" preserveAspectRatio="none" role="img" aria-labelledby="mod7-seam-t mod7-seam-d">
+            <title id="mod7-seam-t">A thin warm-gold seam beneath the words</title>
+            <desc id="mod7-seam-d">A kintsugi-style line that marks where the self was broken and mended. It is drawn once when the first voice is let in, and it stays — the wound is carried, not erased.</desc>
+            <path id="mod7-seam-path" d="M2,8 C46,3 78,12 120,7 C168,1 206,12 250,6 C292,1 330,11 398,7" />
+          </svg>
+        </div>
+
+        <p class="mod7-opposing" id="mod7-opposing">
+          <span class="mod7-but">but</span> I keep the one I couldn’t reach.
+        </p>
+      </div>
+
+      <span class="mod7-presence" id="mod7-presence" aria-hidden="true"></span>
+
+      <p class="mod7-count" id="mod7-count">
+        voices let in: <span class="mod7-count-num"><span id="mod7-count-num">0</span> of 5</span>
+        <span class="mod7-vh"> — all voices are equal; this is not a score.</span>
+      </p>
+    </div>
+
+    <ul class="mod7-voices" id="mod7-voices" aria-label="Supportive voices you can let in. Letting a voice in cannot be undone — you don’t take back support.">
+      <li>
+        <button type="button" class="mod7-voice" id="mod7-v-peer"
+          aria-pressed="false"
+          data-line="Someone who’d been there said: me too. I stopped being the only one."
+          aria-label="Let in peer support. Role: community and peer connection answering isolation with recognition.">
+          <span class="mod7-voice-role">Let in — peer support</span>
+          <span class="mod7-voice-label">Someone who has carried something similar.</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="mod7-voice" id="mod7-v-therapy"
+          aria-pressed="false"
+          data-line="A therapist helped me ask what was truly mine to carry — and what was never in my hands."
+          aria-label="Let in therapy. Role: structured, compassionate re-examining of self-blame, separating responsibility from what was outside one’s control.">
+          <span class="mod7-voice-role">Let in — therapy</span>
+          <span class="mod7-voice-label">A structured, compassionate place to look again.</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="mod7-voice" id="mod7-v-mind"
+          aria-pressed="false"
+          data-line="I learned to notice the harsh voice without obeying it. It speaks; I don’t have to follow."
+          aria-label="Let in mindfulness. Role: spirituality and mindfulness, noticing harsh self-judgment without being commanded by it.">
+          <span class="mod7-voice-role">Let in — mindfulness</span>
+          <span class="mod7-voice-label">A way to notice the inner critic without obeying it.</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="mod7-voice" id="mod7-v-comm"
+          aria-pressed="false"
+          data-line="People still saved me a seat. I mattered to them, even when I couldn’t feel that I mattered."
+          aria-label="Let in community. Role: community connection and recognition, restoring the felt sense of mattering.">
+          <span class="mod7-voice-role">Let in — community</span>
+          <span class="mod7-voice-label">People who keep a place for you.</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="mod7-voice" id="mod7-v-create"
+          aria-pressed="false"
+          data-line="I gave it a shape — wrote it, built it, made it — and it stopped only living in silence."
+          aria-label="Let in creative expression. Role: creative and narrative expression, giving form to what words alone struggle to reach.">
+          <span class="mod7-voice-role">Let in — creative expression</span>
+          <span class="mod7-voice-label">A shape for what words alone can’t reach.</span>
+        </button>
+      </li>
+    </ul>
+
+    <!-- Polite live region announcing each voice + count -->
+    <p class="mod7-vh" id="mod7-live" aria-live="polite"></p>
+
+    <!-- In-room summary anchor (skip target) -->
+    <div class="mod7-summary" id="mod7-summary-room" tabindex="-1">
+      <h3>What this is showing</h3>
+      <p>
+        As supportive voices enter, the self re-forms — the central line
+        steadies and brightens a little with each one. But it never returns
+        to who it was before, the quiet “but” stays, and a warm seam remains
+        beneath the words. That is the point: restoration is an integration
+        that carries the experience, gradual, relational, and witnessed —
+        never the erasing of a wound, and never the product of willpower alone.
+      </p>
+    </div>
+  </div>
+
+  <!-- ===================== TEXT-ONLY ROUTE (full findings) ===================== -->
+  <div class="mod7-textonly" id="mod7-textonly">
+    <div class="mod7-controls">
+      <button type="button" class="mod7-ctrl" id="mod7-text-pause-btn" aria-controls="mod7-pause-text" aria-expanded="false">
+        Pause / step away
+      </button>
+      <button type="button" class="mod7-ctrl" id="mod7-text-skip-btn">
+        Skip to summary
+      </button>
+      <button type="button" class="mod7-ctrl" id="mod7-room-btn">
+        Switch to the room
+      </button>
+    </div>
+
+    <div class="mod7-pause" id="mod7-pause-text" role="region" aria-label="Take a moment">
+      <h3><span class="mod7-breath" aria-hidden="true"></span>Take a breath</h3>
+      <p>
+        There’s no rush, and nothing you need to finish. In Canada you can
+        call or text <a href="tel:988">9-8-8</a> (Suicide Crisis Helpline);
+        elsewhere, please reach your local emergency or crisis line. You can
+        step away and come back whenever you’re ready.
+      </p>
+      <button type="button" class="mod7-ctrl" id="mod7-pause-text-close">Close this</button>
+    </div>
+
+    <h3>Stage 3 → 4, in words</h3>
+    <p>
+      Stage 2 leaves the self withdrawn. In the interactive version, that self
+      is a quiet line at a low type weight: <em>“I am the one who comes when
+      called,”</em> with a quieter opposing voice beneath it —
+      <em>“but I keep the one I couldn’t reach.”</em> The opposing voice is a
+      dialogical knot: the shape of internal conflict, never a verdict on the
+      person, and the “failing” it names is a <em>perceived</em> moral failure.
+    </p>
+    <p>
+      In Stage 3, restorative voices enter the inner conversation. Letting one
+      in cannot be undone — you don’t take back support. Each of the five
+      pathways plays a recognizable part:
+    </p>
+    <dl>
+      <dt>Peer support</dt>
+      <dd><span class="mod7-to-role">community and peer connection</span>“Someone who’d been there said: me too. I stopped being the only one.” Recognition answers isolation; hearing “me too” rather than “you failed” quietly counters the inner critic.</dd>
+
+      <dt>Therapy</dt>
+      <dd><span class="mod7-to-role">compassionate re-examination</span>“A therapist helped me ask what was truly mine to carry — and what was never in my hands.” Structured, compassionate work separates realistic responsibility from what was never within a person’s control.</dd>
+
+      <dt>Mindfulness</dt>
+      <dd><span class="mod7-to-role">spirituality and mindfulness</span>“I learned to notice the harsh voice without obeying it.” A way to notice harsh self-judgment without being commanded by it.</dd>
+
+      <dt>Community</dt>
+      <dd><span class="mod7-to-role">recognition and mattering</span>“People still saved me a seat. I mattered to them, even when I couldn’t feel that I mattered.” Being recognized restores the felt sense of mattering.</dd>
+
+      <dt>Creative expression</dt>
+      <dd><span class="mod7-to-role">creative and narrative expression</span>“I gave it a shape — wrote it, built it, made it — and it stopped only living in silence.” Giving form to what words alone struggle to reach.</dd>
+    </dl>
+    <p>
+      In Stage 4, identity is reconstructed — but only partway. In the
+      interaction the self-line steadies and brightens with each voice, settling
+      toward a restored weight that never reaches its original strength. The
+      opposing voice persists, and a thin warm “kintsugi” seam stays beneath the
+      words to mark the carried wound. Restoration is not a return to a pre-injury
+      self; it is an integration that carries the experience — gradual, relational,
+      and witnessed, supported with and by others rather than by willpower alone.
+      These supports, while widely valued, are best understood as complements to
+      professional care rather than guaranteed cures.
+    </p>
+
+    <div class="mod7-summary" id="mod7-summary-text" tabindex="-1">
+      <h3>Summary</h3>
+      <p>
+        Supportive voices re-form a self without erasing its wound. The self
+        steadies but does not return to who it was; the difficult voice stays
+        and is answered rather than silenced; the seam remains. Healing is not
+        deleting a voice — it is introducing voices that can sit alongside the
+        hard one, so it no longer rules alone.
+      </p>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    "use strict";
+
+    var root = document.currentScript && document.currentScript.closest
+      ? document.currentScript.closest(".mod-mod7")
+      : document.querySelector(".mod-mod7");
+    if (!root) return;
+
+    var $ = function (id) { return root.querySelector("#" + id); };
+    var body = document.body;
+
+    /* ---- Honor reduced-motion + Calm flag (mi-calm) ---- */
+    var mqReduce = window.matchMedia
+      ? window.matchMedia("(prefers-reduced-motion: reduce)")
+      : { matches: false, addEventListener: function(){}, addListener: function(){} };
+
+    function calmStored() {
+      try { return localStorage.getItem("mi-calm") === "1"; } catch (e) { return false; }
+    }
+    function noMotion() {
+      return mqReduce.matches || body.classList.contains("calm") || calmStored();
+    }
+
+    /* ---- Mode (gate / room / text) ---- */
+    function setMode(mode) {
+      root.setAttribute("data-mode", mode);
+    }
+
+    var gateEnter = $("mod7-door-enter");
+    var gateText  = $("mod7-door-text");
+    var gateSkip  = $("mod7-door-skip");
+
+    if (gateEnter) gateEnter.addEventListener("click", function () {
+      setMode("room");
+      var s = $("mod7-stage");
+      if (s && s.focus) { /* keep focus near start */ }
+      var first = $("mod7-pause-btn");
+      if (first && first.focus) first.focus();
+    });
+    if (gateText) gateText.addEventListener("click", function () {
+      setMode("text");
+      var t = $("mod7-text-pause-btn");
+      if (t && t.focus) t.focus();
+    });
+    if (gateSkip) gateSkip.addEventListener("click", function () {
+      setMode("room");
+      goSummary("mod7-summary-room");
+    });
+
+    /* ---- Switch between room and text any time ---- */
+    var toText = $("mod7-text-btn");
+    var toRoom = $("mod7-room-btn");
+    if (toText) toText.addEventListener("click", function () {
+      setMode("text");
+      var t = $("mod7-text-pause-btn"); if (t && t.focus) t.focus();
+    });
+    if (toRoom) toRoom.addEventListener("click", function () {
+      setMode("room");
+      var r = $("mod7-pause-btn"); if (r && r.focus) r.focus();
+    });
+
+    /* ---- Skip to summary (both routes) ---- */
+    function goSummary(id) {
+      var el = $(id);
+      if (el && el.focus) {
+        el.focus();
+        if (el.scrollIntoView) el.scrollIntoView({ block: "nearest", behavior: noMotion() ? "auto" : "smooth" });
+      }
+    }
+    var skipBtn = $("mod7-skip-btn");
+    var skipTextBtn = $("mod7-text-skip-btn");
+    if (skipBtn) skipBtn.addEventListener("click", function () { goSummary("mod7-summary-room"); });
+    if (skipTextBtn) skipTextBtn.addEventListener("click", function () { goSummary("mod7-summary-text"); });
+
+    /* ---- Pause / step-away (persistent) ---- */
+    function wirePause(btnId, closeId, expandedTargetId) {
+      var btn = $(btnId), close = $(closeId);
+      function open() {
+        root.setAttribute("data-paused", "true");
+        if (btn) btn.setAttribute("aria-expanded", "true");
+        var p = $(expandedTargetId);
+        if (p && p.focus) { p.setAttribute("tabindex", "-1"); p.focus(); }
+      }
+      function shut() {
+        root.removeAttribute("data-paused");
+        if (btn) { btn.setAttribute("aria-expanded", "false"); if (btn.focus) btn.focus(); }
+      }
+      if (btn) btn.addEventListener("click", function () {
+        if (root.getAttribute("data-paused") === "true") shut(); else open();
+      });
+      if (close) close.addEventListener("click", shut);
+    }
+    wirePause("mod7-pause-btn", "mod7-pause-close", "mod7-pause");
+    wirePause("mod7-text-pause-btn", "mod7-pause-text-close", "mod7-pause-text");
+
+    /* ---- The restoration mechanic ---- */
+    var STEPS = 5;
+    var WGHT_START = 250;
+    var WGHT_FINAL = 400;            /* never back to original 600 */
+    var OPACITY_START = 0.62;
+    var OPACITY_FINAL = 0.92;        /* brighter, never fully resolved (<1) */
+
+    var stage    = $("mod7-stage");
+    var selfline = $("mod7-selfline");
+    var glow     = $("mod7-glow");
+    var coolEl   = root.querySelector(".mod7-cool");
+    var seamPath = $("mod7-seam-path");
+    var countNum = $("mod7-count-num");
+    var live     = $("mod7-live");
+
+    var letIn = 0;
+    var seamDrawn = false;
+
+    /* Prepare the seam for a one-time draw. */
+    function primeSeam() {
+      if (!seamPath) return;
+      try {
+        var len = seamPath.getTotalLength();
+        seamPath.style.strokeDasharray = len;
+        if (noMotion()) {
+          seamPath.style.strokeDashoffset = "0";
+        } else {
+          seamPath.style.strokeDashoffset = String(len);
+        }
+      } catch (e) {
+        seamPath.style.strokeDashoffset = "0";
+      }
+    }
+    function drawSeam() {
+      if (seamDrawn || !seamPath) return;
+      seamDrawn = true;
+      if (noMotion()) { seamPath.style.strokeDashoffset = "0"; return; }
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { seamPath.style.strokeDashoffset = "0"; });
+      });
+    }
+
+    function applyState() {
+      var frac = letIn / STEPS;
+      /* Reverse-entropy: ease weight UP one step toward the final. */
+      var wght = Math.round(WGHT_START + (WGHT_FINAL - WGHT_START) * frac);
+      var op   = (OPACITY_START + (OPACITY_FINAL - OPACITY_START) * frac);
+      if (selfline) {
+        selfline.style.fontVariationSettings = '"wght" ' + wght;
+        selfline.style.fontWeight = String(wght); /* fallback for non-variable */
+        selfline.style.opacity = op.toFixed(3);
+      }
+      if (glow) glow.style.opacity = (frac * 0.95).toFixed(3);
+      if (coolEl) coolEl.style.opacity = (1 - frac * 0.85).toFixed(3);
+      if (stage) stage.setAttribute("data-step", String(letIn));
+      if (countNum) countNum.textContent = String(letIn);
+    }
+
+    function makeLetIn(btn) {
+      btn.addEventListener("click", function () {
+        if (btn.getAttribute("aria-pressed") === "true") return; /* cannot be un-let-in */
+        btn.setAttribute("aria-pressed", "true");
+        btn.disabled = false; /* keep focusable, but visually settled */
+
+        /* Replace the label with the consented first-person line. */
+        var lineText = btn.getAttribute("data-line") || "";
+        var labelEl = btn.querySelector(".mod7-voice-label");
+
+        var doSwap = function () {
+          if (labelEl) labelEl.textContent = lineText;
+          /* trigger the staggered pure-opacity fade (motion path only) */
+          if (!noMotion()) {
+            btn.classList.add("mod7-just");
+            window.setTimeout(function () { btn.classList.remove("mod7-just"); }, 1000);
+          }
+        };
+
+        letIn += 1;
+        if (letIn === 1) { primeSeam(); drawSeam(); }
+        applyState();
+
+        /* Held ~500ms pause, then the line fades in (~800ms), staggered 160ms.
+           Stagger is by current count so consecutive presses don't overlap. */
+        if (noMotion()) {
+          doSwap();
+        } else {
+          var delay = 500 + (letIn - 1) * 160;
+          window.setTimeout(doSwap, delay);
+        }
+
+        /* Announce politely: the role + line + neutral count. */
+        var role = btn.querySelector(".mod7-voice-role");
+        var roleText = role ? role.textContent.replace(/^Let in\s*—\s*/i, "").trim() : "a voice";
+        if (live) {
+          live.textContent = "Let in: " + roleText + ". " + lineText +
+            " Voices let in: " + letIn + " of 5. The self re-forms a little; the wound stays.";
+        }
+      });
+    }
+
+    var voiceBtns = root.querySelectorAll(".mod7-voice");
+    for (var i = 0; i < voiceBtns.length; i++) makeLetIn(voiceBtns[i]);
+
+    /* Initial render. If we begin in no-motion, everything is already at its
+       authored (withdrawn) start; that's correct — restoration only happens on
+       user action. But seam should be ready to appear instantly when used. */
+    primeSeam();
+    applyState();
+
+    /* If reduced-motion / calm toggles live, re-snap seam + transitions. */
+    function onMotionChange() {
+      /* Re-prime seam to correct dashoffset for current mode + drawn state. */
+      if (seamPath) {
+        if (noMotion()) {
+          seamPath.style.strokeDashoffset = "0";
+        } else if (!seamDrawn) {
+          primeSeam();
+        }
+      }
+    }
+    if (mqReduce.addEventListener) mqReduce.addEventListener("change", onMotionChange);
+    else if (mqReduce.addListener) mqReduce.addListener(onMotionChange);
+
+    /* Watch the page's Calm class so toggling it live snaps this module. */
+    if (window.MutationObserver) {
+      var mo = new MutationObserver(onMotionChange);
+      mo.observe(body, { attributes: true, attributeFilter: ["class"] });
+    }
+  })();
+  </script>
+</section>
     </div>
   </section>
 
@@ -741,6 +5487,10 @@
         <li>Shay, J. (1994). <em>Achilles in Vietnam: Combat trauma and the undoing of character</em>. Scribner.</li>
         <li>Smith, C. P., &amp; Freyd, J. J. (2013). Dangerous safe havens: Institutional betrayal exacerbates sexual trauma. <em>Journal of Traumatic Stress, 26</em>(1), 119–124. <a href="https://doi.org/10.1002/jts.21778" target="_blank" rel="noopener">https://doi.org/10.1002/jts.21778</a></li>
       </ul>
+
+      <p class="influences-note">
+        <strong>Influences.</strong> The interactive form of this companion was inspired, in a general way, by other authors’ interactive works on trauma, grief, and empathy — pieces that use restraint, consent, and quiet pacing to invite a reader to witness rather than consume difficult experience. That influence is gratefully acknowledged; it is not an endorsement of this work by any of those authors, and none of the participants’ words are drawn from them.
+      </p>
     </div>
   </section>
 </main>
@@ -829,7 +5579,7 @@
       var len = hb.getTotalLength();
       hb.style.strokeDasharray = len;
       hb.style.strokeDashoffset = len;
-      hb.style.transition = "stroke-dashoffset 2400ms ease-out, opacity 1200ms ease-out";
+      hb.style.transition = "stroke-dashoffset 2400ms cubic-bezier(0.16, 1, 0.3, 1), opacity 1200ms cubic-bezier(0.16, 1, 0.3, 1)";
       // draw, then settle to a calm flat presence
       requestAnimationFrame(function () {
         requestAnimationFrame(function () {
