@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClockItCode</title>
+  <style>
+    :root { --bg:#0f1020; --card:#1a1c33; --accent:#d9773a; --accent2:#6b5cc7; --text:#eef0ff; --muted:#a6a9c8; }
+    * { box-sizing: border-box; }
+    body {
+      margin:0; min-height:100vh; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+      color:var(--text);
+      background:radial-gradient(1200px 600px at 20% -10%, #2a2350 0%, transparent 60%),
+                 radial-gradient(1000px 500px at 100% 0%, #3a2140 0%, transparent 55%), var(--bg);
+      display:flex; align-items:center; justify-content:center; padding:2rem;
+    }
+    .wrap { width:100%; max-width:760px; }
+    .hero { text-align:center; margin-bottom:2.5rem; }
+    .badge { font-size:3.4rem; }
+    h1 { font-size:2.6rem; margin:.4rem 0 .2rem; letter-spacing:-.02em;
+         background:linear-gradient(90deg,var(--accent),var(--accent2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .tag { color:var(--muted); font-size:1.05rem; margin:0; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:1rem; }
+    .card { background:var(--card); border:1px solid #2b2e4d; border-radius:16px; padding:1.25rem 1.35rem;
+            text-decoration:none; color:inherit; transition:transform .15s ease, border-color .15s ease; }
+    .card:hover { transform:translateY(-3px); border-color:var(--accent); }
+    .card h3 { margin:.1rem 0 .35rem; font-size:1.15rem; }
+    .card p { margin:0; color:var(--muted); font-size:.92rem; }
+    .empty { background:var(--card); border:1px dashed #3a3d63; border-radius:16px; padding:1.5rem; color:var(--muted); text-align:center; }
+    footer { text-align:center; color:var(--muted); font-size:.82rem; margin-top:2.5rem; }
+    code { background:#000; padding:.15rem .4rem; border-radius:6px; color:#ffd9b8; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <div class="badge">🐰</div>
+      <h1>ClockItCode</h1>
+      <p class="tag">Allison's sites — generated with Claude, published on GitHub Pages.</p>
+    </div>
+
+    <!-- SITES_LIST: add a card per site below -->
+    <div class="grid">
+      <div class="empty">
+        No sites yet. Ask Claude to build one — each new site becomes a folder here
+        and shows up as a card, live at <code>clockitcode.github.io/&lt;name&gt;/</code>.
+      </div>
+    </div>
+
+    <footer>Built on-device · published from <code>Alex's Claude Files/sites</code></footer>
+  </div>
+</body>
+</html>
