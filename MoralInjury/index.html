@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Multivoicedness and Moral Injury</title>
+<meta name="description" content="A web companion to a research poster on moral injury and the dialogical self in first responders: understanding identity disruption and restoration through the many voices that make up a self." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper: #FAFAF8;
+    --surface: #FFFFFF;
+    --ink: #1A1C1E;
+    --ink-soft: #4A4E54;
+    --mist: #9AA0A6;
+    --ghost: #6B7178;
+    --accent: #5B6B7A;
+    --hairline: #E4E4E1;
+    --hairline-strong: #CFCFCB;
+    --alert: #B25A4F;
+    --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --measure: 66ch;
+    --col: 720px;
+    --col-wide: 1080px;
+    --dur: 560ms;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17.5px;
+    line-height: 1.66;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  @media (min-width: 700px) {
+    body { font-size: 18px; }
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--hairline-strong);
+    transition: border-color 200ms ease, color 200ms ease;
+  }
+  a:hover { border-bottom-color: var(--accent); }
+  a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--serif);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+
+  /* Layout */
+  .wrap {
+    width: 100%;
+    max-width: var(--col);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .wrap-wide {
+    width: 100%;
+    max-width: var(--col-wide);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  p { max-width: var(--measure); }
+
+  /* Skip link */
+  .skip {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    background: var(--surface);
+    color: var(--ink);
+    padding: 10px 16px;
+    border: 1px solid var(--hairline-strong);
+    z-index: 100;
+  }
+  .skip:focus {
+    left: 16px;
+    top: 16px;
+  }
+
+  /* Top bar: sensitivity + resources + calm view */
+  .topbar {
+    border-bottom: 1px solid var(--hairline);
+    background: var(--paper);
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+  .topbar .wrap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 20px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  .topbar .note {
+    flex: 1 1 320px;
+    line-height: 1.45;
+  }
+  .topbar .note strong { font-weight: 600; color: var(--ink); }
+
+  .calm-toggle {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--hairline-strong);
+    background: var(--surface);
+    color: var(--ink-soft);
+    font-family: var(--sans);
+    font-size: 13.5px;
+    padding: 7px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: border-color 200ms ease, color 200ms ease;
+  }
+  .calm-toggle:hover { border-color: var(--accent); color: var(--ink); }
+  .calm-toggle .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--mist);
+    transition: background 200ms ease;
+  }
+  .calm-toggle[aria-pressed="true"] .dot { background: var(--accent); }
+
+  /* Hero */
+  .hero {
+    padding: 96px 0 64px;
+    text-align: left;
+  }
+  .hero h1 {
+    font-size: clamp(30px, 6vw, 40px);
+    margin: 0 0 18px;
+    max-width: 18ch;
+  }
+  .hero .sub {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(19px, 3vw, 22px);
+    color: var(--ink-soft);
+    line-height: 1.45;
+    margin: 0 0 36px;
+    max-width: 50ch;
+  }
+  .hero .meta {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    margin: 0;
+    max-width: 60ch;
+  }
+  .hero .meta .authors { color: var(--ink); }
+  .hero .meta .lab { color: var(--ink-soft); }
+
+  /* Heartbeat motif */
+  .motif {
+    margin: 40px 0 0;
+    max-width: 520px;
+  }
+  .motif svg { display: block; width: 100%; height: auto; }
+  .motif path {
+    fill: none;
+    stroke: var(--mist);
+    stroke-width: 1.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* Scope note strip */
+  .scope {
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+    background: var(--surface);
+  }
+  .scope .wrap {
+    padding-top: 18px;
+    padding-bottom: 18px;
+    font-size: 14.5px;
+    color: var(--ink-soft);
+  }
+  .scope strong { color: var(--ink); font-weight: 600; }
+
+  /* Sections */
+  section.content {
+    padding: 72px 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  @media (min-width: 700px) {
+    section.content { padding: 104px 0; }
+  }
+  section.content h2 {
+    font-size: clamp(24px, 4vw, 28px);
+    margin: 0 0 28px;
+    max-width: 24ch;
+  }
+  section.content p { margin: 0 0 20px; color: var(--ink); }
+  section.content p:last-child { margin-bottom: 0; }
+  .kicker {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mist);
+    margin: 0 0 14px;
+  }
+
+  /* Pull quote */
+  .pull {
+    margin: 40px 0;
+    padding: 4px 0 4px 26px;
+    border-left: 1px solid var(--hairline-strong);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(20px, 3.2vw, 24px);
+    line-height: 1.42;
+    color: var(--ink-soft);
+    max-width: 46ch;
+  }
+
+  /* Voice labels */
+  .voices {
+    margin: 36px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .voice {
+    display: inline-block;
+    font-family: var(--serif);
+    font-size: 16.5px;
+    padding: 8px 14px;
+    border: 1px solid var(--hairline-strong);
+    border-radius: 3px;
+    background: var(--surface);
+    color: var(--ink);
+  }
+  .voice.opposing {
+    font-style: italic;
+    color: var(--ghost);
+    border-color: var(--hairline);
+    background: var(--paper);
+  }
+  .voice.restorative {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* Knot: paired opposed voices */
+  .knot {
+    margin: 40px 0;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 8px 20px;
+    max-width: 640px;
+  }
+  .knot .side { display: flex; flex-direction: column; gap: 12px; }
+  .knot .side.right { align-items: flex-end; text-align: right; }
+  .knot .side.right .voice { align-self: flex-end; }
+  .knot .but {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--mist);
+    font-size: 18px;
+    align-self: center;
+  }
+  @media (max-width: 560px) {
+    .knot { grid-template-columns: 1fr; gap: 14px; }
+    .knot .side.right { align-items: flex-start; text-align: left; }
+    .knot .side.right .voice { align-self: flex-start; }
+    .knot .but { text-align: center; }
+  }
+
+  /* Four-stage model */
+  .model-section { padding: 72px 0; border-bottom: 1px solid var(--hairline); }
+  @media (min-width: 700px) { .model-section { padding: 104px 0; } }
+  .model-grid {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  @media (min-width: 720px) {
+    .model-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  }
+  @media (min-width: 1000px) {
+    .model-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+  .stage {
+    border: 1px solid var(--hairline);
+    border-radius: 4px;
+    padding: 24px 22px;
+    background: var(--surface);
+  }
+  .stage .num {
+    font-family: var(--serif);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--mist);
+    margin: 0 0 10px;
+  }
+  .stage h3 {
+    font-size: 19px;
+    margin: 0 0 10px;
+    line-height: 1.3;
+  }
+  .stage p {
+    margin: 0;
+    font-size: 15.5px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+  /* mist -> ink arc: stages 1-2 cooler/dimmer, 3-4 full */
+  .stage.s1, .stage.s2 {
+    color: var(--mist);
+    background: var(--paper);
+    border-color: var(--hairline);
+  }
+  .stage.s1 .num, .stage.s2 .num { color: var(--mist); }
+  .stage.s1 h3, .stage.s2 h3 { color: var(--ghost); }
+  .stage.s1 p, .stage.s2 p { color: var(--mist); }
+  .stage.s3, .stage.s4 {
+    border-color: var(--hairline-strong);
+  }
+  .stage.s4 { border-color: var(--accent); }
+  .stage.s4 .num { color: var(--accent); }
+
+  /* Poster feature */
+  .poster-section { padding: 72px 0; border-bottom: 1px solid var(--hairline); }
+  @media (min-width: 700px) { .poster-section { padding: 104px 0; } }
+  .poster-frame {
+    margin: 32px 0 20px;
+    border: 1px solid var(--hairline-strong);
+    border-radius: 4px;
+    padding: 12px;
+    background: var(--surface);
+    cursor: zoom-in;
+    display: block;
+    width: 100%;
+  }
+  .poster-frame img { display: block; width: 100%; height: auto; border-radius: 2px; }
+  .poster-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 28px;
+    align-items: center;
+    font-size: 15.5px;
+  }
+
+  /* Lightbox */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 28, 30, 0.86);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 28px;
+    z-index: 200;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 3px;
+    box-shadow: 0 2px 24px rgba(0,0,0,0.3);
+  }
+  .lightbox .close {
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    background: var(--surface);
+    border: 1px solid var(--hairline-strong);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 14px;
+    padding: 8px 14px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+
+  /* References */
+  .refs-section { padding: 72px 0; }
+  .refs-list {
+    margin: 28px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .refs-list li {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    padding-left: 1.6em;
+    text-indent: -1.6em;
+    margin-bottom: 14px;
+    max-width: 80ch;
+  }
+  .refs-list li a { font-size: 13.5px; word-break: break-word; }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--hairline-strong);
+    background: var(--surface);
+    padding: 56px 0 72px;
+  }
+  .disclaimer {
+    border: 1px solid var(--hairline-strong);
+    border-radius: 4px;
+    padding: 20px 22px;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 70ch;
+  }
+  .disclaimer strong { color: var(--ink); font-weight: 600; }
+  .foot-meta {
+    margin-top: 28px;
+    font-size: 13.5px;
+    color: var(--mist);
+    line-height: 1.6;
+  }
+
+  /* ---- Animation: opacity-as-meaning ---- */
+  /* Default (no motion): everything fully present. */
+  .reveal { opacity: 1; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    body:not(.calm) .reveal {
+      opacity: 0;
+      transition: opacity var(--dur) cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+    body:not(.calm) .reveal.in { opacity: 1; }
+
+    /* hero stagger via voice elements */
+    body:not(.calm) .stagger > * {
+      opacity: 0;
+      transition: opacity var(--dur) cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+    body:not(.calm) .stagger.in > * { opacity: 1; }
+    body:not(.calm) .stagger.in > *:nth-child(2) { transition-delay: 120ms; }
+    body:not(.calm) .stagger.in > *:nth-child(3) { transition-delay: 240ms; }
+    body:not(.calm) .stagger.in > *:nth-child(4) { transition-delay: 360ms; }
+
+    /* loss of meaning: words dim + soft blur, body stays legible */
+    body:not(.calm) .dissolve {
+      filter: blur(0.4px);
+      opacity: 1;
+      transition: opacity var(--dur) ease, filter var(--dur) ease, letter-spacing var(--dur) ease;
+    }
+    body:not(.calm) .dissolve.in {
+      opacity: 0.55;
+      filter: blur(1.1px);
+      letter-spacing: 0.04em;
+    }
+  }
+
+  /* Calm view forces full presence regardless */
+  body.calm .reveal,
+  body.calm .stagger > *,
+  body.calm .dissolve {
+    opacity: 1 !important;
+    filter: none !important;
+    letter-spacing: normal !important;
+    transition: none !important;
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- Top bar: sensitivity note, resources, calm view -->
+<div class="topbar">
+  <div class="wrap">
+    <p class="note">
+      <strong>A note before you begin.</strong> This page discusses moral injury, guilt, shame, and trauma among first responders. If you need support now, in Canada you can call or text <a href="tel:988">9-8-8</a> (Suicide Crisis Helpline), and elsewhere please contact your local emergency or crisis line.
+    </p>
+    <button class="calm-toggle" id="calmToggle" type="button" aria-pressed="false" title="Turn off motion; show everything fully and steadily">
+      <span class="dot" aria-hidden="true"></span>
+      <span class="label">Calm view</span>
+    </button>
+  </div>
+</div>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="wrap">
+    <h1 class="reveal">Multivoicedness and Moral Injury</h1>
+    <p class="sub reveal">Understanding identity disruption and restoration in first responders, through the many voices that make up a self.</p>
+    <p class="meta reveal">
+      <span class="authors">Allison Gao, Konstantinos Xanthios, Pouria Saffaran, Michel Ferrari</span><br />
+      <span class="lab">Wisdom &amp; Identity Lab, Ontario Institute for Studies in Education (OISE), University of Toronto</span>
+    </p>
+    <div class="motif reveal" aria-hidden="true">
+      <svg viewBox="0 0 520 80" role="img">
+        <title>A steady line that falters and then quiets</title>
+        <path id="hbpath" d="M0,40 L120,40 L140,40 L150,16 L162,64 L176,40 L300,40 L312,28 L322,52 L334,40 L360,40 L520,40" />
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- Scope note -->
+<div class="scope">
+  <div class="wrap">
+    <span class="reveal"><strong>Scope.</strong> This is a small, exploratory study of three life-story interviews (n&nbsp;=&nbsp;3). It illustrates patterns in these particular lives; it is not generalizable to all first responders.</span>
+  </div>
+</div>
+
+<main id="main">
+
+  <!-- Background -->
+  <section class="content" id="background" aria-labelledby="h-background">
+    <div class="wrap">
+      <p class="kicker reveal">Background</p>
+      <h2 id="h-background" class="reveal">What moral injury is</h2>
+      <p class="reveal">Moral injury is the lasting psychological distress that can follow violating, or witnessing the violation of, deeply held moral values (Cahill et al., 2023). It is not the same as fear-based trauma. Where post-traumatic stress is rooted in danger and threat, moral injury is rooted in conscience — in guilt, shame, betrayal, and the sense that something deeply right has been broken. The concept was first named with Vietnam veterans whose suffering the language of PTSD could not fully reach (Litz et al., 2009; Shay, 1994), and it has since been recognized in many high-stakes settings, including the work of first responders.</p>
+      <p class="reveal">First responders are especially exposed. Their work places them, repeatedly, in situations where they must act, fail to act, or witness harm under extraordinary pressure and constraint (Maguen et al., 2025). Exposure to such morally challenging events is common in this profession — in one nationally representative sample, roughly four in ten first responders reported such exposure (Maguen et al., 2025). The outcomes that can follow include guilt, shame, and social withdrawal, alongside anxiety, depression, symptoms of PTSD, and burnout.</p>
+      <p class="reveal">A careful distinction matters here. Exposure to a morally difficult event is not the same as carrying a lasting injury from it. Most people exposed do not go on to develop significant moral injury — which is part of why this study treats moral injury as something that happens at the level of identity and meaning, not simply as a reaction to an event. Throughout this work, the idea of ‘failing’ is understood as a perceived moral failure: the painful gap between what a responder felt they should have done and what was actually possible in the moment. It is not a judgment that anyone did their job poorly.</p>
+      <blockquote class="pull reveal">Moral injury is a wound to conscience and self — not merely a reaction to a frightening event.</blockquote>
+    </div>
+  </section>
+
+  <!-- Identity / dialogical self -->
+  <section class="content" id="identity" aria-labelledby="h-identity">
+    <div class="wrap">
+      <p class="kicker reveal">Theoretical framework</p>
+      <h2 id="h-identity" class="reveal">Identity and the dialogical self</h2>
+      <p class="reveal">Professional identity, for first responders, is built on moral values — fairness, responsibility, altruism, the commitment to help and protect (Carminati &amp; Heliot, 2021; Hodges, 2025). When someone’s actions, or the outcomes they witness, come into conflict with those values, they can experience internal dissonance and a destabilized sense of who they are (Hodges, 2025). This is why moral injury reaches so deep: it is not only about what happened, but about what the person comes to believe about themselves.</p>
+      <p class="reveal">To understand this, the study draws on Dialogical Self Theory. The idea is gentle and human: we do not carry a single inner voice, but many, in ongoing conversation. The self is a ‘society’ of relatively autonomous positions — an I-as-helper, an I-as-professional, an I-as-caregiver — each able to speak, agree, question, or disagree with the others (Hermans, 2001). Crucially, the self is social all the way down: the people and institutions in our lives also live inside this inner conversation, shaped through relationships and through being recognized by others (Atkins, 2008; Aveling et al., 2015).</p>
+      <div class="voices stagger reveal" aria-label="Voices entering one conversation">
+        <span class="voice">I-as-helper</span>
+        <span class="voice">I-as-professional</span>
+        <span class="voice">I-as-caregiver</span>
+      </div>
+      <p class="reveal">Seen this way, moral injury can be understood as a disruption of that inner conversation. Valued moral voices can be thrown into conflict with newly amplified opposing ones, creating internal tension and a sense of fragmentation. The hopeful side of the same idea is that, because the self is sustained through recognition and relationship, supportive voices can re-enter the conversation and help a coherent sense of self be rebuilt.</p>
+      <blockquote class="pull reveal">We do not have one inner voice. We have many, in conversation — and moral injury is when that conversation falls into conflict.</blockquote>
+    </div>
+  </section>
+
+  <!-- Methods -->
+  <section class="content" id="methods" aria-labelledby="h-methods">
+    <div class="wrap">
+      <p class="kicker reveal">Methods</p>
+      <h2 id="h-methods" class="reveal">How we listened: the multivoicedness method</h2>
+      <p class="reveal">This study analyzed three life-story interviews with first responders, who took part through the Valhalla Project Niagara, a Canadian non-profit supporting veterans and first responders living with post-traumatic stress through community, connection, and purpose (Arnoldi, 2023). The interviews focused on life experiences, meaning-making, and personal histories rather than on any single incident.</p>
+      <p class="reveal">We used a published three-step approach to analyzing multivoicedness (Aveling et al., 2015). First, we noticed the different ‘I-voices’ a person speaks from — the distinct identity positions in their account. Second, we listened for the voices of others living within the account — family, colleagues, institutions — the inner-Others who are part of how a person understands themselves. Third, we examined how all of these voices relate: where they support one another, and where they pull against each other.</p>
+      <p class="reveal">Those points of tension have a name in this method: dialogical knots. A knot is a moment where two inner voices pull in opposite directions, often marked by a quiet ‘but.’ It is the shape of internal conflict, never a verdict on the person. We coded each quotation in the full context of the interview rather than lifting fragments, held our interpretations as provisional, compared our coding collaboratively for consistency, and reflected on our own role as listeners. This is exploratory, small-scale work; with three participants, it illustrates patterns in these particular lives rather than making claims about all first responders.</p>
+      <blockquote class="pull reveal">A dialogical knot is the shape of internal conflict — never a verdict on the person.</blockquote>
+    </div>
+  </section>
+
+  <!-- Voice conflict -->
+  <section class="content" id="voice-conflict" aria-labelledby="h-voice-conflict">
+    <div class="wrap">
+      <p class="kicker reveal">Results</p>
+      <h2 id="h-voice-conflict" class="reveal">Moral injury as a conflict of voices</h2>
+      <p class="reveal">Across the three interviews, moral injury appeared as conflict between core identity positions. On one side stood valued voices the participants had built their sense of self upon: I-as-helper, I-as-professional, I-as-caregiver. On the other emerged opposing voices: I-as-perpetuator, I-as-guilty, I-as-self-critical, and I-as-identity-lost.</p>
+      <div class="knot reveal" aria-label="A dialogical knot: valued voices pulling against opposing voices">
+        <div class="side left">
+          <span class="voice">I-as-helper</span>
+          <span class="voice">I-as-professional</span>
+          <span class="voice">I-as-caregiver</span>
+        </div>
+        <div class="but" aria-hidden="true">but</div>
+        <div class="side right">
+          <span class="voice opposing">I-as-guilty</span>
+          <span class="voice opposing">I-as-self-critical</span>
+          <span class="voice opposing">I-as-identity-lost</span>
+        </div>
+      </div>
+      <p class="reveal">The reason the helper identity makes these conflicts so sharp is that it sets a high standard for the self. When a person’s whole sense of who they are is built around protecting and helping, almost any outcome involving harm can come to feel like a personal moral failing — even when they acted properly, and even when the constraints of the moment made another outcome impossible (Litz et al., 2009). This is where guilt can quietly harden into shame: a discrete sense of ‘I did something wrong’ can slide into a corrosive verdict of ‘I am wrong.’ In the language of voices, a self-critical voice can grow loud enough to dominate, drowning out the valued voices it speaks against.</p>
+      <p class="reveal">The outcomes the participants described — persistent shame, self-blame, a felt sense of responsibility, and a destabilized moral identity — follow from this inner conflict. This supports the study’s central reframing: moral injury is best understood as an identity-based disruption, not solely a reaction to a traumatic event.</p>
+      <blockquote class="pull reveal">A self-critical voice can grow loud enough to drown out the helper voice it speaks against.</blockquote>
+    </div>
+  </section>
+
+  <!-- Loss of meaning -->
+  <section class="content" id="loss-of-meaning" aria-labelledby="h-loss">
+    <div class="wrap">
+      <p class="kicker reveal">Results</p>
+      <h2 id="h-loss" class="reveal">Trauma and the loss of meaning</h2>
+      <p class="reveal">Alongside the conflict of voices, the interviews showed a shift in the kinds of identities the participants could speak from. Meaning-oriented positions — helper, contributor, passionate professional — gave way to disrupted self-states described as hopeless, isolated, and disconnected. People spoke of feeling ‘lost’ or burdened, of a breakdown in their ability to make sense of their experience and hold a coherent sense of self.</p>
+      <div class="voices reveal" aria-label="Identity words losing coherence">
+        <span class="voice opposing dissolve">hopeless</span>
+        <span class="voice opposing dissolve">isolated</span>
+        <span class="voice opposing dissolve">disconnected</span>
+        <span class="voice opposing dissolve">lost</span>
+      </div>
+      <p class="reveal">This can be understood as an erosion of meaning along several dimensions at once. Meaning in life is built from a sense that one’s life is coherent, that it has purpose, and that one matters (Costin &amp; Vignoles, 2020). Moral injury can disturb all three: the self-narrative no longer quite makes sense, valued goals feel foreclosed, and — perhaps most corrosively — the felt sense of mattering withdraws, as a person comes to feel they no longer count. Research suggests mattering is the strongest of these threads, which is part of why recognition by others is so central to recovery.</p>
+      <p class="reveal">It is important to hold this gently. Loss of meaning here is the lived experience of someone whose deepest values were strained by an impossible situation. Meaning is not something a person failed to keep; it is something that was disrupted, and that can, with support, be slowly rebuilt.</p>
+      <blockquote class="pull reveal">Meaning is not something a person failed to keep. It is something disrupted — and, with support, slowly rebuilt.</blockquote>
+    </div>
+  </section>
+
+  <!-- Four-stage model -->
+  <section class="model-section" id="model" aria-labelledby="h-model">
+    <div class="wrap-wide">
+      <div style="max-width: var(--col); margin: 0 auto;">
+        <p class="kicker reveal">Figure 1</p>
+        <h2 id="h-model" class="reveal" style="font-family:var(--serif);font-weight:600;font-size:clamp(24px,4vw,28px);margin:0 0 28px;">A four-stage model of moral injury</h2>
+        <p class="reveal">Drawing these threads together, the study proposes a model of moral injury as a dynamic, ongoing dialogical process — captured in four stages. In Stage 1, core identities encounter conflicting internal voices: the helper, professional, and caregiver positions meet opposing voices of guilt and self-criticism. In Stage 2, these conflicts give rise to shame, guilt, and self-blame, to a loss of meaning, and to social withdrawal — the constriction of self that follows when self-condemning voices dominate.</p>
+        <p class="reveal">In Stage 3, restorative voices intervene: peer support, therapy, mindfulness, and community begin to enter the inner conversation. In Stage 4, identity is reconstructed — meaning is rebuilt and a coherent sense of self is gradually restored. Importantly, restoration does not mean erasing the event or silencing the difficult voices. It means introducing supportive voices that can sit alongside them, so the guilty voice can be answered rather than left to rule alone. Because this is an ongoing process rather than a finish line, the model holds both the depth of the injury and the genuine possibility of repair.</p>
+      </div>
+      <div class="model-grid">
+        <div class="stage s1 reveal">
+          <p class="num">Stage 1</p>
+          <h3>Conflict of voices</h3>
+          <p>Core identities — helper, professional, caregiver — encounter conflicting internal voices of guilt and self-criticism.</p>
+        </div>
+        <div class="stage s2 reveal">
+          <p class="num">Stage 2</p>
+          <h3>Disruption</h3>
+          <p>Shame, guilt, and self-blame emerge, alongside a loss of meaning and social withdrawal as self-condemning voices dominate.</p>
+        </div>
+        <div class="stage s3 reveal">
+          <p class="num">Stage 3</p>
+          <h3>Restorative voices</h3>
+          <p>Peer support, therapy, mindfulness, and community begin to enter the inner conversation.</p>
+        </div>
+        <div class="stage s4 reveal">
+          <p class="num">Stage 4</p>
+          <h3>Reconstruction</h3>
+          <p>Identity is reconstructed: meaning is rebuilt and a coherent sense of self is gradually restored.</p>
+        </div>
+      </div>
+      <div style="max-width: var(--col); margin: 36px auto 0;">
+        <blockquote class="pull reveal">Healing is not deleting a voice. It is introducing supportive voices so the guilty one can be answered rather than rule alone.</blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- Restoration -->
+  <section class="content" id="restoration" aria-labelledby="h-restoration">
+    <div class="wrap">
+      <p class="kicker reveal">Results</p>
+      <h2 id="h-restoration" class="reveal">Restoration through supportive voices</h2>
+      <p class="reveal">In the participants’ accounts, recovery was linked to the arrival of restorative voices: community connection, therapy, spirituality and mindfulness, and creative expression. These supported the emergence of new identity positions — I-as-restored-self, I-as-supported, I-as-expressive — and helped the work of reframing trauma, rebuilding meaning, and reclaiming a coherent identity and a sense of agency.</p>
+      <div class="voices reveal" aria-label="Supportive voices entering the conversation">
+        <span class="voice restorative">I-as-restored-self</span>
+        <span class="voice restorative">I-as-supported</span>
+        <span class="voice restorative">I-as-expressive</span>
+      </div>
+      <p class="reveal">Each pathway plays a recognizable part. Community and peer connection answer isolation with recognition; hearing another person who has carried similar guilt say ‘me too’ rather than ‘you failed’ can quietly counter the inner critic — the mechanism at the heart of the Valhalla Project’s peer model, whose participants speak of no longer feeling alone. Therapy offers structured, compassionate ways to re-examine self-blame and separate realistic responsibility from what was never within a person’s control; several approaches developed for moral injury work precisely by introducing a compassionate voice into the inner dialogue (Litz et al., 2009). Spirituality, mindfulness, and creative or narrative expression offer ways to hold meaning, to notice harsh self-judgment without being commanded by it, and to give form to what words alone struggle to reach.</p>
+      <p class="reveal">We hold this part of the story with honesty and humility. Restoration is not a return to a pre-injury self; it is an integration that carries the experience rather than pretending it never happened. It is gradual, relational, and witnessed — supported with and by others, never the product of willpower alone — and several of these supports, while widely valued, are best understood as complements to professional care rather than guaranteed cures.</p>
+      <blockquote class="pull reveal">Restoration is not a return to who you were before. It is a self that carries the experience, and is recognized by others.</blockquote>
+    </div>
+  </section>
+
+  <!-- Implications -->
+  <section class="content" id="implications" aria-labelledby="h-implications">
+    <div class="wrap">
+      <p class="kicker reveal">Discussion</p>
+      <h2 id="h-implications" class="reveal">What this suggests</h2>
+      <p class="reveal">Read together, these three lives point toward a single general implication: moral injury is an identity-based conflict of internal voices, not solely a reaction to traumatic events. That reframing changes where care can be directed.</p>
+      <p class="reveal">For intervention, it suggests gently separating personal responsibility from systemic failure — naming honestly what was, and was not, within a person’s control under duress — so that self-blame and shame can be eased and valued identity positions can be reconstructed. This is not excusing anyone or dismissing genuine remorse; it is restoring an accurate, compassionate account of what was actually possible, so that a burden carried alone can be set down.</p>
+      <p class="reveal">For organizations, the implication is that what happens after a difficult event matters profoundly. Invalidation — silence, blame, or abandonment — can intensify moral injury, lending external weight to the voices of self-blame. Recognition and support do the opposite: acknowledgment, psychological safety, and trustworthy care can re-enter a person’s inner world as a supportive voice rather than an accusing one, and make the separation of personal from systemic responsibility credible rather than merely reassuring.</p>
+      <blockquote class="pull reveal">Naming the constraint is not making an excuse. It is telling the truth about what was actually possible.</blockquote>
+    </div>
+  </section>
+
+  <!-- Takeaway -->
+  <section class="content" id="takeaway" aria-labelledby="h-takeaway">
+    <div class="wrap">
+      <p class="kicker reveal">Key takeaway</p>
+      <h2 id="h-takeaway" class="reveal">Key takeaway</h2>
+      <p class="reveal">For these three participants, moral injury emerged when core identity voices — the helper, the professional, the caregiver — came into conflict with voices of guilt, failure, and self-blame. Healing began when supportive voices were introduced, and when each person could begin to reconstruct a coherent, meaningful sense of self.</p>
+      <p class="reveal">This is a small, exploratory study of three lives, not a verdict on first responders as a whole. But within that careful scope, it offers a hopeful way of understanding a painful experience: that the inner conversation which can fall into conflict is the same conversation through which, with recognition and support, a person can be made whole again.</p>
+      <blockquote class="pull reveal">The inner conversation that falls into conflict is the same one through which a person can be made whole again.</blockquote>
+    </div>
+  </section>
+
+  <!-- Poster -->
+  <section class="poster-section" id="poster" aria-labelledby="h-poster">
+    <div class="wrap">
+      <p class="kicker reveal">The poster</p>
+      <h2 id="h-poster" class="reveal" style="font-family:var(--serif);font-weight:600;font-size:clamp(24px,4vw,28px);margin:0 0 16px;">The research poster</h2>
+      <p class="reveal">The full research poster presents the framework, methods, results, and model in one view. Select the image to enlarge it, or download the PDF.</p>
+      <button type="button" class="poster-frame reveal" id="posterTrigger" aria-label="Enlarge the research poster">
+        <img src="assets/poster.png" alt="Research poster: Multivoicedness and Moral Injury — Understanding Identity Disruption and Restoration in First Responders. Wisdom and Identity Lab, OISE, University of Toronto." />
+      </button>
+      <div class="poster-actions reveal">
+        <a href="assets/poster.pdf" download>Download the poster (PDF)</a>
+        <a href="assets/poster.png" target="_blank" rel="noopener">Open the image in a new tab</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- References -->
+  <section class="refs-section" id="references" aria-labelledby="h-refs">
+    <div class="wrap">
+      <p class="kicker">References</p>
+      <h2 id="h-refs" style="font-family:var(--serif);font-weight:600;font-size:clamp(24px,4vw,28px);margin:0 0 8px;">References</h2>
+      <ul class="refs-list">
+        <li>Atkins, K. (2008). <em>Narrative identity and moral identity: A practical perspective</em>. Routledge.</li>
+        <li>Aveling, E.-L., Gillespie, A., &amp; Cornish, F. (2015). A qualitative method for analysing multivoicedness. <em>Qualitative Research, 15</em>(6), 670–687. <a href="https://doi.org/10.1177/1468794114557991" target="_blank" rel="noopener">https://doi.org/10.1177/1468794114557991</a></li>
+        <li>Arnoldi, J. (Host). (2023). <em>Valhalla Project Niagara for vets &amp; first responders with PTSD</em> [Audio/video interview]. Life Unscripted. <a href="https://lifeunscripted.ca/valhalla-project-niagara-for-vets-first-responders-with-ptsd/" target="_blank" rel="noopener">https://lifeunscripted.ca/valhalla-project-niagara-for-vets-first-responders-with-ptsd/</a></li>
+        <li>Cahill, J. M., Moyse, A. J., &amp; Dugdale, L. S. (2023). Ruptured selves: Moral injury and wounded identity. <em>Medicine, Health Care and Philosophy, 26</em>(2), 225–231. <a href="https://doi.org/10.1007/s11019-023-10138-y" target="_blank" rel="noopener">https://doi.org/10.1007/s11019-023-10138-y</a></li>
+        <li>Carminati, L., &amp; Heliot, Y. G. (2021). Multilevel dynamics of moral identity conflict: Professional and personal values in ethically-charged situations. <em>Ethics &amp; Behavior, 33</em>(1), 37–54. <a href="https://doi.org/10.1080/10508422.2021.2004891" target="_blank" rel="noopener">https://doi.org/10.1080/10508422.2021.2004891</a></li>
+        <li>Costin, V., &amp; Vignoles, V. L. (2020). Meaning is about mattering: Evaluating coherence, purpose, and existential mattering as precursors of meaning in life judgments. <em>Journal of Personality and Social Psychology, 118</em>(4), 864–884. <a href="https://doi.org/10.1037/pspp0000225" target="_blank" rel="noopener">https://doi.org/10.1037/pspp0000225</a></li>
+        <li>Fleming, W. H. (2022). Complex moral injury: Shattered moral assumptions. <em>Journal of Religion and Health, 61</em>(2), 1022–1050. <a href="https://doi.org/10.1007/s10943-022-01542-4" target="_blank" rel="noopener">https://doi.org/10.1007/s10943-022-01542-4</a></li>
+        <li>Griffin, B. J., Purcell, N., Burkman, K., Litz, B. T., Bryan, C. J., Schmitz, M., Villierme, C., Walsh, J., &amp; Maguen, S. (2019). Moral injury: An integrative review. <em>Journal of Traumatic Stress, 32</em>(3), 350–362. <a href="https://doi.org/10.1002/jts.22362" target="_blank" rel="noopener">https://doi.org/10.1002/jts.22362</a></li>
+        <li>Hermans, H. J. M. (2001). The dialogical self: Toward a theory of personal and cultural positioning. <em>Culture &amp; Psychology, 7</em>(3), 243–281. <a href="https://doi.org/10.1177/1354067X0173001" target="_blank" rel="noopener">https://doi.org/10.1177/1354067X0173001</a></li>
+        <li>Hodges, T. (2025). <em>Moral injury, identity dissonance, and reintegration: A compendium of reintegration and survey of United States military veterans</em> [Doctoral dissertation, Kennesaw State University]. DigitalCommons@Kennesaw State University. <a href="https://digitalcommons.kennesaw.edu/incmdoc_etd/52/" target="_blank" rel="noopener">https://digitalcommons.kennesaw.edu/incmdoc_etd/52/</a></li>
+        <li>Lentz, L. M., Smith-MacDonald, L., Malloy, D., Carleton, R. N., &amp; Bremault-Phillips, S. (2021). Compromised conscience: A scoping review of moral injury among firefighters, paramedics, and police officers. <em>Frontiers in Psychology, 12</em>, 639781. <a href="https://doi.org/10.3389/fpsyg.2021.639781" target="_blank" rel="noopener">https://doi.org/10.3389/fpsyg.2021.639781</a></li>
+        <li>Litz, B. T., Stein, N., Delaney, E., Lebowitz, L., Nash, W. P., Silva, C., &amp; Maguen, S. (2009). Moral injury and moral repair in war veterans: A preliminary model and intervention strategy. <em>Clinical Psychology Review, 29</em>(8), 695–706. <a href="https://doi.org/10.1016/j.cpr.2009.07.003" target="_blank" rel="noopener">https://doi.org/10.1016/j.cpr.2009.07.003</a></li>
+        <li>Litz, B. T., Plouffe, R. A., Nazarov, A., Murphy, D., Phelps, A., Coady, A., Houle, S. A., Dell, L., Frankfurt, S., Zerach, G., Levi-Belz, Y., &amp; the Moral Injury Outcome Scale Consortium. (2022). Defining and assessing the syndrome of moral injury: Initial findings of the Moral Injury Outcome Scale Consortium. <em>Frontiers in Psychiatry, 13</em>, 923928. <a href="https://doi.org/10.3389/fpsyt.2022.923928" target="_blank" rel="noopener">https://doi.org/10.3389/fpsyt.2022.923928</a></li>
+        <li>Maguen, S., de Bourbon, S., Batten, A., Mason, M., Sloan, A., Nazzareta, D., Graterol, J., Pang, S., &amp; Worthen, M. (2025). Prevalence of exposures and moral injury in first responders. <em>Journal of the American College of Emergency Physicians Open, 6</em>(6), 100259. <a href="https://doi.org/10.1016/j.acepjo.2025.100259" target="_blank" rel="noopener">https://doi.org/10.1016/j.acepjo.2025.100259</a></li>
+        <li>Shay, J. (1994). <em>Achilles in Vietnam: Combat trauma and the undoing of character</em>. Scribner.</li>
+        <li>Smith, C. P., &amp; Freyd, J. J. (2013). Dangerous safe havens: Institutional betrayal exacerbates sexual trauma. <em>Journal of Traumatic Stress, 26</em>(1), 119–124. <a href="https://doi.org/10.1002/jts.21778" target="_blank" rel="noopener">https://doi.org/10.1002/jts.21778</a></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="disclaimer">
+      <strong>Disclaimer.</strong> This study is being conducted by a master’s student enrolled in an OISE program. This study is not run by or affiliated with OISE, and OISE does not endorse this poster.
+    </div>
+    <p class="foot-meta">
+      Wisdom &amp; Identity Lab, Ontario Institute for Studies in Education (OISE), University of Toronto.<br />
+      If you or someone you know needs support, in Canada call or text 9-8-8 (Suicide Crisis Helpline); elsewhere, contact your local emergency or crisis line.
+    </p>
+  </div>
+</footer>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged research poster">
+  <button type="button" class="close" id="lightboxClose">Close</button>
+  <img src="assets/poster.png" alt="Enlarged research poster: Multivoicedness and Moral Injury — Understanding Identity Disruption and Restoration in First Responders." />
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var body = document.body;
+
+  /* ---- Calm view toggle ---- */
+  var calmToggle = document.getElementById("calmToggle");
+  function setCalm(on) {
+    body.classList.toggle("calm", on);
+    calmToggle.setAttribute("aria-pressed", on ? "true" : "false");
+    try { localStorage.setItem("mi-calm", on ? "1" : "0"); } catch (e) {}
+    if (on) {
+      // ensure everything is visibly present
+      var hidden = document.querySelectorAll(".reveal, .stagger, .dissolve");
+      for (var i = 0; i < hidden.length; i++) hidden[i].classList.add("in");
+    }
+  }
+  var stored = null;
+  try { stored = localStorage.getItem("mi-calm"); } catch (e) {}
+  if (stored === "1") setCalm(true);
+  calmToggle.addEventListener("click", function () {
+    setCalm(!body.classList.contains("calm"));
+  });
+
+  /* ---- Reveal on scroll (opacity-as-meaning) ---- */
+  var prefersReduced = window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var revealEls = document.querySelectorAll(".reveal, .stagger, .dissolve");
+
+  if (prefersReduced || !("IntersectionObserver" in window)) {
+    // No motion: everything present immediately.
+    for (var i = 0; i < revealEls.length; i++) revealEls[i].classList.add("in");
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
+
+    for (var j = 0; j < revealEls.length; j++) io.observe(revealEls[j]);
+
+    // Safety net: if anything is still hidden after load, reveal it.
+    window.addEventListener("load", function () {
+      setTimeout(function () {
+        for (var k = 0; k < revealEls.length; k++) {
+          if (!revealEls[k].classList.contains("in")) {
+            var r = revealEls[k].getBoundingClientRect();
+            if (r.top < window.innerHeight) revealEls[k].classList.add("in");
+          }
+        }
+      }, 900);
+    });
+  }
+
+  /* ---- Heartbeat motif: a gentle, one-time draw that quiets ---- */
+  var hb = document.getElementById("hbpath");
+  if (hb && !prefersReduced && !body.classList.contains("calm")) {
+    try {
+      var len = hb.getTotalLength();
+      hb.style.strokeDasharray = len;
+      hb.style.strokeDashoffset = len;
+      hb.style.transition = "stroke-dashoffset 2400ms ease-out, opacity 1200ms ease-out";
+      // draw, then settle to a calm flat presence
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          hb.style.strokeDashoffset = "0";
+        });
+      });
+    } catch (e) {}
+  }
+
+  /* ---- Lightbox ---- */
+  var trigger = document.getElementById("posterTrigger");
+  var lightbox = document.getElementById("lightbox");
+  var closeBtn = document.getElementById("lightboxClose");
+  var lastFocused = null;
+
+  function openLightbox() {
+    lastFocused = document.activeElement;
+    lightbox.classList.add("open");
+    closeBtn.focus();
+    document.addEventListener("keydown", onKey);
+  }
+  function closeLightbox() {
+    lightbox.classList.remove("open");
+    document.removeEventListener("keydown", onKey);
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+  }
+  function onKey(e) {
+    if (e.key === "Escape") closeLightbox();
+  }
+
+  if (trigger) trigger.addEventListener("click", openLightbox);
+  if (closeBtn) closeBtn.addEventListener("click", closeLightbox);
+  if (lightbox) lightbox.addEventListener("click", function (e) {
+    if (e.target === lightbox) closeLightbox();
+  });
+})();
+</script>
+</body>
+</html>
